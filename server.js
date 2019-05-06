@@ -1,28 +1,34 @@
-const express = require('express')
+const express = require('express');
 const path = require('path')
-app = express();
-
-app.use((req, res, next) => {
-  if(req) 
-  next()
-})
+const app = express();
+// const ASSET_PATH = process.env.ASSET_PATH || '/'
 
 app.get('*.js', function (req, res, next) {
-  console.log("js", req.url)
-  req.url = req.url + '.gz';
-  res.set('Content-Encoding', 'gzip');
+  const runtimeUrlRegex = /runtime.*.js/
+  const vendorUrlRegex = /vendor.*.js/
+  if(!runtimeUrlRegex.test(req.url)) {
+     req.url = req.url + '.gz';
+    res.set('Content-Encoding', 'gzip');
+    res.set('Content-Type', 'text/javascript');
+  } 
+  if (vendorUrlRegex.test(req.url)) {
+    res.setHeader('Cache-Control', 'private, max-age=31536000')
+  }
   next();
 });
 
-app.use(express.static(path.join(__dirname, 'dist')))
+app.use('/admin', express.static(path.join(__dirname, 'dist')))
 
-app.get('/*', (req, res) => {
+app.get('/*', (req, res)=>{
+  //console.log(req.query);
   res.sendFile(path.join(__dirname, 'dist/index.html'), (err) => {
     if (err) {
       res.status(500).send(err)
     }
   })
-})
+});
 
-//Binding the server to a port(3000)
-app.listen(3000,()=>console.log('express server started at port 3000'));
+// Serve the files on port 3000.
+app.listen(8080, function () {
+  console.log('Example app listening on port 3000!\n');
+});

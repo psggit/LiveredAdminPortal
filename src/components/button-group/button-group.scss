@@ -1,0 +1,15 @@
+.button--group {
+  display: flex;
+  & button:not(:last-child) {
+    margin-right: 10px;
+  }
+  &.button--group__left {
+    justify-content: flex-start;
+  }
+  &.button--group__right {
+    justify-content: flex-end;
+  }
+  &.button--group__center {
+    justify-content: center;
+  }
+}
