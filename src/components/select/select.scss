@@ -1,0 +1,32 @@
+.select--container {
+  position: relative;
+  display: inline-block;
+}
+
+.select {
+  width: 225px;
+  height: 40px;
+  background-color: rgba(61, 112, 178, 0.1);
+  border: 0;
+  padding: 0 10px;
+  color: #5a6872;
+  &:focus {
+    outline: 0;
+  }
+  &.small {
+    width: 90px;
+  }
+}
+
+.select {
+  -moz-appearance:none; /* Firefox */
+  -webkit-appearance:none; /* Safari and Chrome */
+  appearance:none;
+}
+
+.select--container svg {
+  position: absolute;
+  bottom: 50%;
+  right: 10px;
+  transform: translatey(50%); 
+}

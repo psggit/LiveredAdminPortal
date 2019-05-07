@@ -12,6 +12,7 @@ import 'Sass/app.scss'
 import { Api } from 'Utils/config'
 import Login from './login'
 import Layout from 'Components/layout'
+import OTTPManagement from 'Container/manage-ottp'
 import { createSession } from './login/session'
 
 const history = createHistory()
@@ -101,15 +102,15 @@ class App extends React.Component {
                   }
                   <Layout isLoggedIn={isLoggedIn}>
                     <Switch>
-                      {/* <Route
+                      <Route
                         exact
-                        path="/home"
+                        path="/home/ottp-management"
                         render={
                           props => (
-                            <Account {...props} />
+                            <OTTPManagement {...props} />
                           )
                         }
-                      /> */}
+                      />
                     </Switch>
                   </Layout>
                 </div>

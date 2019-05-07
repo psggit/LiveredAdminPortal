@@ -11,8 +11,8 @@ import { Api } from "./../config"
 
 const getToken = () => ({
   // "Authorization": `Bearer ${localStorage.getItem('auth-token')}`,
-  "x-hasura-role": `${localStorage.getItem('x-hasura-role')}`,
-  "hasura-id": `${localStorage.getItem('hasura-id')}`
+  // "x-hasura-role": `${localStorage.getItem('x-hasura-role')}`,
+  // "hasura-id": `${localStorage.getItem('hasura-id')}`
 })
 
 function getHeaders(type) {
@@ -76,13 +76,13 @@ export function constructFetchUtility(options) {
   // construct options for creating `window.fetch` instance
   let fetchOptions = {
     method,
-    credentials: 'include',
+    //credentials: 'include',
     headers: getHeaders(type),
   }
 
   if(cors) fetchOptions.mode = 'cors'
   // add data to request
-  if (data && method !== "GET") {
+  if (data) {
     fetchOptions.body = constructBody({type, data})
   }
 

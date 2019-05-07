@@ -1,48 +1,57 @@
 #sidemenu {
-  width: 70px;
-  height: 100vh;
-  background: #008571;
+ 
+  .side-menu {
+  position: fixed;
+    // top: 76px;
+    // left: 0;
+    width: 70px;
+    height: 100vh;
+    background: #008571;
+    padding-top: 20px;
+    padding-bottom: 82px;
+    overflow: auto;
+  
+    .side-menu__item {
+      text-align: -webkit-center;
+      padding: 15px 0;
+      position: relative;
 
-  .side-menu__item {
-    text-align: -webkit-center;
-    padding: 15px 0;
-    position: relative;
+      &.active {
+        background: #00b4a0;
+      }
 
-    &.active {
-      background: #00b4a0;
-    }
-
-    .tooltip-text {
-      display: none;
-      box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.1);
-      background-color:#152935;
-      top: 15px;
-      left: 50px;
-      position: absolute;
-      width: 150px;
-      max-width: 200px;
-      padding: 6px;
-      z-index: 1;
-      font-size: 14px;
-      font-weight: normal;
-      line-height: 1.29;
-      letter-spacing: normal;
-      color: #fff;
-    }
-    
-    &:hover .tooltip-text {
-      display: block;
-    }
-    
-    .tooltip-text::after {
-      content: "";
-      position: absolute;
-      top: 50%;
-      right: 100%;
-      margin-top: -5px;
-      border-width: 5px;
-      border-style: solid;
-      border-color: transparent #152935 transparent transparent;
+      .tooltip-text {
+        display: none;
+        box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.1);
+        background-color:#152935;
+        top: 10px;
+        left: 50px;
+        position: absolute;
+        width: 150px;
+        max-width: 200px;
+        padding: 6px;
+        z-index: 1;
+        font-size: 14px;
+        font-weight: normal;
+        line-height: 1.29;
+        letter-spacing: normal;
+        color: #fff;
+      }
+      
+      &:hover .tooltip-text {
+        display: block;
+      }
+      
+      .tooltip-text::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        right: 100%;
+        margin-top: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: transparent #152935 transparent transparent;
+      }
     }
   }
 }

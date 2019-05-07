@@ -33,13 +33,13 @@
 
   &.btn-secondary {
     background-color: #fff;
-    border-color: #5a6872;
-    color: #3e3e40;
+    border-color: #fff;
+    color: #00b4a0;
     &:hover {
       transition: all 0.2s ease;
-      border-color: #5a6872;
-      background-color: #5a6872;
-      color: #fff;
+      // border-color: #5a6872;
+      // background-color: #5a6872;
+      // color: #fff;
     }
   }
 
