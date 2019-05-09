@@ -1,6 +1,7 @@
 import React from "react"
 import Label from "../label"
 import Select from "../select"
+import * as Api from "./../../api"
 
 class DeliveryOperator extends React.Component {
   constructor() {
@@ -15,8 +16,31 @@ class DeliveryOperator extends React.Component {
     }
 
     this.handleChange = this.handleChange.bind(this)
+    this.fetchDSOList = this.fetchDSOList.bind(this)
     this.getData = this.getData.bind(this)
   }
+
+  componentDidMount() {
+    this.fetchDSOList({
+      limit: 10000,
+      offset: 0
+    })
+  }
+
+  fetchDSOList(payload) {
+    Api.fetchDSOList(payload)
+      .then((response) => {
+        let dsoList = response.dso.map((item, i) => {
+          return { text: item.dso_name, value: i }
+        })
+        dsoList = [...dsoList, { text: "All", value: dsoList.length }]
+        this.setState({ dsoList })
+      })
+      .catch((err) => {
+        console.log("Error in fetching dso list", err)
+      })
+  }
+
 
   getData() {
     return this.state
@@ -27,7 +51,7 @@ class DeliveryOperator extends React.Component {
     this.setState({
       dso: {
         filterby: e.target.name,
-        value: this.props.dsoList.find(item => item.value === parseInt(value)).text,
+        value: this.state.dsoList.find(item => item.value === parseInt(value)).text,
         idx: e.target.value
       }
     })
@@ -35,15 +59,15 @@ class DeliveryOperator extends React.Component {
 
   render() {
     console.log("selected dso index", this.props.selectedDsoIdx)
-    return(
+    return (
       <div className="delivery-operator input-field">
         <Label>
           Delivery Operator
         </Label>
-        <Select 
-          options={this.props.dsoList}
-          name="Delivery Operator" 
-          onChange={e => this.handleChange(e)} 
+        <Select
+          options={this.state.dsoList}
+          name="Delivery Operator"
+          onChange={e => this.handleChange(e)}
           value={this.props.selectedDsoIdx}
         />
       </div>

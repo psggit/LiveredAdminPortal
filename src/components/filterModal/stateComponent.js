@@ -12,12 +12,42 @@ class State extends React.Component {
         value: "",
         idx: "",
         stateName: ""
-      }
+      },
+      stateList: []
     }
 
     this.handleChange = this.handleChange.bind(this)
     this.getData = this.getData.bind(this)
+    this.fetchStateAndCitiesList = this.fetchStateAndCitiesList.bind(this)
+    this.formatResponse = this.formatResponse.bind(this)
   }
+
+  componentDidMount() {
+    this.fetchStateAndCitiesList()
+  }
+
+  fetchStateAndCitiesList() {
+    Api.fetchStateAndCitiesList({})
+      .then((response) => {
+        this.formatResponse(response)
+      })
+      .catch((err) => {
+        console.log("Error in fetching state and city list", err)
+      })
+  }
+
+  formatResponse(response) {
+    let stateList = response.states.map((item) => {
+      return {
+        text: item.state_name,
+        value: item.id
+      }
+    })
+    stateList = [...stateList, { text: "All", value: stateList.length + 1 }]
+
+    this.setState({ stateList })
+  }
+
 
   getData() {
     return this.state
@@ -30,7 +60,7 @@ class State extends React.Component {
         filterby: e.target.name,
         value: e.target.value,
         idx: e.target.value,
-        stateName: this.props.stateList.find(item => item.value === parseInt(value)).text
+        stateName: this.state.stateList.find(item => item.value === parseInt(value)).text
       }
     })
   }
@@ -42,7 +72,7 @@ class State extends React.Component {
           State
         </Label>
         <Select
-          options={this.props.stateList}
+          options={this.state.stateList}
           name="State"
           onChange={e => this.handleChange(e)}
           value={this.props.selectedStateIdx}

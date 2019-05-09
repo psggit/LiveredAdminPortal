@@ -2,6 +2,11 @@ import React from "react"
 import Label from "../label"
 import Select from "../select"
 
+const permitStatus = [
+  { text: 'ONGOING', value: 1 },
+  { text: 'CLOSED', value: 2 },
+]
+
 class PermitStatus extends React.Component {
   constructor() {
     super()
@@ -23,11 +28,12 @@ class PermitStatus extends React.Component {
 
   handleChange(e) {
     const value = e.target.value
-    console.log("target", e.target.value, "permitStatus", this.props.permitStatus)
+    console.log("target", e.target.value, "permitStatus", permitStatus)
     this.setState({
       permitStatus: {
         filterby: e.target.name,
-        value: this.props.permitStatus.find(item => item.value === parseInt(value)).text
+        idx: e.target.value,
+        value: permitStatus.find(item => item.value === parseInt(value)).text
       }
     })
   }
@@ -39,7 +45,7 @@ class PermitStatus extends React.Component {
           Permit Status
         </Label>
         <Select
-          options={this.props.permitStatus}
+          options={permitStatus}
           name="Permit Status"
           onChange={e => this.handleChange(e)}
         />

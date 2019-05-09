@@ -24,19 +24,14 @@ const ottpTableHeaders = [
   { title: "", icon: "", tooltipText: "" },
 ]
 
-const permitStatus = [
-  { text: 'ONGOING', value: 1 },
-  { text: 'CLOSED', value: 2 },
-]
-
 const ManageOTTP = (props) => {
   const pageLimit = parseInt(getQueryObjByName("limit")) || 10
   const pageNo = parseInt(getQueryObjByName("activePage")) || 1
   const filterParams = Object.keys(getQueryObjByName("filter")).length > 0 ? JSON.parse(decodeURI(getQueryObjByName("filter"))) : []
   const [activePage, setActivePage] = useState(pageNo)
-  const [dsoList, setDsoList] = useState([])
-  const [cityList, setCityList] = useState([])
-  const [stateList, setStateList] = useState([])
+  // const [dsoList, setDsoList] = useState([])
+  // const [cityList, setCityList] = useState([])
+  // const [stateList, setStateList] = useState([])
   const [mountFilter, setMountFilter] = useState(false)
   const [loadingOttp, setLoadingOttp] = useState(true)
   const [ottpData, setOttpData] = useState([])
@@ -51,7 +46,7 @@ const ManageOTTP = (props) => {
   const [selectedPermitIdx, setPermitIdx] = useState("")
   const [fromDate, setFromDate] = useState("")
   const [toDate, setToDate] = useState("")
-  console.log("json", Object.keys(getQueryObjByName("filter")).length > 0)
+
   const ottpReqParams = {
     limit,
     offset: limit * parseInt(activePage - 1)
@@ -101,85 +96,88 @@ const ManageOTTP = (props) => {
     }
   }
 
-  useEffect(() => {
-    if (filter.length > 0) {
-      ottpReqParams.filter = filter
+  if (filter.length > 0 && isFilterApplied === false) {
+    ottpReqParams.filter = filter
+    //sets the filtered fields as default value to filter fields
+    filter.map((item) => {
+      setSelectedDropDownValue(item)
+    })
+    setIsFilterApplied(true)
+  }
 
-      //sets the filtered fields as default value to filter fields
-      filter.map((item) => {
-        setSelectedDropDownValue(item)
-      })
-    }
+  useEffect(() => {
     fetchAllOttps(ottpReqParams)
     fetchFilterDropDownData()
   }, [activePage])
 
   const fetchAllOttps = (payload) => {
+    setLoadingOttp(true)
+    setOttpData([])
     Api.fetchAllOttps(payload)
       .then((response) => {
         console.log("response", response)
+        setLoadingOttp(false)
         setOttpData(response.ottp)
         setOttpDataCount(response.count)
-        setLoadingOttp(false)
       })
       .catch((err) => {
         console.log("Error in fetching all ottp's")
       })
   }
 
-  const fetchFilterDropDownData = () => {
-    fetchDSOList({
-      limit: 10000,
-      offset: 0
-    })
-    fetchStateAndCitiesList()
-  }
+  // const fetchFilterDropDownData = () => {
+  //   fetchDSOList({
+  //     limit: 10000,
+  //     offset: 0
+  //   })
+  //   fetchStateAndCitiesList()
+  // }
 
-  const fetchDSOList = (payload) => {
-    Api.fetchDSOList(payload)
-      .then((response) => {
-        let dsoList = response.dso.map((item, i) => {
-          return { text: item.dso_name, value: i }
-        })
-        dsoList = [...dsoList, { text: "All", value: dsoList.length }]
-        setDsoList(dsoList)
-      })
-      .catch((err) => {
-        console.log("Error in fetching dso list", err)
-      })
-  }
+  // const fetchDSOList = (payload) => {
+  //   Api.fetchDSOList(payload)
+  //     .then((response) => {
+  //       let dsoList = response.dso.map((item, i) => {
+  //         return { text: item.dso_name, value: i }
+  //       })
+  //       dsoList = [...dsoList, { text: "All", value: dsoList.length }]
+  //       setDsoList(dsoList)
+  //     })
+  //     .catch((err) => {
+  //       console.log("Error in fetching dso list", err)
+  //     })
+  // }
 
-  const fetchStateAndCitiesList = () => {
-    Api.fetchStateAndCitiesList({})
-      .then((response) => {
-        formatResponse(response)
-      })
-      .catch((err) => {
-        console.log("Error in fetching state and city list", err)
-      })
-  }
+  // const fetchStateAndCitiesList = () => {
+  //   Api.fetchStateAndCitiesList({})
+  //     .then((response) => {
+  //       formatResponse(response)
+  //     })
+  //     .catch((err) => {
+  //       console.log("Error in fetching state and city list", err)
+  //     })
+  // }
 
-  const formatResponse = (response) => {
-    let cityList = response.cities.map((item) => {
-      return {
-        text: item.city_name,
-        value: item.id,
-        stateId: item.StateId
-      }
-    })
-    cityList = [...cityList, { text: "All", value: cityList.length + 1 }]
+  // const formatResponse = (response) => {
+  //   let cityList = response.cities.map((item) => {
+  //     return {
+  //       text: item.city_name,
+  //       value: item.id,
+  //       stateId: item.StateId
+  //     }
+  //   })
+  //   cityList = [...cityList, { text: "All", value: cityList.length + 1 }]
 
-    let stateList = response.states.map((item) => {
-      return {
-        text: item.state_name,
-        value: item.id
-      }
-    })
-    stateList = [...stateList, { text: "All", value: stateList.length + 1 }]
+  //   let stateList = response.states.map((item) => {
+  //     return {
+  //       text: item.state_name,
+  //       value: item.id
+  //     }
+  //   })
+  //   stateList = [...stateList, { text: "All", value: stateList.length + 1 }]
 
-    setStateList(stateList)
-    setCityList(cityList)
-  }
+  //   setStateList(stateList)
+  //   setCityList(cityList)
+  // }
 
   /**
    * Navigates to next page
@@ -225,11 +223,7 @@ const ManageOTTP = (props) => {
     // })
     //}
 
-    history.pushState(
-      queryParamsObj,
-      "ottp listing",
-      `/home/ottp-management?${getQueryUri(queryParamsObj)}`
-    )
+    props.history.push(`/home/ottp-management?${getQueryUri(queryParamsObj)}`)
   }
 
   /**
@@ -312,7 +306,7 @@ const ManageOTTP = (props) => {
       filter: appliedFilter
     })
     console.log("applied filter", appliedFilter, queryObj)
-    history.pushState(queryObj, "ottp listing", `/home/ottp-management?${getQueryUri(queryObj)}`)
+    props.history.push(`/home/ottp-management?${getQueryUri(queryObj)}`)
     mountFilterModal()
   }
 
