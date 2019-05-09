@@ -4,7 +4,7 @@ import Pagination from "Components/pagination"
 import PageHeader from "Components/pageheader"
 import Icon from "Components/icon"
 import Loader from "Components/loader"
-import { getQueryObj, getQueryUri } from "Utils/url-utils"
+import { getQueryObjByName, getQueryUri } from "Utils/url-utils"
 import DataTable from "Components/table/custom-table"
 import Moment from "moment"
 import Search from "Components/search"
@@ -29,9 +29,11 @@ const permitStatus = [
   { text: 'CLOSED', value: 2 },
 ]
 
-const ManageOTTP = ({ history }) => {
-
-  const [activePage, setActivePage] = useState(1)
+const ManageOTTP = (props) => {
+  const pageLimit = parseInt(getQueryObjByName("limit")) || 10
+  const pageNo = parseInt(getQueryObjByName("activePage")) || 1
+  const filterParams = Object.keys(getQueryObjByName("filter")).length > 0 ? JSON.parse(decodeURI(getQueryObjByName("filter"))) : []
+  const [activePage, setActivePage] = useState(pageNo)
   const [dsoList, setDsoList] = useState([])
   const [cityList, setCityList] = useState([])
   const [stateList, setStateList] = useState([])
@@ -40,8 +42,8 @@ const ManageOTTP = ({ history }) => {
   const [ottpData, setOttpData] = useState([])
   const [ottpDataCount, setOttpDataCount] = useState(0)
   const [isFilterApplied, setIsFilterApplied] = useState(false)
-  const [limit, setLimit] = useState(10)
-  const [filter, setFilter] = useState([])
+  const [limit, setLimit] = useState(pageLimit)
+  const [filter, setFilter] = useState(filterParams)
   const [OttpId, setOttpId] = useState("")
   const [selectedCityIdx, setCityIdx] = useState("")
   const [selectedStateIdx, setStateIdx] = useState("")
@@ -49,15 +51,68 @@ const ManageOTTP = ({ history }) => {
   const [selectedPermitIdx, setPermitIdx] = useState("")
   const [fromDate, setFromDate] = useState("")
   const [toDate, setToDate] = useState("")
+  console.log("json", Object.keys(getQueryObjByName("filter")).length > 0)
+  const ottpReqParams = {
+    limit,
+    offset: limit * parseInt(activePage - 1)
+  }
 
+
+  /**
+   * Sets the dropdown field with selected value
+   * @param {String} name - selected dropdown field name
+   * @param {String} value - selected dropdown field index
+   */
+  const setFilteredFieldState = (fieldName, value) => {
+    if (fieldName !== "FromDate" && fieldName !== "ToDate") {
+      const selectedFieldIdxFn = eval(`selected${fieldName}Idx`)
+      selectedFieldIdxFn(value)
+    } else if (fieldName === "FromDate") {
+      setFromDate(value)
+    } else if (fieldName === "ToDate") {
+      setToDate(value)
+    }
+  }
+
+  /**
+   * Sets the filtered dropdown value on page reload
+   */
+  const setSelectedDropDownValue = (item) => {
+    console.log("item", item)
+    switch (item.filterby) {
+      case 'City':
+        setFilteredFieldState('City', item.idx)
+        break;
+      case 'Delivery Operator':
+        setFilteredFieldState('Dso', item.idx)
+        break;
+      case 'State':
+        setFilteredFieldState('State', item.idx)
+        break;
+      case 'Permit Status':
+        setFilteredFieldState('Permit', item.idx)
+        break;
+      case 'From':
+        setFilteredFieldState('FromDate', item.value)
+        break;
+      case 'To':
+        setFilteredFieldState('ToDate', item.value)
+        break;
+    }
+  }
 
   useEffect(() => {
-    fetchAllOttps({
-      limit,
-      offset: 0
-    })
+    if (filter.length > 0) {
+      ottpReqParams.filter = filter
+
+      //sets the filtered fields as default value to filter fields
+      filter.map((item) => {
+        setSelectedDropDownValue(item)
+      })
+    }
+    fetchAllOttps(ottpReqParams)
     fetchFilterDropDownData()
-  }, [])
+  }, [activePage])
 
   const fetchAllOttps = (payload) => {
     Api.fetchAllOttps(payload)
@@ -87,11 +142,20 @@ const ManageOTTP = ({ history }) => {
           return { text: item.dso_name, value: i }
         })
         dsoList = [...dsoList, { text: "All", value: dsoList.length }]
-        //this.setState({dsoList})
         setDsoList(dsoList)
       })
       .catch((err) => {
         console.log("Error in fetching dso list", err)
+      })
+  }
+
+  const fetchStateAndCitiesList = () => {
+    Api.fetchStateAndCitiesList({})
+      .then((response) => {
+        formatResponse(response)
+      })
+      .catch((err) => {
+        console.log("Error in fetching state and city list", err)
       })
   }
 
@@ -115,29 +179,6 @@ const ManageOTTP = ({ history }) => {
 
     setStateList(stateList)
     setCityList(cityList)
-    // this.setState({stateList, cityList})
-  }
-
-  const fetchStateAndCitiesList = () => {
-    Api.fetchStateAndCitiesList({})
-      .then((response) => {
-        formatResponse(response)
-      })
-      .catch((err) => {
-        console.log("Error in fetching state and city list", err)
-      })
-  }
-
-  /**
- * On clicking each liveOrder it takes to detailed view page of that particular order 
- * @param {object} dataObj - Passed from liveOttpListItem 
- * @param {string} dataObj.ottp_id - Used to get the details of clicked live order
- **/
-  const handleRowClick = (dataObj) => {
-    history.push(
-      `/home/live-orders/${dataObj.ottp_info.ottp_id}`,
-      dataObj
-    )
   }
 
   /**
@@ -147,15 +188,22 @@ const ManageOTTP = ({ history }) => {
    * @param {Integer} pagerObj.pageSize - Used as limit to fetch next set of ottp
    */
   const handlePageChange = (pagerObj) => {
-    const queryUri = location.search.slice(1)
-    const queryObj = getQueryObj(queryUri)
+    //const queryObj = getQueryObj()
     let queryParamsObj = {}
-
-    const offset = pagerObj.pageSize * (pagerObj.activePage - 1)
-    console.log("pager", pagerObj.activePage)
     setActivePage(pagerObj.activePage)
     setLimit(pagerObj.pageSize)
-
+    if (filter.length > 0) {
+      queryParamsObj = {
+        activePage: pagerObj.activePage,
+        limit: pagerObj.pageSize,
+        filter: queryObj.filter
+      }
+    } else {
+      queryParamsObj = {
+        activePage: pagerObj.activePage,
+        limit: pagerObj.pageSize
+      }
+    }
     // if(queryObj.filter && queryObj.filter.length) {
     //   queryParamsObj = {
     //     activePage: pagerObj.activePage,
@@ -169,18 +217,15 @@ const ManageOTTP = ({ history }) => {
     //     filter: JSON.parse(decodeURIComponent(queryObj.filter))
     //   })
     // } else {
-    queryParamsObj = {
-      activePage: pagerObj.activePage,
-      limit: pagerObj.pageSize
-    }
 
-    fetchAllOttps({
-      limit: pagerObj.pageSize,
-      offset
-    })
+
+    // fetchAllOttps({
+    //   limit,
+    //   offset: limit * parseInt(activePage - 1)
+    // })
     //}
 
-    history.push(
+    history.pushState(
       queryParamsObj,
       "ottp listing",
       `/home/ottp-management?${getQueryUri(queryParamsObj)}`
@@ -191,10 +236,10 @@ const ManageOTTP = ({ history }) => {
    * Fetches the ottp(order) of given OttpId
    * @param {string} searchQuery - OttpId passed from searchComponent, used for filtering the ottp's
    */
-  const handleSearch = (searchQuery) => {
+  const handleSearch = () => {
     const filterObj = {
       filterby: "OttpId",
-      value: searchQuery
+      value: OttpId
     }
     const urlParams = {
       limit: 10,
@@ -202,13 +247,15 @@ const ManageOTTP = ({ history }) => {
       filter: JSON.stringify([filterObj])
     }
 
-    fetchAllOttps({
-      limit: 10,
-      offset: 0,
-      filter: [filterObj]
-    })
+    // fetchAllOttps({
+    //   limit: 10,
+    //   offset: 0,
+    //   filter: [filterObj]
+    // })
+    //setLimit(10)
+    setActivePage(1)
     setFilter([filterObj])
-    history.push(urlParams, "ottp listing", `/home/ottp-management?${(getQueryUri(urlParams))}`)
+    props.history.push(`/home/ottp-management?${(getQueryUri(urlParams))}`)
   }
 
   /**
@@ -220,9 +267,11 @@ const ManageOTTP = ({ history }) => {
         limit,
         offset: 0
       })
-      history.push(`/home/ottp-management`)
+      props.history.push(`/home/ottp-management`)
       setIsFilterApplied(false)
+      setFilter([])
     }
+    setOttpId("")
   }
 
   /**
@@ -236,13 +285,13 @@ const ManageOTTP = ({ history }) => {
  * Fetches the filtered ottp
  * @param {array of object} filter - Passed form FilterModal component
  */
-  const applyFilter = (filterArray) => {
+  const applyFilter = (newFilter) => {
     let appliedFilter = []
 
     //If filter already applied, then adds the new filter options to it
     if (filter) {
       appliedFilter = filter
-      filterArray.map((item) => {
+      newFilter.map((item) => {
         appliedFilter.push(item)
       })
     }
@@ -262,7 +311,8 @@ const ManageOTTP = ({ history }) => {
       offset: 0,
       filter: appliedFilter
     })
-    history.push(queryObj, "ottp listing", `/home/ottp-management?${getQueryUri(queryObj)}`)
+    console.log("applied filter", appliedFilter, queryObj)
+    history.pushState(queryObj, "ottp listing", `/home/ottp-management?${getQueryUri(queryObj)}`)
     mountFilterModal()
   }
 
@@ -286,8 +336,9 @@ const ManageOTTP = ({ history }) => {
       >
         <Search
           placeholder="Search by permit Id"
+          setSearchText={setOttpId}
           searchText={OttpId}
-          search={handleSearch}
+          handleSearch={handleSearch}
           clearSearch={clearSearchResults}
         />
         {
