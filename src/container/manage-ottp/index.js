@@ -42,10 +42,10 @@ const ManageOTTP = (props) => {
   const [limit, setLimit] = useState(pageLimit)
   const [filter, setFilter] = useState(filterParams)
   const [OttpId, setOttpId] = useState(searchedOttpId)
-  const [selectedCityIdx, setCityIdx] = useState(-1)
-  const [selectedStateIdx, setStateIdx] = useState(-1)
-  const [selectedDsoIdx, setdsoIdx] = useState(-1)
-  const [selectedPermitIdx, setPermitIdx] = useState(-1)
+  const [selectedCityIdx, setCityIdx] = useState("")
+  const [selectedStateIdx, setStateIdx] = useState("")
+  const [selectedDsoIdx, setDsoIdx] = useState("")
+  const [selectedPermitIdx, setPermitIdx] = useState("")
   const [fromDate, setFromDate] = useState("")
   const [toDate, setToDate] = useState("")
 
@@ -64,7 +64,8 @@ const ManageOTTP = (props) => {
    */
   const setFilteredFieldState = (fieldName, value) => {
     if (fieldName !== "FromDate" && fieldName !== "ToDate") {
-      const selectedFieldIdxFn = eval(`selected${fieldName}Idx`)
+      const selectedFieldIdxFn = eval(`set${fieldName}Idx`)
+      console.log("selectedFieldFn", selectedFieldIdxFn)
       selectedFieldIdxFn(value)
     } else if (fieldName === "FromDate") {
       setFromDate(value)
@@ -192,6 +193,10 @@ const ManageOTTP = (props) => {
       setIsFilterApplied(false)
       setFilter([])
     }
+    setDsoIdx("")
+    setCityIdx("")
+    setStateIdx("")
+    setPermitIdx("")
     setOttpId("")
   }
 
@@ -216,16 +221,26 @@ const ManageOTTP = (props) => {
         appliedFilter.push(item)
       })
     }
+    const uniqueFilter = appliedFilter.reduce((acc, current) => {
+      const isFoundFilter = acc.find(item => item.filterby === current.filterby);
+      if (!isFoundFilter) {
+        return acc.concat([current]);
+      } else {
+        const foundFilterIdx = acc.findIndex(item => item.filterby === current.filterby)
+        acc[foundFilterIdx] = { ...acc[foundFilterIdx], ...current }
+        return acc
+      }
+    }, []);
 
     setLimit(10)
     setActivePage(1)
-    setFilter(appliedFilter)
+    setFilter(uniqueFilter)
     setIsFilterApplied(isFilterApplied)
 
     const queryObj = {
       limit: 10,
       activePage: 1,
-      filter: JSON.stringify(appliedFilter)
+      filter: JSON.stringify(uniqueFilter)
     }
 
     props.history.push(`/home/ottp-management?${getQueryUri(queryObj)}`)
@@ -276,6 +291,10 @@ const ManageOTTP = (props) => {
             applyFilter={applyFilter}
             fromDate={fromDate}
             toDate={toDate}
+            selectedCityIdx={selectedCityIdx}
+            selectedDsoIdx={selectedDsoIdx}
+            selectedPermitIdx={selectedPermitIdx}
+            selectedStateIdx={selectedStateIdx}
           >
           </Filter>
         </div>

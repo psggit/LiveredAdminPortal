@@ -17,7 +17,6 @@ class Filter extends React.Component {
 
   applyFilter() {
     let filterObj = []
-    console.log("hello")
     const dso = this.dsoListState.getData().dso
     const city = this.cityState.getData().city
     const stateComponentState = this.stateComponent.getData().stateObj
@@ -31,15 +30,13 @@ class Filter extends React.Component {
     if (toDate.filterby) {
       filterObj.push(toDate)
     }
-    //console.log("state", stateComponentState, dso, city, permitStatus)
+
     filterObj.push(stateComponentState, dso, city, permitStatus)
     filterObj = filterObj.filter((item) => item.value && item.value !== "All")
-    console.log("filter", filterObj)
     this.props.applyFilter(filterObj)
   }
 
   render() {
-    console.log("parent", this.props.selectedCityIdx)
     return (
       <div className={`filter-container ${this.props.showFilter ? 'show' : 'hide'}`} >
         <p className="title"> Filters </p>

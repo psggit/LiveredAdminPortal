@@ -4,17 +4,15 @@ import "./table.scss"
 import Icon from "./../icon"
 import PropTypes from "prop-types"
 
-const CustomTable = ({headings, rows, className, children, loadingData}) =>{
-
-
+const CustomTable = ({ headings, rows, className, children, loadingData }) => {
   const renderHeadingRow = (item, i) => {
     return (
       <th key={i}>
         {item.title}
         {
           item.icon &&
-          <span className="info"  style={{ position: "relative", marginLeft: "12px", verticalAlign: "middle"}}>
-            <Icon name={item.icon} /> 
+          <span className="info" style={{ position: "relative", marginLeft: "12px", verticalAlign: "middle" }}>
+            <Icon name={item.icon} />
             <span className="tooltip-text">
               {item.tooltipText}
             </span>
@@ -30,7 +28,7 @@ const CustomTable = ({headings, rows, className, children, loadingData}) =>{
         <thead>
           <tr>
             {
-              headings.map((item,i) => {
+              headings.map((item, i) => {
                 return renderHeadingRow(item, i)
               })
             }
@@ -48,10 +46,10 @@ const CustomTable = ({headings, rows, className, children, loadingData}) =>{
           }
           {
             !loadingData &&
-            children.length === 0 && (
+            children.length === undefined && (
               <tr>
                 <td style={{ textAlign: "center" }} colSpan={headings.length}>
-                  No records found
+                  No orders found
                 </td>
               </tr>
             )

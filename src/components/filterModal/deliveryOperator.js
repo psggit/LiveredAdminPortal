@@ -4,14 +4,14 @@ import Select from "../select"
 import * as Api from "./../../api"
 
 class DeliveryOperator extends React.Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
 
     this.state = {
       dso: {
         filterby: "",
         value: "",
-        idx: ""
+        idx: props && props.selectedDsoIdx ? props.selectedDsoIdx : ""
       }
     }
 
@@ -58,7 +58,6 @@ class DeliveryOperator extends React.Component {
   }
 
   render() {
-    console.log("selected dso index", this.props.selectedDsoIdx)
     return (
       <div className="delivery-operator input-field">
         <Label>
@@ -69,7 +68,7 @@ class DeliveryOperator extends React.Component {
             options={this.state.dsoList ? this.state.dsoList : []}
             name="Delivery Operator"
             onChange={e => this.handleChange(e)}
-            value={this.props.selectedDsoIdx}
+            value={this.state.dso.idx}
           />
         }
       </div>

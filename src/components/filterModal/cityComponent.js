@@ -4,15 +4,15 @@ import Select from "./../select"
 import * as Api from "./../../api"
 
 class City extends React.Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
 
     this.state = {
       city: {
         filterby: "",
         value: "",
         cityName: "",
-        idx: ""
+        idx: props && props.selectedCityIdx ? props.selectedCityIdx : ""
       },
       cityList: []
     }
@@ -61,13 +61,12 @@ class City extends React.Component {
         filterby: e.target.name,
         value: value.toString(),
         idx: e.target.value,
-        cityName: this.props.cityList.find(item => item.value === parseInt(value)).text
+        cityName: this.state.cityList.find(item => item.value === parseInt(value)).text
       }
     })
   }
 
   render() {
-    console.log("value", this.props.selectedCityIdx)
     return (
       <div className="city input-field">
         <Label>
@@ -77,7 +76,7 @@ class City extends React.Component {
           options={this.state.cityList ? this.state.cityList : []}
           name="City"
           onChange={e => this.handleChange(e)}
-          value={parseInt(this.props.selectedCityIdx)}
+          value={parseInt(this.state.city.idx)}
         />
       </div>
     )

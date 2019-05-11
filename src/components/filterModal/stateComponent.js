@@ -4,14 +4,14 @@ import Select from "../select"
 import * as Api from "./../../api"
 
 class State extends React.Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
 
     this.state = {
       stateObj: {
         filterby: "",
         value: "",
-        idx: "",
+        idx: props && props.selectedStateIdx ? props.selectedStateIdx : "",
         stateName: ""
       },
       stateList: []
@@ -76,7 +76,7 @@ class State extends React.Component {
           options={this.state.stateList ? this.state.stateList : []}
           name="State"
           onChange={e => this.handleChange(e)}
-          value={this.props.selectedStateIdx}
+          value={this.state.stateObj.idx}
         />
       </div>
     )

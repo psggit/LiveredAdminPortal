@@ -8,13 +8,14 @@ const permitStatus = [
 ]
 
 class PermitStatus extends React.Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
 
     this.state = {
       permitStatus: {
         filterby: "",
-        value: ""
+        value: "",
+        idx: props && props.selectedPermitIdx ? props.selectedPermitIdx : ""
       }
     }
 
@@ -28,7 +29,6 @@ class PermitStatus extends React.Component {
 
   handleChange(e) {
     const value = e.target.value
-    console.log("target", e.target.value, "permitStatus", permitStatus)
     this.setState({
       permitStatus: {
         filterby: e.target.name,
@@ -48,6 +48,7 @@ class PermitStatus extends React.Component {
           options={permitStatus}
           name="Permit Status"
           onChange={e => this.handleChange(e)}
+          value={this.state.permitStatus.idx}
         />
       </div>
     )

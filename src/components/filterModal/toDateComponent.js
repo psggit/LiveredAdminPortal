@@ -33,7 +33,6 @@ class ToDate extends React.Component {
   }
 
   render() {
-    console.log("props", this.props)
     return (
       <div style={{ position: 'relative' }} className="input-field">
         <span className="calendar-icon">
