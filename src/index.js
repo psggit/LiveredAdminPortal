@@ -13,6 +13,7 @@ import { Api } from 'Utils/config'
 import Login from './login'
 import Layout from 'Components/layout'
 import OTTPManagement from 'Container/manage-ottp'
+import OttpDetails from "Container/ottp-details"
 import { createSession } from './login/session'
 
 const history = createHistory()
@@ -57,7 +58,7 @@ class App extends React.Component {
           return
         }
         response.json().then((data) => {
-          this.setState({isLoggedIn: true})
+          this.setState({ isLoggedIn: true })
           if (!location.pathname.includes('home') && !location.pathname.includes('support')) {
             location.href = '/home/'
           }
@@ -73,51 +74,60 @@ class App extends React.Component {
 
   render() {
     console.log("location.path", location.pathname)
-    const {isLoggedIn} = this.state
-      return (
-        <Router history={history}>
-          <div>
-            <Route  path="/login" component={Login} />
-            {
-              location.pathname.includes("home") &&
-              <div
-                style={{
-                  backgroundColor: '#fbfbfb',
-                  width: '100%',
-                  //maxWidth: '1980px',
-                  margin: '0 auto',
-                  height: '100vh',
-                  overflow: 'auto'
-                }}
-              >
-                <Header isLoggedIn={isLoggedIn} />
-                <div>
-                  {
-                    this.state.isLoggedIn &&
-                    <SideMenu
-                      history={history}
-                      menuItems={menuItems}
-                      currentRoute={this.state.currentRoute}
+    const { isLoggedIn } = this.state
+    return (
+      <Router history={history}>
+        <div>
+          <Route path="/login" component={Login} />
+          {
+            location.pathname.includes("home") &&
+            <div
+              style={{
+                backgroundColor: '#fbfbfb',
+                width: '100%',
+                //maxWidth: '1980px',
+                margin: '0 auto',
+                height: '100vh',
+                overflow: 'auto'
+              }}
+            >
+              <Header isLoggedIn={isLoggedIn} />
+              <div>
+                {
+                  this.state.isLoggedIn &&
+                  <SideMenu
+                    history={history}
+                    menuItems={menuItems}
+                    currentRoute={this.state.currentRoute}
+                  />
+                }
+                <Layout isLoggedIn={isLoggedIn}>
+                  <Switch>
+                    <Route
+                      exact
+                      path="/home/ottp-management"
+                      render={
+                        props => (
+                          <OTTPManagement {...props} />
+                        )
+                      }
                     />
-                  }
-                  <Layout isLoggedIn={isLoggedIn}>
-                    <Switch>
-                      <Route
-                        exact
-                        path="/home/ottp-management"
-                        render={
-                          props => (
-                            <OTTPManagement {...props} />
-                          )
-                        }
-                      />
-                    </Switch>
-                  </Layout>
-                </div>
+                    <Route
+                      exact
+                      path="/home/ottp-details/:OttpId"
+                      render={
+                        props => (
+                          <OttpDetails {...props} />
+                        )
+                      }
+                    />
+                  </Switch>
+                </Layout>
               </div>
-            }
-          </div>
-        </Router>
+            </div>
+          }
+        </div>
+      </Router>
     )
   }
 }

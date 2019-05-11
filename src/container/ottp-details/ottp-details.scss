@@ -1,0 +1,30 @@
+#ottpDetails {
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+    width: 100%;
+    padding: 20px 26px;
+    border: solid 1px #dfe3e6;
+    background-color: rgba(235, 235, 235, 0.5);
+  }
+
+  span {
+    margin-right: 10px;
+  }
+
+  .card {
+    .item {
+      .label {
+        color: #00b4a0;
+        font-size: 13px;
+      }
+
+      .value {
+        color: #000;
+        font-size: 14px;
+      }
+    }
+  }
+}

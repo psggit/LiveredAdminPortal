@@ -25,6 +25,15 @@ export function fetchDSOList(payload) {
   })
 }
 
+export function fetchOttpDetails(payload) {
+  return POST({
+    api: `${ottp}/livered/ottp/ottpDetails `,
+    handleError: true,
+    prependBaseUrl: false,
+    data: payload
+  })
+}
+
 export function fetchStateAndCitiesList(payload) {
   return GET({
     api: `${ottp}/livered/ottp/getCityAndStates`,

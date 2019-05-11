@@ -254,8 +254,12 @@ const ManageOTTP = (props) => {
     setMountFilter(!mountFilter)
   }
 
+  const handleRowClick = (data) => {
+    props.history.push(`/home/ottp-details/${data.ottp_info.ottp_id}`)
+  }
+
   return (
-    < React.Fragment >
+    <React.Fragment >
       <PageHeader pageName="Ottp Management" />
       <div style={{
         display: "flex",
@@ -324,7 +328,7 @@ const ManageOTTP = (props) => {
                 ottpData.length > 0 &&
                 ottpData.map((item, i) => {
                   return (
-                    <tr key={i} onClick={() => { handleClick(data) }} className="clickable">
+                    <tr key={i} onClick={() => { handleRowClick(item) }} className="clickable">
                       <td>{item.ottp_info.ottp_id}</td>
                       <td>{Moment(item.ottp_info.issued_at).format("YYYY/MM/DD, h:mm A")}</td>
                       <td>{item.dso.name}</td>
@@ -332,7 +336,12 @@ const ManageOTTP = (props) => {
                       <td>{item.consumer.city}</td>
                       <td>₹ {item.order.total}</td>
                       <td>{item.order.total_volume}</td>
-                      <td>{item.ottp_info.status}</td>
+                      <td>
+                        <span style={{ marginRight: '5px' }}>
+                          {item.ottp_info.status === "ongoing" ? <Icon name="active" /> : <Icon name="expired" />}
+                        </span>
+                        <span>{item.ottp_info.status}</span>
+                      </td>
                       <td></td>
                     </tr>
                   )
