@@ -3,7 +3,6 @@ import * as Api from "./../../api"
 import Pagination from "Components/pagination"
 import PageHeader from "Components/pageheader"
 import Icon from "Components/icon"
-import Loader from "Components/loader"
 import { getQueryObjByName, getQueryUri } from "Utils/url-utils"
 import DataTable from "Components/table/custom-table"
 import Moment from "moment"
@@ -21,37 +20,42 @@ const ottpTableHeaders = [
   { title: "Order Amount", icon: "info", tooltipText: "Price of the chosen alcohol beverage against its quantity" },
   { title: "Volume (Litres)", icon: "info", tooltipText: "Total volume of alcoholic beverages" },
   { title: "Permit Status", icon: "info", tooltipText: "Validity status of a single Permit ID " },
-  { title: "", icon: "", tooltipText: "" },
+  { title: "Customer Age verification", icon: "info", tooltipText: "Customer Age Verification" },
 ]
 
 const ManageOTTP = (props) => {
   const pageLimit = parseInt(getQueryObjByName("limit")) || 10
   const pageNo = parseInt(getQueryObjByName("activePage")) || 1
-  const filterParams = Object.keys(getQueryObjByName("filter")).length > 0 ? JSON.parse(decodeURI(getQueryObjByName("filter"))) : []
+  const searchedOttpId = getQueryObjByName("filter") !== undefined &&
+    Object.keys(getQueryObjByName("filter")).length > 0 &&
+    (JSON.parse(decodeURI(getQueryObjByName("filter")))).find((item) => item.filterby === "OttpId") !== undefined
+    ? (JSON.parse(decodeURI(getQueryObjByName("filter")))).find((item) => item.filterby === "OttpId").value
+    : ""
+  const filterParams = getQueryObjByName("filter") !== undefined && Object.keys(getQueryObjByName("filter")).length > 0 ? JSON.parse(decodeURI(getQueryObjByName("filter"))) : []
   const [activePage, setActivePage] = useState(pageNo)
-  // const [dsoList, setDsoList] = useState([])
-  // const [cityList, setCityList] = useState([])
-  // const [stateList, setStateList] = useState([])
   const [mountFilter, setMountFilter] = useState(false)
   const [loadingOttp, setLoadingOttp] = useState(true)
   const [ottpData, setOttpData] = useState([])
   const [ottpDataCount, setOttpDataCount] = useState(0)
   const [isFilterApplied, setIsFilterApplied] = useState(false)
+  const [isSearchApplied, setIsSearchApplied] = useState(searchedOttpId ? true : false)
   const [limit, setLimit] = useState(pageLimit)
   const [filter, setFilter] = useState(filterParams)
-  const [OttpId, setOttpId] = useState("")
-  const [selectedCityIdx, setCityIdx] = useState("")
-  const [selectedStateIdx, setStateIdx] = useState("")
-  const [selectedDsoIdx, setdsoIdx] = useState("")
-  const [selectedPermitIdx, setPermitIdx] = useState("")
+  const [OttpId, setOttpId] = useState(searchedOttpId)
+  const [selectedCityIdx, setCityIdx] = useState(-1)
+  const [selectedStateIdx, setStateIdx] = useState(-1)
+  const [selectedDsoIdx, setdsoIdx] = useState(-1)
+  const [selectedPermitIdx, setPermitIdx] = useState(-1)
   const [fromDate, setFromDate] = useState("")
   const [toDate, setToDate] = useState("")
 
+  /**
+   * Payload for fetching ottp's
+   */
   const ottpReqParams = {
     limit,
     offset: limit * parseInt(activePage - 1)
   }
-
 
   /**
    * Sets the dropdown field with selected value
@@ -96,8 +100,14 @@ const ManageOTTP = (props) => {
     }
   }
 
-  if (filter.length > 0 && isFilterApplied === false) {
+  /**
+   * Updates the ottp payload with filter option
+   */
+  if (filter.length > 0 && isFilterApplied === true) {
     ottpReqParams.filter = filter
+  }
+
+  if (filter.length > 0 && isFilterApplied === false) {
     //sets the filtered fields as default value to filter fields
     filter.map((item) => {
       setSelectedDropDownValue(item)
@@ -105,10 +115,12 @@ const ManageOTTP = (props) => {
     setIsFilterApplied(true)
   }
 
+  /**
+   * OnChange in activePage/limit/filter, it fetches the ottp's
+   */
   useEffect(() => {
     fetchAllOttps(ottpReqParams)
-    fetchFilterDropDownData()
-  }, [activePage])
+  }, [activePage, limit, filter])
 
   const fetchAllOttps = (payload) => {
     setLoadingOttp(true)
@@ -125,60 +137,6 @@ const ManageOTTP = (props) => {
       })
   }
 
-  // const fetchFilterDropDownData = () => {
-  //   fetchDSOList({
-  //     limit: 10000,
-  //     offset: 0
-  //   })
-  //   fetchStateAndCitiesList()
-  // }
-
-  // const fetchDSOList = (payload) => {
-  //   Api.fetchDSOList(payload)
-  //     .then((response) => {
-  //       let dsoList = response.dso.map((item, i) => {
-  //         return { text: item.dso_name, value: i }
-  //       })
-  //       dsoList = [...dsoList, { text: "All", value: dsoList.length }]
-  //       setDsoList(dsoList)
-  //     })
-  //     .catch((err) => {
-  //       console.log("Error in fetching dso list", err)
-  //     })
-  // }
-
-  // const fetchStateAndCitiesList = () => {
-  //   Api.fetchStateAndCitiesList({})
-  //     .then((response) => {
-  //       formatResponse(response)
-  //     })
-  //     .catch((err) => {
-  //       console.log("Error in fetching state and city list", err)
-  //     })
-  // }
-
-  // const formatResponse = (response) => {
-  //   let cityList = response.cities.map((item) => {
-  //     return {
-  //       text: item.city_name,
-  //       value: item.id,
-  //       stateId: item.StateId
-  //     }
-  //   })
-  //   cityList = [...cityList, { text: "All", value: cityList.length + 1 }]
-
-  //   let stateList = response.states.map((item) => {
-  //     return {
-  //       text: item.state_name,
-  //       value: item.id
-  //     }
-  //   })
-  //   stateList = [...stateList, { text: "All", value: stateList.length + 1 }]
-
-  //   setStateList(stateList)
-  //   setCityList(cityList)
-  // }
-
   /**
    * Navigates to next page
    * @param {object} pagerObj - Passed from pagination component
@@ -186,7 +144,6 @@ const ManageOTTP = (props) => {
    * @param {Integer} pagerObj.pageSize - Used as limit to fetch next set of ottp
    */
   const handlePageChange = (pagerObj) => {
-    //const queryObj = getQueryObj()
     let queryParamsObj = {}
     setActivePage(pagerObj.activePage)
     setLimit(pagerObj.pageSize)
@@ -202,26 +159,6 @@ const ManageOTTP = (props) => {
         limit: pagerObj.pageSize
       }
     }
-    // if(queryObj.filter && queryObj.filter.length) {
-    //   queryParamsObj = {
-    //     activePage: pagerObj.activePage,
-    //     limit: pagerObj.pageSize,
-    //     filter: queryObj.filter
-    //   }
-    //   this.props.actions.fetchInProgressOTTP({
-    //     limit: pagerObj.pageSize,
-    //     activePage: pagerObj.activePage,
-    //     offset,
-    //     filter: JSON.parse(decodeURIComponent(queryObj.filter))
-    //   })
-    // } else {
-
-
-    // fetchAllOttps({
-    //   limit,
-    //   offset: limit * parseInt(activePage - 1)
-    // })
-    //}
 
     props.history.push(`/home/ottp-management?${getQueryUri(queryParamsObj)}`)
   }
@@ -240,15 +177,9 @@ const ManageOTTP = (props) => {
       activePage: 1,
       filter: JSON.stringify([filterObj])
     }
-
-    // fetchAllOttps({
-    //   limit: 10,
-    //   offset: 0,
-    //   filter: [filterObj]
-    // })
-    //setLimit(10)
     setActivePage(1)
     setFilter([filterObj])
+    setIsSearchApplied(true)
     props.history.push(`/home/ottp-management?${(getQueryUri(urlParams))}`)
   }
 
@@ -257,10 +188,6 @@ const ManageOTTP = (props) => {
   */
   const clearSearchResults = () => {
     if (filter.length > 0) {
-      fetchAllOttps({
-        limit,
-        offset: 0
-      })
       props.history.push(`/home/ottp-management`)
       setIsFilterApplied(false)
       setFilter([])
@@ -291,21 +218,16 @@ const ManageOTTP = (props) => {
     }
 
     setLimit(10)
+    setActivePage(1)
     setFilter(appliedFilter)
     setIsFilterApplied(isFilterApplied)
 
     const queryObj = {
       limit: 10,
-      offset: 0,
       activePage: 1,
       filter: JSON.stringify(appliedFilter)
     }
-    fetchAllOttps({
-      limit: 10,
-      offset: 0,
-      filter: appliedFilter
-    })
-    console.log("applied filter", appliedFilter, queryObj)
+
     props.history.push(`/home/ottp-management?${getQueryUri(queryObj)}`)
     mountFilterModal()
   }
@@ -318,7 +240,7 @@ const ManageOTTP = (props) => {
   }
 
   return (
-    <React.Fragment>
+    < React.Fragment >
       <PageHeader pageName="Ottp Management" />
       <div style={{
         display: "flex",
@@ -336,7 +258,7 @@ const ManageOTTP = (props) => {
           clearSearch={clearSearchResults}
         />
         {
-          isFilterApplied &&
+          isFilterApplied && !isSearchApplied &&
           <FilteredParams data={filter} />
         }
         <div style={{ marginLeft: '46px', position: 'relative' }}>
@@ -351,12 +273,7 @@ const ManageOTTP = (props) => {
           </Button>
           <Filter
             showFilter={mountFilter}
-            // filterName="liveOrders"
             applyFilter={applyFilter}
-            cityList={cityList}
-            stateList={stateList}
-            permitStatus={permitStatus}
-            dsoList={dsoList}
             fromDate={fromDate}
             toDate={toDate}
           >
@@ -368,7 +285,7 @@ const ManageOTTP = (props) => {
         margin: '60px',
         padding: '60px'
       }}>
-        {!loadingOttp && ottpData.length > 1 && (
+        {(
           <div>
             <Pagination
               activePage={activePage}
@@ -383,7 +300,6 @@ const ManageOTTP = (props) => {
             <DataTable
               headings={ottpTableHeaders}
               loadingData={loadingOttp}
-            //className="logs"
             >
               {
                 ottpData.length > 0 &&
@@ -398,7 +314,7 @@ const ManageOTTP = (props) => {
                       <td>₹ {item.order.total}</td>
                       <td>{item.order.total_volume}</td>
                       <td>{item.ottp_info.status}</td>
-                      <td>{`valid till ${Moment(item.ottp_info.expiry_at).format("h:mm A")}`}</td>
+                      <td></td>
                     </tr>
                   )
                 })
@@ -407,7 +323,7 @@ const ManageOTTP = (props) => {
           </div>
         }
       </div>
-    </React.Fragment>
+    </React.Fragment >
   )
 }
 

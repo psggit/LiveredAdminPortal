@@ -74,7 +74,7 @@ class City extends React.Component {
           City/Town
         </Label>
         <Select
-          options={this.props.cityList}
+          options={this.state.cityList ? this.state.cityList : []}
           name="City"
           onChange={e => this.handleChange(e)}
           value={parseInt(this.props.selectedCityIdx)}

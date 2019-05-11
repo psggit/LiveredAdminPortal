@@ -1,6 +1,7 @@
 import React from "react"
 import Label from "../label"
 import Select from "../select"
+import * as Api from "./../../api"
 
 class State extends React.Component {
   constructor() {
@@ -72,7 +73,7 @@ class State extends React.Component {
           State
         </Label>
         <Select
-          options={this.state.stateList}
+          options={this.state.stateList ? this.state.stateList : []}
           name="State"
           onChange={e => this.handleChange(e)}
           value={this.props.selectedStateIdx}

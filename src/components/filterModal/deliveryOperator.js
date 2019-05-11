@@ -64,12 +64,14 @@ class DeliveryOperator extends React.Component {
         <Label>
           Delivery Operator
         </Label>
-        <Select
-          options={this.state.dsoList}
-          name="Delivery Operator"
-          onChange={e => this.handleChange(e)}
-          value={this.props.selectedDsoIdx}
-        />
+        {
+          <Select
+            options={this.state.dsoList ? this.state.dsoList : []}
+            name="Delivery Operator"
+            onChange={e => this.handleChange(e)}
+            value={this.props.selectedDsoIdx}
+          />
+        }
       </div>
     )
   }
