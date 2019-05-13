@@ -337,12 +337,21 @@ const ManageOTTP = (props) => {
                       <td>₹ {item.order.total}</td>
                       <td>{item.order.total_volume}</td>
                       <td>
-                        <span style={{ marginRight: '5px' }}>
-                          {item.ottp_info.status === "ongoing" ? <Icon name="active" /> : <Icon name="expired" />}
-                        </span>
-                        <span>{item.ottp_info.status}</span>
+                        <div style={{ display: 'flex', alignItems: 'center', color: "#000" }}>
+                          <span style={{ marginRight: '5px' }}>
+                            {item.ottp_info.status === "ongoing" ? <Icon name="active" /> : <Icon name="expired" />}
+                          </span>
+                          <span>{item.ottp_info.status}</span>
+                        </div>
                       </td>
-                      <td></td>
+                      <td>
+                        <div style={{ display: 'flex', alignItems: 'center', color: "#000" }}>
+                          <span style={{ marginRight: '5px' }}>
+                            {item.consumer.is_verified ? <Icon name="greenFlag" /> : <Icon name="yellowFlag" />}
+                          </span>
+                          <span>{item.consumer.is_verified ? "Verified" : "Pending"}</span>
+                        </div>
+                      </td>
                     </tr>
                   )
                 })

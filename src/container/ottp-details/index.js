@@ -7,6 +7,9 @@ import Moment from "moment"
 import Button from "Components/button"
 import "./ottp-details.scss"
 import DsoDetails from "./dso-details"
+import DeliveryAgentDetails from "./delivery-agent-details"
+import OrderDetails from "./order-details"
+import ConsumerDetails from "./customer-details"
 
 const OttpDetails = (props) => {
   const OttpId = props.match.params.OttpId
@@ -35,7 +38,7 @@ const OttpDetails = (props) => {
         console.log("Error in fetching ottp details", err)
       })
   }
-  console.log("ottp", ottpDetailsData)
+  console.log("ottp", ottpDetailsData, loadingOttpDetails)
   return (
     <React.Fragment>
       <PageHeader pageName="Ottp Management" text={OttpId} />
@@ -66,14 +69,33 @@ const OttpDetails = (props) => {
                   <Button danger>Cancel OTTP</Button>
                 </div>
               </div>
-              <div>
-                <DsoDetails data={ottpDetailsData.ottp_info.dso} />
-                {/* <DsoDetails data={ottpDetailsData.ottp_info.dso} /> */}
+              <div className="card-container">
+                <DsoDetails
+                  dsoName={ottpDetailsData.dso.name}
+                  retailerName={ottpDetailsData.retailer.name}
+                  retailerAddress={ottpDetailsData.retailer.address}
+                />
+                <DeliveryAgentDetails
+                  name={ottpDetailsData.delivery_agent.name}
+                  phoneNumber={ottpDetailsData.delivery_agent.phone_number}
+                  verificationDoc={ottpDetailsData.delivery_agent.verification_doc}
+                  vehicleNumber={ottpDetailsData.delivery_agent.vehicle_number}
+                  licenseNumber={ottpDetailsData.delivery_agent.license_number}
+                />
+                <OrderDetails
+                  orderStatus={ottpDetailsData.ottp_info.status}
+                  orders={ottpDetailsData.order}
+                />
+                <ConsumerDetails
+                  name={ottpDetailsData.consumer.name}
+                  dob={ottpDetailsData.consumer.dob}
+                  address={ottpDetailsData.consumer.address}
+                  otpStatus={ottpDetailsData.consumer.is_verified}
+                />
               </div>
             </div>
           </React.Fragment>
         }
-
       </div>
     </React.Fragment>
   )
