@@ -1,6 +1,6 @@
 #ottpDetails {
   width: 100%;
-  .header {
+  .main-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -26,6 +26,13 @@
       h4 {
         font-size: 24px;
         color: #2d3f49;
+      }
+
+      .row {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row;
+        margin-top: 26px;
       }
 
       .item {

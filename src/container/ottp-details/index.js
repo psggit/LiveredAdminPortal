@@ -10,9 +10,11 @@ import DsoDetails from "./dso-details"
 import DeliveryAgentDetails from "./delivery-agent-details"
 import OrderDetails from "./order-details"
 import ConsumerDetails from "./customer-details"
+//import { getQueryObjByName } from "Utils/url-utils"
 
 const OttpDetails = (props) => {
   const OttpId = props.match.params.OttpId
+  // const dsoId = getQueryObjByName("dsoId")
   const [ottpDetailsData, setOttpDetails] = useState({})
   const [loadingOttpDetails, setLoadingOttpDetails] = useState(true)
 
@@ -21,8 +23,8 @@ const OttpDetails = (props) => {
       ottp_id: props.match.params.OttpId
     }
   }
+
   useEffect(() => {
-    console.log("hello")
     setLoadingOttpDetails(true)
     fetchOttpDetails()
   }, [])
@@ -38,7 +40,22 @@ const OttpDetails = (props) => {
         console.log("Error in fetching ottp details", err)
       })
   }
-  console.log("ottp", ottpDetailsData, loadingOttpDetails)
+
+  const cancelOttp = () => {
+    Api.cancelOttp({
+      ottp_info: {
+        ottp_id: OttpId
+      }
+    })
+      .then((response) => {
+        console.log("response", response)
+        window.location = location.href
+      })
+      .catch((err) => {
+        console.log("Error in cancelling ottp", err)
+      })
+  }
+
   return (
     <React.Fragment>
       <PageHeader pageName="Ottp Management" text={OttpId} />
@@ -54,7 +71,7 @@ const OttpDetails = (props) => {
           !loadingOttpDetails &&
           <React.Fragment>
             <div id="ottpDetails">
-              <div className="header">
+              <div className="main-header">
                 <div>
                   <span><Icon name="active" /></span>
                   <span>{ottpDetailsData.ottp_info.status}</span>
@@ -65,9 +82,12 @@ const OttpDetails = (props) => {
                   <span>at</span>
                   <span>{Moment(ottpDetailsData.ottp_info.issued_at).format("h:mm A")}</span>
                 </div>
-                <div>
-                  <Button danger>Cancel OTTP</Button>
-                </div>
+                {
+                  ottpDetailsData.ottp_info.status === "ongoing" &&
+                  <div>
+                    <Button danger onClick={cancelOttp}>Cancel OTTP</Button>
+                  </div>
+                }
               </div>
               <div className="card-container">
                 <DsoDetails
@@ -83,10 +103,12 @@ const OttpDetails = (props) => {
                   licenseNumber={ottpDetailsData.delivery_agent.license_number}
                 />
                 <OrderDetails
+                  ottpId={ottpDetailsData.ottp_info.ottp_id}
                   orderStatus={ottpDetailsData.ottp_info.status}
                   orders={ottpDetailsData.order}
                 />
                 <ConsumerDetails
+                  ottpId={ottpDetailsData.ottp_info.ottp_id}
                   name={ottpDetailsData.consumer.name}
                   dob={ottpDetailsData.consumer.dob}
                   address={ottpDetailsData.consumer.address}

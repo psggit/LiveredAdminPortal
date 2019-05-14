@@ -1,10 +1,11 @@
-import React, {useEffect, useState} from "react"
+import React, { useEffect, useState } from "react"
 import Button from "./../button"
 import "./dialog.scss"
 import ButtonGroup from "./../button-group"
 import Icon from "./../icon"
+import { AST_PropAccess } from "terser";
 
-const Dialog = ({icon, title, subtitle, children, onClick, actions}) => {
+const Dialog = ({ icon, title, subtitle, children, onClick, actions }) => {
   useEffect(() => {
     document.addEventListener('click', handlePress)
     console.log("Created");
@@ -23,7 +24,7 @@ const Dialog = ({icon, title, subtitle, children, onClick, actions}) => {
   return (
     <div className="overlay-container">
       <div className="dialog--container">
-      <div className="dialog--body">
+        <div className="dialog--body">
           <div className="header">
             {
               icon &&
@@ -31,38 +32,41 @@ const Dialog = ({icon, title, subtitle, children, onClick, actions}) => {
                 <Icon name={icon} />
               </div>
             }
-            <div  className={`column2 ${icon ? 'text' : undefined}`}>
+            <div className={`column2 ${icon ? 'text' : undefined}`}>
               {
                 title
-                ? (
-                  <div className="dialog--title-bar">
-                    <p>
-                      { title }
-                    </p>
-                  </div>
-                )
-                : ''
+                  ? (
+                    <div className="dialog--title-bar">
+                      <p>
+                        {title}
+                      </p>
+                    </div>
+                  )
+                  : ''
               }
               {
                 subtitle
-                ? (
-                  <div className="dialog--subtitle-bar">
-                    <p>
-                      { subtitle }
-                    </p>
-                  </div>
-                )
-                : ''
+                  ? (
+                    <div className="dialog--subtitle-bar">
+                      <p>
+                        {subtitle}
+                      </p>
+                    </div>
+                  )
+                  : ''
               }
             </div>
           </div>
-          { children }
+          {children}
         </div>
-        <div className="dialog--footer">
-          <ButtonGroup alignment="right">
-              { actions.map(item => item) }
-          </ButtonGroup>
-        </div>
+        {
+          actions &&
+          <div className="dialog--footer">
+            <ButtonGroup alignment="right">
+              {actions.map(item => item)}
+            </ButtonGroup>
+          </div>
+        }
       </div>
     </div>
   )
