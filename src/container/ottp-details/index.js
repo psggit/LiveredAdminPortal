@@ -81,12 +81,23 @@ const OttpDetails = (props) => {
                   <span>{Moment(ottpDetailsData.ottp_info.issued_at).format("DD-MM-YYYY")}</span>
                   <span>at</span>
                   <span>{Moment(ottpDetailsData.ottp_info.issued_at).format("h:mm A")}</span>
+                  {
+                    ottpDetailsData.ottp_info.status === "closed" &&
+                    <React.Fragment>
+                      <span>|</span>
+                      <span>Expired on</span>
+                      <span>{Moment(ottpDetailsData.ottp_info.expiry_at).format("DD-MM-YYYY")}</span>
+                      <span>at</span>
+                      <span>{Moment(ottpDetailsData.ottp_info.expiry_at).format("h:mm A")}</span>
+                    </React.Fragment>
+                  }
                 </div>
                 {
-                  ottpDetailsData.ottp_info.status === "ongoing" &&
-                  <div>
-                    <Button danger onClick={cancelOttp}>Cancel OTTP</Button>
-                  </div>
+                  ottpDetailsData.ottp_info.status === "ongoing"
+                    ? <div>
+                      <Button danger onClick={cancelOttp}>Cancel OTTP</Button>
+                    </div>
+                    : <div></div>
                 }
               </div>
               <div className="card-container">
@@ -109,6 +120,7 @@ const OttpDetails = (props) => {
                 />
                 <ConsumerDetails
                   ottpId={ottpDetailsData.ottp_info.ottp_id}
+                  orderStatus={ottpDetailsData.ottp_info.status}
                   name={ottpDetailsData.consumer.name}
                   dob={ottpDetailsData.consumer.dob}
                   address={ottpDetailsData.consumer.address}

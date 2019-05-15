@@ -3,25 +3,32 @@ import Button from "Components/button"
 import Dialog from "Components/dialog"
 import * as Api from "./../../api"
 
-const consumerDetails = ({ ottpId, name, dob, address, isVerified }) => {
+const consumerDetails = ({ orderStatus, ottpId, name, dob, address, isVerified }) => {
 
-  const [showModal, setShowModal] = useState(false)
+  const [showResendOtpModal, setShowResendOtpModal] = useState(false)
+  const [showSuccessOtpModal, setShowSuccessOtpModal] = useState(false)
+  const [resendingOtp, setResendingOtp] = useState(false)
 
-  const mountModal = () => {
-    setShowModal(true)
+  const mountModal = (modalName) => {
+    const showModalFn = eval(`setShow${modalName}Modal`)
+    showModalFn(true)
   }
 
-  const unmountModal = () => {
-    setShowModal(false)
+  const unmountModal = (modalName) => {
+    const showModalFn = eval(`setShow${modalName}Modal`)
+    showModalFn(false)
   }
 
   const resendOtp = () => {
-    setShowModal(false)
+    setResendingOtp(true)
     Api.resendOtp({
       ottp_id: ottpId
     })
       .then((response) => {
-        window.location = location.href
+        setShowResendOtpModal(false)
+        setShowSuccessOtpModal(true)
+        setResendingOtp(false)
+        // window.location = location.href
       })
       .catch((err) => {
         console.log("Error in resending otp", err)
@@ -48,20 +55,35 @@ const consumerDetails = ({ ottpId, name, dob, address, isVerified }) => {
             <p className="label">OTP Status</p>
             <p className="value">Sent | {isVerified ? "Verified" : "Verification Pending"}</p>
           </div>
-          <Button danger onClick={mountModal}>Resend OTP</Button>
+          {
+            orderStatus === "ongoing" &&
+            <Button danger onClick={() => mountModal("ResendOtp")}>Resend OTP</Button>
+          }
         </div>
       </div>
       {
-        showModal &&
+        showResendOtpModal &&
         <Dialog
           title="Are you sure to resend OTP?"
-          onClick={unmountModal}
+          onClick={() => unmountModal("ResendOtp")}
           actions={[
-            <Button onClick={unmountModal} secondary>
+            <Button onClick={() => unmountModal("ResendOtp")} secondary>
               No
             </Button>,
-            <Button onClick={resendOtp} primary>
+            <Button onClick={resendOtp} disabled={resendingOtp} primary>
               Yes
+            </Button>
+          ]}
+        />
+      }
+      {
+        showSuccessOtpModal &&
+        <Dialog
+          title="OTP has been resent successfully"
+          onClick={() => unmountModal("SuccessOtp")}
+          actions={[
+            <Button onClick={() => unmountModal("SuccessOtp")} primary>
+              Done
             </Button>
           ]}
         />
