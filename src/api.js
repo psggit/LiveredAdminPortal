@@ -34,6 +34,15 @@ export function fetchDSOList(payload) {
   })
 }
 
+export function fetchDsoDetails(payload) {
+  return POST({
+    api: `${dso}/livered/dso/dsoDetails`,
+    handleError: true,
+    prependBaseUrl: false,
+    data: payload
+  })
+}
+
 export function changeOrderStatus(payload) {
   return POST({
     api: `${ottp}/livered/ottp/changeOttpStatus`,

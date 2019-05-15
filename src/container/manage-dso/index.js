@@ -127,7 +127,7 @@ const ManageDSO = (props) => {
   }
 
   const handleRowClick = (data) => {
-    props.history.push(`/home/ottp-details/${data.ottp_info.ottp_id}`)
+    props.history.push(`/home/dso-details?id=${data.dso_id}&name=${data.dso_name}`)
   }
 
   return (

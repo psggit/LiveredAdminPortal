@@ -1,5 +1,6 @@
 import React from 'react'
 import './button.scss'
+import Icon from "./../icon"
 
 function getClassName(props) {
 
@@ -11,6 +12,8 @@ function getClassName(props) {
     className = 'btn-secondary'
   } else if (props.danger) {
     className = 'btn-danger'
+  } else if (props.custom) {
+    className = "btn-custom"
   }
   return className
 }
@@ -22,7 +25,11 @@ const Button = (props) => {
       onClick={props.onClick}
       className={`btn ${getClassName(props)}`}
     >
-      { props.children }
+      {
+        props.icon &&
+        <span><Icon name={props.icon} /></span>
+      }
+      {props.children}
     </button>
   )
 }

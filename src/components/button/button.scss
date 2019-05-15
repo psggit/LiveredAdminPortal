@@ -12,6 +12,8 @@
   border-radius: 5px;
   transition: all 0.2s ease;
   cursor: pointer;
+  display: flex;
+  align-items: center;
   &:focus {
     outline: 0;
   }
@@ -25,6 +27,22 @@
     border-color: #00b4a0;
     background-color: #00b4a0;
     color: #fff;
+    &:hover {
+      transition: all 0.2s ease;
+      //background-color: darken(#2f2f31, 5%);
+    }
+  }
+
+  &.btn-custom {
+    border-color: #152935;
+    background-color: #152935;
+    color: #fff;
+    span {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 10px;
+    }
     &:hover {
       transition: all 0.2s ease;
       //background-color: darken(#2f2f31, 5%);

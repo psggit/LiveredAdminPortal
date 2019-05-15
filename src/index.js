@@ -14,6 +14,7 @@ import Login from './login'
 import Layout from 'Components/layout'
 import OTTPManagement from 'Container/manage-ottp'
 import DSOManagement from "Container/manage-dso"
+import DsoDetails from "Container/dso-details"
 import OttpDetails from "Container/ottp-details"
 import { createSession } from './login/session'
 
@@ -115,6 +116,15 @@ class App extends React.Component {
                     />
                     <Route
                       exact
+                      path="/home/ottp-details/:OttpId"
+                      render={
+                        props => (
+                          <OttpDetails {...props} />
+                        )
+                      }
+                    />
+                    <Route
+                      exact
                       path="/home/dso-management"
                       render={
                         props => (
@@ -124,10 +134,10 @@ class App extends React.Component {
                     />
                     <Route
                       exact
-                      path="/home/ottp-details/:OttpId"
+                      path="/home/dso-details"
                       render={
                         props => (
-                          <OttpDetails {...props} />
+                          <DsoDetails {...props} />
                         )
                       }
                     />
