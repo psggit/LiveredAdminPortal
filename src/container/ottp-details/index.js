@@ -74,7 +74,7 @@ const OttpDetails = (props) => {
               <div className="main-header">
                 <div>
                   <span><Icon name="active" /></span>
-                  <span>{ottpDetailsData.ottp_info.status}</span>
+                  <span>{ottpDetailsData.ottp_info.status === "ongoing" ? "ONGOING" : "EXPIRED"}</span>
                 </div>
                 <div>
                   <span>Issued on</span>

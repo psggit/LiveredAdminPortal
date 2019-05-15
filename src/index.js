@@ -13,6 +13,7 @@ import { Api } from 'Utils/config'
 import Login from './login'
 import Layout from 'Components/layout'
 import OTTPManagement from 'Container/manage-ottp'
+import DSOManagement from "Container/manage-dso"
 import OttpDetails from "Container/ottp-details"
 import { createSession } from './login/session'
 
@@ -109,6 +110,15 @@ class App extends React.Component {
                       render={
                         props => (
                           <OTTPManagement {...props} />
+                        )
+                      }
+                    />
+                    <Route
+                      exact
+                      path="/home/dso-management"
+                      render={
+                        props => (
+                          <DSOManagement {...props} />
                         )
                       }
                     />
