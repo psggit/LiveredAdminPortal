@@ -54,7 +54,7 @@ const orderDetails = ({ ottpId, orderStatus, orders }) => {
           </div>
           {
             orderStatus === "ongoing" &&
-            <Button danger onClick={mountModal}>Change Order Status</Button>
+            <Button primary onClick={mountModal}>Change Order Status</Button>
           }
         </div>
         <div className="item">

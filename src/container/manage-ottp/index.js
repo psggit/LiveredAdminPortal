@@ -235,7 +235,7 @@ const ManageOTTP = (props) => {
     setLimit(10)
     setActivePage(1)
     setFilter(uniqueFilter)
-    setIsFilterApplied(isFilterApplied)
+    setIsFilterApplied(true)
 
     const queryObj = {
       limit: 10,
@@ -276,16 +276,14 @@ const ManageOTTP = (props) => {
           handleSearch={handleSearch}
           clearSearch={clearSearchResults}
         />
-        {
-          isFilterApplied && !isSearchApplied &&
-          <FilteredParams data={filter} />
-        }
         <div style={{ marginLeft: '46px', position: 'relative' }}>
-          <span style={{ marginRight: '10px' }}>
-            <Button secondary onClick={resetFilter}>
-              <span>Reset</span>
-            </Button>
-          </span>
+          {
+            <span style={{ marginRight: '10px' }}>
+              <Button secondary onClick={resetFilter}>
+                <span>Reset</span>
+              </Button>
+            </span>
+          }
           <Button primary onClick={mountFilterModal}>
             <Icon name="filter" />
             <span style={{ position: 'relative', top: '-2px', marginLeft: '5px' }}>Filter</span>
@@ -303,9 +301,13 @@ const ManageOTTP = (props) => {
           </Filter>
         </div>
       </div>
+      {
+        isFilterApplied && !isSearchApplied &&
+        <FilteredParams data={filter} />
+      }
       <div style={{
         background: '#fff',
-        margin: '60px',
+        margin: '20px',
         padding: '60px'
       }}>
         {(

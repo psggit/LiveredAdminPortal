@@ -17,6 +17,8 @@ const OttpDetails = (props) => {
   // const dsoId = getQueryObjByName("dsoId")
   const [ottpDetailsData, setOttpDetails] = useState({})
   const [loadingOttpDetails, setLoadingOttpDetails] = useState(true)
+  const [showCancelOtpModal, setShowCancelOtpModal] = useState(false)
+  //const [showSuccessCancelOtpModal, setSuccessCancelOtpModal] = useState(false)
 
   const OttpDetailsReqParams = {
     ottp_info: {
@@ -42,6 +44,7 @@ const OttpDetails = (props) => {
   }
 
   const cancelOttp = () => {
+    setShowCancelOtpModal(false)
     Api.cancelOttp({
       ottp_info: {
         ottp_id: OttpId
@@ -54,6 +57,16 @@ const OttpDetails = (props) => {
       .catch((err) => {
         console.log("Error in cancelling ottp", err)
       })
+  }
+
+  const mountModal = () => {
+    //const showModalFn = eval(`setShow${modalName}Modal`)
+    setShowCancelOtpModal(true)
+  }
+
+  const unmountModal = () => {
+    //const showModalFn = eval(`setShow${modalName}Modal`)
+    setShowCancelOtpModal(false)
   }
 
   return (
@@ -95,7 +108,7 @@ const OttpDetails = (props) => {
                 {
                   ottpDetailsData.ottp_info.status === "ongoing"
                     ? <div>
-                      <Button danger onClick={cancelOttp}>Cancel OTTP</Button>
+                      <Button danger onClick={mountModal}>Cancel OTTP</Button>
                     </div>
                     : <div></div>
                 }
@@ -130,6 +143,33 @@ const OttpDetails = (props) => {
             </div>
           </React.Fragment>
         }
+        {
+          showCancelOtpModal &&
+          <Dialog
+            title="Are you sure you want to cancel the OTTP?"
+            onClick={() => unmountModal()}
+            actions={[
+              <Button onClick={() => unmountModal()} secondary>
+                No
+              </Button>,
+              <Button onClick={cancelOttp} primary>
+                Yes
+              </Button>
+            ]}
+          />
+        }
+        {/* {
+        showSuccessCancelOtpModal &&
+        <Dialog
+          title="OTP has been resent successfully"
+          onClick={() => unmountModal("SuccessOtp")}
+          actions={[
+            <Button onClick={() => unmountModal("SuccessOtp")} primary>
+              Done
+            </Button>
+          ]}
+        />
+      } */}
       </div>
     </React.Fragment>
   )

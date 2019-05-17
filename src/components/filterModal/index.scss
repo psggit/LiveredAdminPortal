@@ -10,7 +10,8 @@
   &.show {
     //opacity: 1;
     display: block;
-    transition: all 0.2s ease
+    transition: all 0.2s ease;
+    right: 0px;
   }
 
   &.hide {

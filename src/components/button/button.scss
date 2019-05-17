@@ -12,8 +12,8 @@
   border-radius: 5px;
   transition: all 0.2s ease;
   cursor: pointer;
-  display: flex;
-  align-items: center;
+  // display: flex;
+  // align-items: center;
   &:focus {
     outline: 0;
   }
@@ -27,6 +27,7 @@
     border-color: #00b4a0;
     background-color: #00b4a0;
     color: #fff;
+    display: inline-block;
     &:hover {
       transition: all 0.2s ease;
       //background-color: darken(#2f2f31, 5%);
@@ -52,6 +53,7 @@
   &.btn-secondary {
     background-color: #fff;
     border-color: #fff;
+    display: inline-block;
     color: #00b4a0;
     &:hover {
       transition: all 0.2s ease;
@@ -63,12 +65,12 @@
 
   &.btn-danger {
     background-color: #fff;
-    border-color: #a2172a;
-    color: #a2172a;
+    border-color: #d0021b;
+    color: #d0021b;
     &:hover {
       transition: all 0.2s ease;
-      border-color: #a2172a;
-      background-color: #a2172a;
+      border-color: #d0021b;
+      background-color: #d0021b;
       color: #fff;
     }
   }
