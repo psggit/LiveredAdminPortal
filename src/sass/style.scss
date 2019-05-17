@@ -1,0 +1,32 @@
+.tooltip-text {
+  display: none;
+  box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  top: 30px;
+  left: -93px;
+  position: absolute;
+  width: 200px;
+  max-width: 200px;
+  padding: 10px 15px;
+  z-index: 1;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1.29;
+  letter-spacing: normal;
+  color: #152934;
+}
+
+.info:hover .tooltip-text {
+  display: block;
+  //margin: 0 auto;
+}
+
+.tooltip-text::after {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 95px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent #fff transparent;
+}

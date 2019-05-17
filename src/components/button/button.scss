@@ -12,8 +12,8 @@
   border-radius: 5px;
   transition: all 0.2s ease;
   cursor: pointer;
-  // display: flex;
-  // align-items: center;
+  display: flex;
+  align-items: center;
   &:focus {
     outline: 0;
   }
@@ -40,8 +40,8 @@
     color: #fff;
     span {
       display: flex;
-      align-items: center;
-      justify-content: center;
+      // align-items: center;
+      // justify-content: center;
       margin-right: 10px;
     }
     &:hover {

@@ -10,6 +10,7 @@ import DsoDetails from "./dso-details"
 import DeliveryAgentDetails from "./delivery-agent-details"
 import OrderDetails from "./order-details"
 import ConsumerDetails from "./customer-details"
+import Dialog from "Components/dialog"
 //import { getQueryObjByName } from "Utils/url-utils"
 
 const OttpDetails = (props) => {

@@ -14,7 +14,8 @@ import Login from './login'
 import Layout from 'Components/layout'
 import OTTPManagement from 'Container/manage-ottp'
 import DSOManagement from "Container/manage-dso"
-import DsoDetails from "Container/dso-details"
+import ViewDsoDetails from "Container/dso-details/view-dso-details"
+import EditDsoDetails from "Container/dso-details/edit-dso-details"
 import OttpDetails from "Container/ottp-details"
 import { createSession } from './login/session'
 
@@ -134,10 +135,19 @@ class App extends React.Component {
                     />
                     <Route
                       exact
-                      path="/home/dso-details"
+                      path="/home/view-dso-details"
                       render={
                         props => (
-                          <DsoDetails {...props} />
+                          <ViewDsoDetails {...props} />
+                        )
+                      }
+                    />
+                    <Route
+                      exact
+                      path="/home/dso-details/edit"
+                      render={
+                        props => (
+                          <EditDsoDetails {...props} />
                         )
                       }
                     />

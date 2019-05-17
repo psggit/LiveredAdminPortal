@@ -14,6 +14,7 @@
       text-transform: uppercase;
       padding: 5px 20px;
       color: #9b9b9b;
+      font-size: 14px;
 
       &:hover {
         color: #000;
@@ -32,5 +33,22 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+  }
+
+  .content {
+    padding: 30px;
+    background: #fff;
+
+    // .item {
+    //   margin-top: 20px;
+    // }
+    .item:not(:first-child){
+      margin-top: 20px;
+    }
+
+    span {
+      vertical-align: sub;
+      margin-right: 10px;
+    }
   }
 }

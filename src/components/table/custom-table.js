@@ -21,8 +21,9 @@ const CustomTable = ({ headings, rows, className, children, loadingData }) => {
       </th>
     )
   }
-
+  console.log("children", Object.keys(children))
   return (
+
     <div className="table-wrapper">
       <table className={`${className ? 'logs' : ''}`}>
         <thead>
@@ -46,7 +47,7 @@ const CustomTable = ({ headings, rows, className, children, loadingData }) => {
           }
           {
             !loadingData &&
-            children.length === undefined && (
+            Object.keys(children) === undefined && (
               <tr>
                 <td style={{ textAlign: "center" }} colSpan={headings.length}>
                   No orders found

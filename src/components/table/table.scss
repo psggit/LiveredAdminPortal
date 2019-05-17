@@ -13,7 +13,7 @@
   }
   
   table tr th {
-    background: #f8f8f8;
+    background: #dfe3e6;
     border-bottom: 1px solid #dfe3e6;
     
     //border-right: 1px solid #D6DAE3;
@@ -67,6 +67,7 @@
   table tr th:last-child,
   table tr td:last-child {
     border-right: 1px solid #D6DAE3;
+    //background: #dfe3e6;
   }
   
   table tbody {

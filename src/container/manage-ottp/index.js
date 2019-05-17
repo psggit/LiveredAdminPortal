@@ -307,7 +307,7 @@ const ManageOTTP = (props) => {
       }
       <div style={{
         background: '#fff',
-        margin: '20px',
+        margin: '20px 60px',
         padding: '60px'
       }}>
         {(

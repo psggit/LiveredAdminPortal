@@ -57,7 +57,7 @@ const consumerDetails = ({ orderStatus, ottpId, name, dob, address, isVerified }
           </div>
           {
             orderStatus === "ongoing" &&
-            <Button primary onClick={() => mountModal("ResendOtp")}>Resend OTP</Button>
+            <Button danger onClick={() => mountModal("ResendOtp")}>Resend OTP</Button>
           }
         </div>
       </div>
