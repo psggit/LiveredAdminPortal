@@ -67,7 +67,9 @@ class EditDsoDetails extends React.Component {
                   <DsoDetailsForm
                     data={dsoDetailsData}
                     buttonTitle="Edit"
-                    title="Basic Details"
+                    title="Edit Basic Details"
+                    enableEdit={true}
+                    history={this.props.history}
                   />
                 </div>
               </div>

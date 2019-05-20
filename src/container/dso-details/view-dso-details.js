@@ -25,6 +25,11 @@ class dsoDetails extends React.Component {
     })
   }
 
+  handleClick(route) {
+    console.log("id", getQueryObjByName("id"))
+    location.href = `${route}?id=${getQueryObjByName("id")}&name=${getQueryObjByName("name")}`
+  }
+
   fetchDsoDetails(payload) {
     Api.fetchDsoDetails(payload)
       .then((response) => {
@@ -58,8 +63,8 @@ class dsoDetails extends React.Component {
             <React.Fragment>
               <div id="dsoDetails">
                 <div className="main-header">
-                  <a href={"/home/dso/details"} className="active">Details</a>
-                  <a>Credits</a>
+                  <a onClick={() => this.handleClick(`/home/dso/view-details`)} className="active">Details</a>
+                  <a onClick={() => this.handleClick("/home/credit-management")}>Credits</a>
                   <a>Users</a>
                   <a>Contact</a>
                 </div>
@@ -68,6 +73,8 @@ class dsoDetails extends React.Component {
                     data={dsoDetailsData}
                     buttonTitle="Edit"
                     title="Basic Details"
+                    enableEdit={false}
+                    history={this.props.history}
                   />
                 </div>
               </div>

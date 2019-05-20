@@ -41,11 +41,18 @@
     font-size: 12px;
     text-align: left;
 
+    // span {
+    //   display: flex;
+    //   align-items: center;
+    // }
+
     div {
-      color: #fff;
+      color: #000;
       border-radius: 100px;
       text-align: center;
       padding: 4px;
+      display: flex;
+      align-items: center;
 
       &.green {
         border-color: #51ae4a;

@@ -73,7 +73,7 @@ const ManageDSO = (props) => {
    * Navigates to next page
    * @param {object} pagerObj - Passed from pagination component
    * @param {Integer} pagerObj.activePage - Used to calculate the offset to fetch next set of dso's
-   * @param {Integer} pagerObj.pageSize - Used as limit to fetch next set of dos's
+   * @param {Integer} pagerObj.pageSize - Used as limit to fetch next set of dso's
    */
   const handlePageChange = (pagerObj) => {
     let queryParamsObj = {}
@@ -127,7 +127,7 @@ const ManageDSO = (props) => {
   }
 
   const handleRowClick = (data) => {
-    props.history.push(`/home/view-dso-details?id=${data.dso_id}&name=${data.dso_name}`)
+    props.history.push(`/home/dso/view-details?id=${data.dso_id}&name=${data.dso_name}`)
   }
 
   return (

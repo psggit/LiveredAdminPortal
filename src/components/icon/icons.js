@@ -325,6 +325,30 @@ export default {
 			</g>
 		</svg>
 	),
+	addIcon: (
+		<svg width="16" height="16">
+			<defs>
+				<clipPath id="clip_0">
+					<rect x="-136" y="-1013" width="1440" height="1234" clip-rule="evenodd" />
+				</clipPath>
+			</defs>
+			<g clip-path="url(#clip_0)">
+				<path fill="rgb(0,180,160)" stroke="none" d="M0 8C0 3.58182 3.58255 0 8 0C12.4175 0 16 3.58182 16 8C16 12.4182 12.4175 16 8 16C3.58255 16 0 12.4182 0 8ZM8.72727 8.72727L11.6364 8.72727L11.6364 7.27273L8.72727 7.27273L8.72727 4.36364L7.27273 4.36364L7.27273 7.27273L4.36364 7.27273L4.36364 8.72727L7.27273 8.72727L7.27273 11.6364L8.72727 11.6364L8.72727 8.72727Z" fill-rule="evenodd" />
+			</g>
+		</svg>
+	),
+	deleteIcon: (
+		<svg width="20" height="20">
+			<defs>
+				<clipPath id="clip_0">
+					<rect x="-570" y="-657" width="1440" height="1234" clip-rule="evenodd" />
+				</clipPath>
+			</defs>
+			<g clip-path="url(#clip_0)">
+				<path fill="rgb(255,80,80)" stroke="none" d="M0 10C0 4.4812 4.4812 0 10 0C15.5188 0 20 4.4812 20 10C20 15.5188 15.5188 20 10 20C4.4812 20 0 15.5188 0 10ZM17.9172 10.0016C17.9172 9.38748 17.4141 8.8828 16.8008 8.8828L3.1992 8.8828C2.58592 8.8828 2.0828 9.3875 2.0828 10.0016C2.0828 10.6148 2.58592 11.1172 3.1992 11.1172L16.8008 11.1172C17.4141 11.1172 17.9172 10.6148 17.9172 10.0016Z" fill-rule="evenodd" />
+			</g>
+		</svg>
+	),
 	editIcon: (
 		<svg width="20" height="18">
 			<defs>

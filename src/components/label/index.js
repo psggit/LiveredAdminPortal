@@ -5,7 +5,7 @@ import "Sass/style.scss"
 
 const Label = ({ children, color, icon, tooltipText }) => {
   return (
-    <div style={{ display: 'flex', alignItems: 'center' }}>
+    <div style={{ display: 'flex', alignItems: 'end' }}>
       <p className="label" style={{ marginBottom: '10px' }}>
         {children}
       </p>
