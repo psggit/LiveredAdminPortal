@@ -1,17 +1,21 @@
 import React, { useState, useEffect } from "react"
 import * as Api from "../../api"
 import PageHeader from "Components/pageheader"
-import "./dso-details.scss"
+// import "./dso-details.scss"
 import DsoDetailsForm from "./dso-details-form"
 import { getQueryObjByName } from "Utils/url-utils"
+import DsoNavbar from "./dso-navbar";
 
 class EditDsoDetails extends React.Component {
   constructor() {
     super()
     this.state = {
       dsoDetailsData: {},
-      loadingDsoDetails: true
+      loadingDsoDetails: true,
+      enableEdit: true
     }
+
+    this.toggleEdit = this.toggleEdit.bind(this)
   }
 
   componentDidMount() {
@@ -39,9 +43,13 @@ class EditDsoDetails extends React.Component {
       })
   }
 
+  toggleEdit() {
+    this.props.history.push(`/home/dso/view-details?id=${getQueryObjByName("id")}&name=${getQueryObjByName("name")}`)
+  }
+
   render() {
     const { dsoName, dsoId, dsoDetailsData, loadingDsoDetails } = this.state
-    console.log("response dso", dsoDetailsData)
+    console.log("state", this.state.enableEdit)
     return (
       <React.Fragment>
         <PageHeader pageName="Delivery Service Operators" text={dsoName} />
@@ -56,19 +64,15 @@ class EditDsoDetails extends React.Component {
           {
             !loadingDsoDetails &&
             <React.Fragment>
-              <div id="dsoDetails">
-                <div className="main-header">
-                  <a href={"/home/dso/details"} className="active">Details</a>
-                  <a>Credits</a>
-                  <a>Users</a>
-                  <a>Contact</a>
-                </div>
+              <div id="dsoDetails" style={{ width: '100%' }}>
+                <DsoNavbar />
                 <div className="content">
                   <DsoDetailsForm
                     data={dsoDetailsData}
                     buttonTitle="Edit"
                     title="Edit Basic Details"
-                    enableEdit={true}
+                    enableEdit={this.state.enableEdit}
+                    toggleEdit={this.toggleEdit}
                     history={this.props.history}
                   />
                 </div>

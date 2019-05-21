@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react"
 import * as Api from "../../api"
 import PageHeader from "Components/pageheader"
-import "./dso-details.scss"
+// import "./dso-details.scss"
 import DsoDetailsForm from "./dso-details-form"
+import DsoNavbar from "./dso-navbar"
 import { getQueryObjByName } from "Utils/url-utils"
 
 class dsoDetails extends React.Component {
@@ -25,11 +26,6 @@ class dsoDetails extends React.Component {
     })
   }
 
-  handleClick(route) {
-    console.log("id", getQueryObjByName("id"))
-    location.href = `${route}?id=${getQueryObjByName("id")}&name=${getQueryObjByName("name")}`
-  }
-
   fetchDsoDetails(payload) {
     Api.fetchDsoDetails(payload)
       .then((response) => {
@@ -46,7 +42,6 @@ class dsoDetails extends React.Component {
 
   render() {
     const { dsoName, dsoDetailsData, loadingDsoDetails } = this.state
-    console.log("response dso", dsoDetailsData)
     return (
       <React.Fragment>
         <PageHeader pageName="Delivery Service Operators" text={dsoName} />
@@ -61,13 +56,8 @@ class dsoDetails extends React.Component {
           {
             !loadingDsoDetails &&
             <React.Fragment>
-              <div id="dsoDetails">
-                <div className="main-header">
-                  <a onClick={() => this.handleClick(`/home/dso/view-details`)} className="active">Details</a>
-                  <a onClick={() => this.handleClick("/home/credit-management")}>Credits</a>
-                  <a>Users</a>
-                  <a>Contact</a>
-                </div>
+              <div id="dsoDetails" style={{ width: '100%' }}>
+                <DsoNavbar />
                 <div className="content">
                   <DsoDetailsForm
                     data={dsoDetailsData}

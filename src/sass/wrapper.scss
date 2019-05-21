@@ -1,0 +1,19 @@
+.content {
+  padding: 30px;
+  background: #fff;
+  width: 100%;
+
+  .item:not(:first-child){
+    margin-top: 26px;
+  }
+
+  .item {
+    .icon {
+      display: flex;
+
+      span {
+        margin-right: 10px;
+      }
+    }
+  }
+}

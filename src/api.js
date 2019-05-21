@@ -1,8 +1,9 @@
 import { POST, GET } from 'Utils/fetch'
 //const ipAddress = "192.168.43.10"
 //const ipAddress = "183.82.32.28"
-const ottp = "https://2638c7ac.ngrok.io"
-const dso = "https://1f46a844.ngrok.io"
+const ottp = "https://3c905aa2.ngrok.io"
+const dso = "https://d49fc1d9.ngrok.io"
+const credit = "https://07ab8373.ngrok.io"
 // const rule = ""
 // const consumer = ""
 // const credit = ""
@@ -45,7 +46,16 @@ export function fetchDsoDetails(payload) {
 
 export function fetchCreditsList(payload) {
   return POST({
-    api: `${dso}/livered/dso/listDso`,
+    api: `${credit}/livered/credits/getDsoCreditLog`,
+    handleError: true,
+    prependBaseUrl: false,
+    data: payload
+  })
+}
+
+export function addDsoStateDetails(payload) {
+  return POST({
+    api: `${dso}/livered/dso/addDsoStateDetails`,
     handleError: true,
     prependBaseUrl: false,
     data: payload
@@ -55,6 +65,24 @@ export function fetchCreditsList(payload) {
 export function changeOrderStatus(payload) {
   return POST({
     api: `${ottp}/livered/ottp/changeOttpStatus`,
+    handleError: true,
+    prependBaseUrl: false,
+    data: payload
+  })
+}
+
+export function toggleDeliveryStatus(payload) {
+  return POST({
+    api: `${dso}/livered/dso/changeDsoStatus`,
+    handleError: true,
+    prependBaseUrl: false,
+    data: payload
+  })
+}
+
+export function toggleStateServiceStatus(payload) {
+  return POST({
+    api: `${dso}/livered/dso/updateStateDeliveryStatus`,
     handleError: true,
     prependBaseUrl: false,
     data: payload

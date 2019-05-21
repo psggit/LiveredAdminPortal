@@ -1,0 +1,30 @@
+.main-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+  width: 100%;
+  padding: 20px 26px;
+  border: solid 1px #dfe3e6;
+  background-color: rgba(235, 235, 235, 0.5);
+
+  a {
+    text-transform: uppercase;
+    padding: 5px 20px;
+    color: #9b9b9b;
+    cursor: pointer;
+    font-size: 14px;
+
+    &:hover {
+      color: #000;
+      font-weight: 600;
+    }
+
+    &.active {
+      color: #000;
+      font-weight: 600;
+      text-decoration: none;
+      border-bottom: 2px solid #000;
+    }
+  }
+}

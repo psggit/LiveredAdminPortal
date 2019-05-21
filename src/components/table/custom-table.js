@@ -4,7 +4,7 @@ import "./table.scss"
 import Icon from "./../icon"
 import PropTypes from "prop-types"
 
-const CustomTable = ({ headings, rows, className, children, loadingData }) => {
+const CustomTable = ({ headings, rows, className, children, loadingData, message }) => {
   const renderHeadingRow = (item, i) => {
     return (
       <th key={i}>
@@ -47,10 +47,11 @@ const CustomTable = ({ headings, rows, className, children, loadingData }) => {
           }
           {
             !loadingData &&
-            Object.keys(children) === undefined && (
+            //Object.keys(children) === undefined || 
+            Object.keys(children).length === 0 && (
               <tr>
                 <td style={{ textAlign: "center" }} colSpan={headings.length}>
-                  No orders found
+                  {message}
                 </td>
               </tr>
             )

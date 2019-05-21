@@ -13,7 +13,8 @@ import { Api } from 'Utils/config'
 import Login from './login'
 import Layout from 'Components/layout'
 import OTTPManagement from 'Container/manage-ottp'
-import CreditManagement from "Container/manage-credits"
+import ViewCreditDetails from "Container/manage-credits/view-credits"
+import EditCreditDetails from "Container/manage-credits/edit-credits"
 import DSOManagement from "Container/manage-dso"
 import ViewDsoDetails from "Container/dso-details/view-dso-details"
 import EditDsoDetails from "Container/dso-details/edit-dso-details"
@@ -136,10 +137,19 @@ class App extends React.Component {
                     />
                     <Route
                       exact
-                      path="/home/credit-management"
+                      path="/home/view-credits"
                       render={
                         props => (
-                          <CreditManagement {...props} />
+                          <ViewCreditDetails {...props} />
+                        )
+                      }
+                    />
+                    <Route
+                      exact
+                      path="/home/edit-credits"
+                      render={
+                        props => (
+                          <EditCreditDetails {...props} />
                         )
                       }
                     />

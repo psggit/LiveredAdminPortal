@@ -25,9 +25,9 @@ class Table extends React.Component {
     const { rows } = this.props
 
     return (
-      <tr 
-        key={`row-${rowIndex}`} 
-        onClick={this.props.rowClick ? this.props.rowClick : () => {}}
+      <tr
+        key={`row-${rowIndex}`}
+        onClick={this.props.rowClick ? this.props.rowClick : () => { }}
         className={`${this.props.rowClick ? 'clickable' : undefined}`}
       >
         {
@@ -43,7 +43,7 @@ class Table extends React.Component {
     )
   }
   render() {
-    const {headings, rows} = this.props;
+    const { headings, rows } = this.props;
     return (
       <div className="table-wrapper">
         <table className={`${this.props.className ? 'logs' : ''}`}>
@@ -66,14 +66,14 @@ class Table extends React.Component {
               </tr>
             }
             {
-                !this.props.loadingData &&
-                this.props.rows.length === 0 && (
-                  <tr>
-                    <td style={{ textAlign: "center" }} colSpan={this.props.headings.length}>
-                      No orders found
-                    </td>
-                  </tr>
-                )
+              !this.props.loadingData &&
+              this.props.rows.length === 0 && (
+                <tr>
+                  <td style={{ textAlign: "center" }} colSpan={this.props.headings.length}>
+                    {this.props.message}
+                  </td>
+                </tr>
+              )
             }
           </tbody>
         </table>

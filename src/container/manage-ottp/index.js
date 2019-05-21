@@ -18,9 +18,9 @@ const ottpTableHeaders = [
   { title: "Retailer", icon: "info", tooltipText: "The retailer/retail outlet which received the order" },
   { title: "City/Town", icon: "" },
   { title: "Order Amount", icon: "info", tooltipText: "Price of the chosen alcohol beverage against its quantity" },
-  { title: "Volume (Litres)", icon: "info", tooltipText: "Total volume of alcoholic beverages" },
-  { title: "Permit Status", icon: "info", tooltipText: "Validity status of a single Permit ID " },
-  { title: "Customer Age verification", icon: "info", tooltipText: "Customer Age Verification" },
+  { title: "Volume (Litres)", icon: "info", tooltipText: "Total volume of the order" },
+  { title: "Permit Status", icon: "info", tooltipText: "Validity status of a single Permit ID (Active/Expired)" },
+  { title: "Customer Age verification", icon: "info", tooltipText: "Status of age verification process for the customer at the time of delivery" },
 ]
 
 const ManageOTTP = (props) => {
@@ -339,7 +339,7 @@ const ManageOTTP = (props) => {
                       <td>₹ {item.order.total}</td>
                       <td>{item.order.total_volume}</td>
                       <td>
-                        <div style={{ display: 'flex', alignItems: 'center', color: "#000" }}>
+                        <div className="text-icon" style={{ display: 'flex', alignItems: 'center', color: "#000" }}>
                           <span style={{ marginRight: '5px' }}>
                             {item.ottp_info.status === "ongoing" ? <Icon name="active" /> : <Icon name="expired" />}
                           </span>
@@ -347,7 +347,7 @@ const ManageOTTP = (props) => {
                         </div>
                       </td>
                       <td>
-                        <div style={{ display: 'flex', alignItems: 'center', color: "#000" }}>
+                        <div className="text-icon" style={{ display: 'flex', alignItems: 'center', color: "#000" }}>
                           <span style={{ marginRight: '5px' }}>
                             {item.consumer.is_verified ? <Icon name="greenFlag" /> : <Icon name="yellowFlag" />}
                           </span>

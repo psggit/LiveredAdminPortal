@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react"
-import * as Api from "./../../api"
+import * as Api from "../../api"
 import Pagination from "Components/pagination"
 import PageHeader from "Components/pageheader"
 import Icon from "Components/icon"
 import Moment from "moment"
 import { getQueryObjByName, getQueryUri } from "Utils/url-utils"
 import DataTable from "Components/table/custom-table"
+import DsoNavbar from "../dso-details/dso-navbar"
+import TitleBar from "Components/titlebar"
 
 const creditTableHeaders = [
   { title: "Transaction ID", icon: "" },
@@ -15,7 +17,7 @@ const creditTableHeaders = [
   { title: "Total Amount", icon: "", tooltipText: "" }
 ]
 
-const ManageCredits = (props) => {
+const EditCredits = (props) => {
   const pageLimit = parseInt(getQueryObjByName("limit")) || 10
   const pageNo = parseInt(getQueryObjByName("activePage")) || 1
   const [activePage, setActivePage] = useState(pageNo)
@@ -76,47 +78,57 @@ const ManageCredits = (props) => {
   return (
     <React.Fragment >
       <PageHeader pageName="Delivery Service Operators" text={dsoName} />
-      <div style={{
-        background: '#fff',
-        margin: '60px',
-        padding: '60px'
-      }}>
-        {(
-          <div>
-            <Pagination
-              activePage={activePage}
-              pageSize={limit}
-              totalItemsCount={creditsDataCount}
-              onChangePage={handlePageChange}
-            />
+      <div id="credits" style={{ width: '100%' }}>
+        <DsoNavbar />
+        <div className="content">
+          <TitleBar
+            title="Edit Credits"
+            enableEdit={true}
+          />
+          <div style={{
+            background: '#fff',
+            margin: '60px',
+            padding: '60px'
+          }}>
+            {(
+              <div>
+                <Pagination
+                  activePage={activePage}
+                  pageSize={limit}
+                  totalItemsCount={creditsDataCount}
+                  onChangePage={handlePageChange}
+                />
+              </div>
+            )}
+            {
+              <div style={{ overflow: 'auto' }}>
+                <DataTable
+                  headings={creditTableHeaders}
+                  loadingData={loadingCredits}
+                  message={"No credit history found. Click edit to add new credits"}
+                >
+                  {
+                    creditsData.length > 0 &&
+                    creditsData.map((item, i) => {
+                      return (
+                        <tr key={i}>
+                          <td>{item.dso_name}</td>
+                          <td>{item.head_office.city}</td>
+                          <td></td>
+                          <td>{item.is_validated ? "Validated" : "Not Validated"}</td>
+                          <td>{item.is_active ? "Enabled" : "Disabled"}</td>
+                        </tr>
+                      )
+                    })
+                  }
+                </DataTable>
+              </div>
+            }
           </div>
-        )}
-        {
-          <div style={{ overflow: 'auto' }}>
-            <DataTable
-              headings={creditTableHeaders}
-              loadingData={loadingCredits}
-            >
-              {
-                creditsData.length > 0 &&
-                creditsData.map((item, i) => {
-                  return (
-                    <tr key={i}>
-                      <td>{item.dso_name}</td>
-                      <td>{item.head_office.city}</td>
-                      <td></td>
-                      <td>{item.is_validated ? "Validated" : "Not Validated"}</td>
-                      <td>{item.is_active ? "Enabled" : "Disabled"}</td>
-                    </tr>
-                  )
-                })
-              }
-            </DataTable>
-          </div>
-        }
+        </div>
       </div>
     </React.Fragment >
   )
 }
 
-export default ManageCredits
+export default EditCredits

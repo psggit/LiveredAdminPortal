@@ -1,12 +1,14 @@
 import React from "react"
 import Button from "Components/button"
-import "./dso-details.scss"
+import "Sass/wrapper.scss"
 import DataTable from "Components/table/custom-table"
 import Label from "Components/label"
 import Select from "Components/select"
 import Icon from "Components/icon"
 import { getQueryObjByName } from "Utils/url-utils"
 import * as Api from "./../../api"
+import Dialog from "Components/dialog"
+import TitleBar from "Components/titlebar"
 
 class DsoDetailsForm extends React.Component {
   constructor() {
@@ -16,23 +18,38 @@ class DsoDetailsForm extends React.Component {
       entityType: "",
       licenseType: "",
       isActive: false,
-      selectedStateIdx: 1,
+      selectedStateIdx: -1,
       enableEdit: "",
-      stateList: []
+      stateList: [],
+      showDeliveryStatusModal: false,
+      showStateDeliveryStatusModal: false,
+      deliverableStateDetails: [],
+      deliverableStateMap: {}
     }
 
     this.handleEdit = this.handleEdit.bind(this)
+    this.mountModal = this.mountModal.bind(this)
+    this.unmountModal = this.unmountModal.bind(this)
     this.handleChange = this.handleChange.bind(this)
+    this.addDsoState = this.addDsoState.bind(this)
     this.toggleDeliveryStatus = this.toggleDeliveryStatus.bind(this)
     this.handleTextFieldChange = this.handleTextFieldChange.bind(this)
+    this.toggleStateServiceStatus = this.toggleStateServiceStatus.bind(this)
   }
 
   componentDidMount() {
-    console.log("props", this.props)
+    const deliverableStateMap = {}
+    this.props.data.state_details.map((item) => {
+      deliverableStateMap[item.state_id] = item
+    })
+
+    this.setState({
+      deliverableStateDetails: this.props.data.state_details,
+      deliverableStateMap
+    })
     if (this.props.enableEdit) {
       Api.fetchStateAndCitiesList({})
         .then((response) => {
-          // this.setState({
           const stateList = response.states.map((item) => {
             return {
               text: item.state_name,
@@ -43,7 +60,6 @@ class DsoDetailsForm extends React.Component {
             stateList,
             selectedStateIdx: stateList[0].value
           })
-          //})
         })
         .catch((err) => {
           console.log("Error in fetching states and cities")
@@ -54,7 +70,7 @@ class DsoDetailsForm extends React.Component {
       dsoName: getQueryObjByName("name"),
       entityType: this.props.data.entity_type,
       licenseType: this.props.data.license_type,
-      isActive: this.props.data.is_active,
+      isActive: this.props.data.is_active
     })
   }
 
@@ -63,9 +79,20 @@ class DsoDetailsForm extends React.Component {
   }
 
   toggleDeliveryStatus() {
-    this.setState({
-      isActive: !this.state.isActive
+    Api.toggleDeliveryStatus({
+      dso_id: getQueryObjByName("id"),
+      is_active: !this.state.isActive
     })
+      .then((response) => {
+        this.setState({
+          isActive: !this.state.isActive
+        })
+        this.unmountModal("DeliveryStatus")
+      })
+      .catch((err) => {
+        console.log("Error in changing delivery status", err)
+        this.unmountModal("DeliveryStatus")
+      })
   }
 
   handleTextFieldChange(e) {
@@ -74,31 +101,67 @@ class DsoDetailsForm extends React.Component {
     })
   }
 
+  mountModal(name) {
+    const flagName = (`show${name}Modal`)
+    this.setState({
+      [flagName]: true
+    })
+  }
+
+  unmountModal(name) {
+    const flagName = (`show${name}Modal`)
+    this.setState({
+      [flagName]: false
+    })
+  }
+
+  addDsoState() {
+    Api.addDsoStateDetails({
+      dso_id: getQueryObjByName("id"),
+      state_id: this.state.selectedStateIdx,
+      service_status: true
+    })
+      .then((response) => {
+        location.reload()
+      })
+      .catch((err) => {
+        console.log("Error in adding dso state", err)
+      })
+  }
+
+  toggleStateServiceStatus() {
+    Api.toggleStateServiceStatus({
+      state_id: this.stateId,
+      dso_id: getQueryObjByName("id"),
+      service_status: !this.serviceStatus
+    })
+      .then((response) => {
+        console.log("location", location.pathname)
+        this.unmountModal("StateDeliveryStatus")
+        location.reload()
+      })
+      .catch((err) => {
+        console.log("Error in updating state delivery status", err)
+        this.unmountModal("StateDeliveryStatus")
+      })
+  }
+
   handleEdit() {
     this.props.history.push(`/home/dso/edit-details?id=${getQueryObjByName("id")}&name=${getQueryObjByName("name")}`)
   }
 
   render() {
-    const { data } = this.props
-
+    const { showDeliveryStatusModal, showStateDeliveryStatusModal } = this.state
+    console.log("props", this.props.enableEdit)
     return (
       <React.Fragment>
-        <div className="title-section">
-          <div>
-            <p>{this.props.title}</p>
-          </div>
-          {
-            !this.props.enableEdit &&
-            <Button custom icon="editIcon" onClick={this.handleEdit}>{this.props.buttonTitle}</Button>
-          }
-          {
-            this.props.enableEdit &&
-            <div className="button">
-              <span style={{ marginRight: '10px' }}><Button primary>Save</Button></span>
-              <span><Button secondary>Cancel</Button></span>
-            </div>
-          }
-        </div>
+        <TitleBar
+          title={this.props.enableEdit ? "Edit Basic Details" : "Basic Details"}
+          enableEdit={this.props.enableEdit}
+          handleClick={this.props.enableEdit ? () => { } : this.handleEdit}
+          handleCancel={this.props.toggleEdit}
+        />
+
         <div className="content-section">
           <div className="item">
             <Label>DSO</Label>
@@ -140,11 +203,15 @@ class DsoDetailsForm extends React.Component {
             <div style={{ display: 'flex', alignItems: 'center' }}>
               {
                 this.state.isActive
-                  ? <span style={{ marginRight: '10px' }} onClick={this.toggleDeliveryStatus}><Icon name="toggleGreen" /></span>
-                  : <span style={{ marginRight: '10px' }} onClick={this.toggleDeliveryStatus}><Icon name="toggleRed" /></span>
+                  ? <span style={{ marginRight: '10px' }} onClick={() => this.mountModal("DeliveryStatus")}>
+                    <Icon name="toggleGreen" />
+                  </span>
+                  : <span style={{ marginRight: '10px' }} onClick={() => this.mountModal("DeliveryStatus")}>
+                    <Icon name="toggleRed" />
+                  </span>
               }
               <span
-                onClick={this.toggleDeliveryStatus}
+                onClick={() => this.mountModal("DeliveryStatus")}
                 style={{ cursor: 'pointer' }}
               >
                 {this.state.isActive ? "Enabled" : "Disabled"}
@@ -154,22 +221,46 @@ class DsoDetailsForm extends React.Component {
           <div className="item">
             <DataTable
               loadingData={false}
+              message="No states added. Add states from the dropdown"
               headings={[
                 { title: "State", icon: "", tooltipText: "" },
-                { title: "Delivery Status", icon: "info", tooltipText: "" },
-                { title: "", icon: "", tooltipText: "" }
+                { title: "Delivery Status", icon: "info", tooltipText: "Current status of delivery operations for a delivery service operator" },
+                // { title: "", icon: "", tooltipText: "" }
               ]}
             >
-              <tr>
-                <td>{"Tamilnadu"}</td>
-                <td>
-                  <div>
-                    <span style={{ marginRight: '10px' }}><Icon name="toggleGreen" /></span>
-                    Enabled
-                  </div>
-                </td>
-                <td>{this.props.enableEdit ? <Icon name="deleteIcon" /> : ""}</td>
-              </tr>
+              {
+                this.state.deliverableStateDetails.length > 0 &&
+                this.state.deliverableStateDetails.map((item) => {
+                  return (
+                    <tr>
+                      <td>{item.state_name}</td>
+                      <td>
+                        <div className="text-icon">
+                          {
+                            item.service_status
+                              ? <span style={{ marginRight: '10px' }}><Icon name="toggleGreen" /></span>
+                              : <span style={{ marginRight: '10px' }}><Icon name="toggleRed" /></span>
+                          }
+                          <span style={{ cursor: 'pointer' }}
+                            onClick={() => {
+                              this.stateId = item.state_id,
+                                this.serviceStatus = item.service_status,
+                                this.mountModal("StateDeliveryStatus")
+                            }}
+                          >
+                            {item.service_status ? "Enabled" : "Disabled"}
+                          </span>
+                        </div>
+                      </td>
+                      {/* <td>
+                        <span style={{ cursor: 'pointer' }}>
+                          {this.props.enableEdit ? <Icon name="deleteIcon" /> : ""}
+                        </span>
+                      </td> */}
+                    </tr>
+                  )
+                })
+              }
             </DataTable>
           </div>
           {
@@ -187,15 +278,44 @@ class DsoDetailsForm extends React.Component {
                   value={this.state.selectedStateIdx}
                 />
                 <div style={{ marginLeft: '10px' }}>
-                  <Button primary>Add</Button>
+                  <Button primary onClick={this.addDsoState}>Add</Button>
                 </div>
               </div>
             </div>
           }
         </div>
-        <div className="item">
-          <Button danger>Deactivate Swiggy</Button>
-        </div>
+        {
+          showDeliveryStatusModal &&
+          (
+            <Dialog
+              title="Are you sure you want to perform this action?"
+              actions={[
+                <Button onClick={() => this.toggleDeliveryStatus()} primary>
+                  Yes
+                </Button>,
+                <Button onClick={() => this.unmountModal("DeliveryStatus")} secondary>
+                  No
+                </Button>
+              ]}
+            />
+          )
+        }
+        {
+          showStateDeliveryStatusModal &&
+          (
+            <Dialog
+              title="Are you sure you want to perform this action?"
+              actions={[
+                <Button onClick={() => this.toggleStateServiceStatus()} primary>
+                  Yes
+                </Button>,
+                <Button onClick={() => this.unmountModal("StateDeliveryStatus")} secondary>
+                  No
+                </Button>
+              ]}
+            />
+          )
+        }
       </React.Fragment>
     )
   }

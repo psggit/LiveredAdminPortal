@@ -10,9 +10,9 @@ import Search from "Components/search"
 const dsoTableHeaders = [
   { title: "Name", icon: "" },
   { title: "Head Quaters", icon: "" },
-  { title: "States Servicable", icon: "info", tooltipText: "" },
-  { title: "Validation Status", icon: "info", tooltipText: "Validation status of Delivery Service Operator by Excise Department" },
-  { title: "Delivery Service Status", icon: "info", tooltipText: "Current status of Delivery Operator if their service is enabled or disabled" }
+  { title: "States Servicable", icon: "info", tooltipText: "States where delivery operations are serviceable" },
+  { title: "Validation Status", icon: "info", tooltipText: "Validated as an authorized delivery service operator to service delivery operations" },
+  { title: "Delivery Service Status", icon: "info", tooltipText: "Current status of delivery operations for a delivery service operator" }
 ]
 
 const ManageDSO = (props) => {
