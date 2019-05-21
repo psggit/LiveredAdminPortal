@@ -75,6 +75,10 @@ const ViewCredits = (props) => {
     props.history.push(`/home/view-credits?${getQueryUri(queryParamsObj)}`)
   }
 
+  const handleEdit = () => {
+    props.history.push(`/home/edit-credits?id=${getQueryObjByName("id")}&name=${getQueryObjByName("name")}`)
+  }
+
   return (
     <React.Fragment >
       <PageHeader pageName="Delivery Service Operators" text={dsoName} />
@@ -93,6 +97,7 @@ const ViewCredits = (props) => {
             <TitleBar
               title="Credits"
               enableEdit={false}
+              handleClick={handleEdit}
             />
             {(
               <div>

@@ -3,6 +3,8 @@ import * as Api from "../../api"
 import Pagination from "Components/pagination"
 import PageHeader from "Components/pageheader"
 import Icon from "Components/icon"
+import Button from "Components/button"
+import Label from "Components/label"
 import Moment from "moment"
 import { getQueryObjByName, getQueryUri } from "Utils/url-utils"
 import DataTable from "Components/table/custom-table"
@@ -21,7 +23,11 @@ const EditCredits = (props) => {
   const pageLimit = parseInt(getQueryObjByName("limit")) || 10
   const pageNo = parseInt(getQueryObjByName("activePage")) || 1
   const [activePage, setActivePage] = useState(pageNo)
+  const [amount, setAmount] = useState(0)
+  const [uploadingImage, setUploadingImage] = useState(false)
   const [loadingCredits, setLoadingCredits] = useState(true)
+  const [enableEdit, setEnableEdit] = useState(true)
+  const [file, setFile] = useState()
   const [creditsData, setCreditsData] = useState([])
   const [creditsDataCount, setCreditsDataCount] = useState(0)
   const [limit, setLimit] = useState(pageLimit)
@@ -48,7 +54,7 @@ const EditCredits = (props) => {
     Api.fetchCreditsList(payload)
       .then((response) => {
         setLoadingCredits(false)
-        setCreditsData(response.dso)
+        setCreditsData(response.credit_log)
         setCreditsDataCount(response.count)
       })
       .catch((err) => {
@@ -72,24 +78,63 @@ const EditCredits = (props) => {
       limit: pagerObj.pageSize
     }
 
-    props.history.push(`/home/credit-management?${getQueryUri(queryParamsObj)}`)
+    props.history.push(`/home/view-credits?${getQueryUri(queryParamsObj)}`)
+  }
+
+  const toggleEnableEdit = () => {
+    setEnableEdit(false)
+    props.history.push(`/home/view-credits?id=${getQueryObjByName("id")}&name=${getQueryObjByName("name")}`)
+  }
+
+  const handleTextFieldChange = (e) => {
+    console.log("e.validity", e.target.validity)
+    if (!e.target.validity.patternMismatch) {
+      setAmount(e.target.value)
+    }
+  }
+
+  const handleUploadChange = (e) => {
+    const file = e.target.files[0]
+    setFile(file)
+  }
+
+  const submitUploadedImage = () => {
+    const formData = new FormData()
+    formData.append('file', file)
+    setUploadingImage(true)
+    // POST({
+    //   api: '/upload',
+    //   type: 'FormData',
+    //   apiBase: 'api2',
+    //   data: formData,
+    //   handleError: true
+    // })
+    //   .then((json) => {
+    //     this.uploadedImageUrl = `${Api.api2}/get?fs_url=${json[0]}`
+    //     this.setState({ isImageUploaded: true, isImageUploading: false, image_url: json[0] })
+    //   })
   }
 
   return (
     <React.Fragment >
       <PageHeader pageName="Delivery Service Operators" text={dsoName} />
-      <div id="credits" style={{ width: '100%' }}>
-        <DsoNavbar />
-        <div className="content">
-          <TitleBar
-            title="Edit Credits"
-            enableEdit={true}
-          />
-          <div style={{
-            background: '#fff',
-            margin: '60px',
-            padding: '60px'
-          }}>
+      <div style={{
+        display: "flex",
+        marginTop: "30px",
+        justifyContent: "space-between",
+        alignItems: "center",
+        padding: '0px 60px',
+        width: '100%'
+      }}
+      >
+        <div id="credits" style={{ width: '100%' }}>
+          <DsoNavbar />
+          <div className="content">
+            <TitleBar
+              title="Edit Credits"
+              enableEdit={enableEdit}
+              handleCancel={toggleEnableEdit}
+            />
             {(
               <div>
                 <Pagination
@@ -112,11 +157,11 @@ const EditCredits = (props) => {
                     creditsData.map((item, i) => {
                       return (
                         <tr key={i}>
-                          <td>{item.dso_name}</td>
-                          <td>{item.head_office.city}</td>
-                          <td></td>
-                          <td>{item.is_validated ? "Validated" : "Not Validated"}</td>
-                          <td>{item.is_active ? "Enabled" : "Disabled"}</td>
+                          <td>{item.transaction_id}</td>
+                          <td>{Moment(item.created_at).format("DD-MM-YYYY")}</td>
+                          <td>{Moment(item.created_at).format("h:mm A")}</td>
+                          <td>{item.payment_mode}</td>
+                          <td>{item.amount}</td>
                         </tr>
                       )
                     })
@@ -124,6 +169,52 @@ const EditCredits = (props) => {
                 </DataTable>
               </div>
             }
+            <div className="item">
+              <div className="icon">
+                <span><Icon name="addIcon" /></span>
+                <Label>Add credits</Label>
+              </div>
+            </div>
+            <div className="item">
+              <Label>Amount</Label>
+              <input
+                type="text"
+                name="amount"
+                pattern="[0-9]*"
+                value={amount}
+                onChange={(e) => handleTextFieldChange(e)}
+              />
+            </div>
+            <div className="item">
+              <Label>Upload supporting document</Label>
+              {
+                <div>
+                  <input
+                    onChange={handleUploadChange}
+                    type="file"
+                    style={{
+                      marginTop: '15px',
+                      padding: '0',
+                      border: '0'
+                    }}
+                  />
+
+                  <Button
+                    disabled={uploadingImage}
+                    primary
+                    onClick={submitUploadedImage}
+                    style={{
+                      width: '100%',
+                      padding: '10px',
+                      borderRadius: '4px',
+                      cursor: uploadingImage ? 'progress' : 'pointer'
+                    }}
+                  >
+                    Upload
+                  </Button>
+                </div>
+              }
+            </div>
           </div>
         </div>
       </div>
