@@ -27,10 +27,10 @@ class DsoDetailsForm extends React.Component {
       deliverableStateMap: {}
     }
 
-    this.handleEdit = this.handleEdit.bind(this)
     this.mountModal = this.mountModal.bind(this)
     this.unmountModal = this.unmountModal.bind(this)
     this.handleChange = this.handleChange.bind(this)
+    this.getData = this.getData.bind(this)
     this.addDsoState = this.addDsoState.bind(this)
     this.toggleDeliveryStatus = this.toggleDeliveryStatus.bind(this)
     this.handleTextFieldChange = this.handleTextFieldChange.bind(this)
@@ -146,8 +146,8 @@ class DsoDetailsForm extends React.Component {
       })
   }
 
-  handleEdit() {
-    this.props.history.push(`/home/dso/edit-details?id=${getQueryObjByName("id")}&name=${getQueryObjByName("name")}`)
+  getData() {
+    return this.state
   }
 
   render() {
@@ -158,7 +158,7 @@ class DsoDetailsForm extends React.Component {
         <TitleBar
           title={this.props.enableEdit ? "Edit Basic Details" : "Basic Details"}
           enableEdit={this.props.enableEdit}
-          handleClick={this.props.enableEdit ? () => { } : this.handleEdit}
+          handleClick={this.props.enableEdit ? this.props.editDsoDetails : this.props.handleEdit}
           handleCancel={this.props.toggleEdit}
         />
 

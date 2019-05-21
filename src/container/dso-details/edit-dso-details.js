@@ -12,10 +12,12 @@ class EditDsoDetails extends React.Component {
     this.state = {
       dsoDetailsData: {},
       loadingDsoDetails: true,
+      updatingDsoDetails: false,
       enableEdit: true
     }
 
     this.toggleEdit = this.toggleEdit.bind(this)
+    this.editDsoDetails = this.editDsoDetails.bind(this)
   }
 
   componentDidMount() {
@@ -27,6 +29,28 @@ class EditDsoDetails extends React.Component {
     this.fetchDsoDetails({
       dso_id: getQueryObjByName("id")
     })
+  }
+
+  editDsoDetails() {
+    // console.log("edit")
+    // console.log(this.dsoDetailsForm.getData())
+    const data = this.dsoDetailsForm.getData()
+    this.setState({ updatingDsoDetails: true })
+    Api.updateDsoDetails({
+      dso_id: getQueryObjByName("id"),
+      dso_name: data.dsoName,
+      entity_type: data.entityType,
+      license_type: data.licenseType
+    })
+      .then((response) => {
+        this.toggleEdit()
+        this.setState({ updatingDsoDetails: false })
+        this.props.history.push(`/home/dso/view-details?id=${getQueryObjByName("id")}&name=${data.dsoName}`)
+      })
+      .catch((err) => {
+        console.log("Error in updating dso details", err)
+        this.setState({ updatingDsoDetails: false })
+      })
   }
 
   fetchDsoDetails(payload) {
@@ -68,11 +92,13 @@ class EditDsoDetails extends React.Component {
                 <DsoNavbar />
                 <div className="content">
                   <DsoDetailsForm
+                    ref={(node) => { this.dsoDetailsForm = node }}
                     data={dsoDetailsData}
                     buttonTitle="Edit"
                     title="Edit Basic Details"
                     enableEdit={this.state.enableEdit}
                     toggleEdit={this.toggleEdit}
+                    editDsoDetails={this.editDsoDetails}
                     history={this.props.history}
                   />
                 </div>

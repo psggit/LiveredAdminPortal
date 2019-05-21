@@ -62,6 +62,15 @@ export function addDsoStateDetails(payload) {
   })
 }
 
+export function updateDsoDetails(payload) {
+  return POST({
+    api: `${dso}/livered/dso/updateDsoBasicDetails`,
+    handleError: true,
+    prependBaseUrl: false,
+    data: payload
+  })
+}
+
 export function changeOrderStatus(payload) {
   return POST({
     api: `${ottp}/livered/ottp/changeOttpStatus`,

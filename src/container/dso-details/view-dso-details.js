@@ -14,6 +14,7 @@ class dsoDetails extends React.Component {
       loadingDsoDetails: true,
       dsoName: ""
     }
+    this.handleEdit = this.handleEdit.bind(this)
   }
 
   componentDidMount() {
@@ -40,6 +41,10 @@ class dsoDetails extends React.Component {
       })
   }
 
+  handleEdit() {
+    this.props.history.push(`/home/dso/edit-details?id=${getQueryObjByName("id")}&name=${getQueryObjByName("name")}`)
+  }
+
   render() {
     const { dsoName, dsoDetailsData, loadingDsoDetails } = this.state
     return (
@@ -64,6 +69,7 @@ class dsoDetails extends React.Component {
                     buttonTitle="Edit"
                     title="Basic Details"
                     enableEdit={false}
+                    handleEdit={this.handleEdit}
                     history={this.props.history}
                   />
                 </div>

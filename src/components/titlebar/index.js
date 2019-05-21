@@ -15,7 +15,7 @@ const Titlebar = ({ title, enableEdit, handleClick, handleCancel }) => {
       {
         enableEdit &&
         <div className="button">
-          <span style={{ marginRight: '10px' }}><Button primary>Save</Button></span>
+          <span style={{ marginRight: '10px' }}><Button primary onClick={handleClick}>Save</Button></span>
           <span><Button secondary onClick={handleCancel}>Cancel</Button></span>
         </div>
       }
