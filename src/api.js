@@ -1,10 +1,10 @@
 import { POST, GET } from 'Utils/fetch'
 //const ipAddress = "192.168.43.10"
 //const ipAddress = "183.82.32.28"
-const ottp = "https://3c905aa2.ngrok.io"
-const dso = "https://d49fc1d9.ngrok.io"
-const credit = "https://07ab8373.ngrok.io"
-// const rule = ""
+const ottp = "https://7ef57341.ngrok.io"
+const dso = "https://53945c72.ngrok.io"
+const credit = "https://9e39c565.ngrok.io"
+const rule = "https://c55d2267.ngrok.io"
 // const consumer = ""
 // const credit = ""
 
@@ -47,6 +47,15 @@ export function fetchDsoDetails(payload) {
 export function fetchCreditsList(payload) {
   return POST({
     api: `${credit}/livered/credits/getDsoCreditLog`,
+    handleError: true,
+    prependBaseUrl: false,
+    data: payload
+  })
+}
+
+export function fetchRules(payload) {
+  return POST({
+    api: `${rule}/livered/rules/listRules`,
     handleError: true,
     prependBaseUrl: false,
     data: payload

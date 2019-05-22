@@ -21,6 +21,7 @@ import EditDsoDetails from "Container/dso-details/edit-dso-details"
 import ViewContactDetails from "Container/manage-contact/view-contact"
 import EditContactDetails from "Container/manage-contact/edit-contact"
 import OttpDetails from "Container/ottp-details"
+import ViewRules from "Container/rule-engine/view-rules"
 import { createSession } from './login/session'
 
 const history = createHistory()
@@ -155,6 +156,24 @@ class App extends React.Component {
                         )
                       }
                     />
+                    <Route
+                      exact
+                      path="/home/rules"
+                      render={
+                        props => (
+                          <ViewRules {...props} />
+                        )
+                      }
+                    />
+                    {/* <Route
+                      exact
+                      path="/home/edit-rules"
+                      render={
+                        props => (
+                          <EditRules {...props} />
+                        )
+                      }
+                    /> */}
                     <Route
                       exact
                       path="/home/view-contact"

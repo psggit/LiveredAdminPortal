@@ -325,6 +325,27 @@ export default {
 			</g>
 		</svg>
 	),
+	'down': (
+		<svg width="10px" height="5px" viewBox="0 0 10 5" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
+			<g id="Symbols" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
+				<g id="Component/Dropdown/Active" transform="translate(-192.000000, -18.000000)" fill="#3D70B2">
+					<polygon id="Shape" transform="translate(197.000000, 20.500000) scale(1, -1) translate(-197.000000, -20.500000) " points="192 23 197 18 202 23"></polygon>
+				</g>
+			</g>
+		</svg>
+	),
+	addWhiteIcon: (
+		<svg width="16" height="16">
+			<defs>
+				<clipPath id="clip_0">
+					<rect x="-1272" y="-196" width="1440" height="1004" clip-rule="evenodd" />
+				</clipPath>
+			</defs>
+			<g clip-path="url(#clip_0)">
+				<path fill="rgb(255,255,255)" stroke="none" d="M0 8C0 3.58182 3.58255 0 8 0C12.4175 0 16 3.58182 16 8C16 12.4182 12.4175 16 8 16C3.58255 16 0 12.4182 0 8ZM8.72727 8.72727L11.6364 8.72727L11.6364 7.27273L8.72727 7.27273L8.72727 4.36364L7.27273 4.36364L7.27273 7.27273L4.36364 7.27273L4.36364 8.72727L7.27273 8.72727L7.27273 11.6364L8.72727 11.6364L8.72727 8.72727Z" fill-rule="evenodd" />
+			</g>
+		</svg>
+	),
 	addIcon: (
 		<svg width="16" height="16">
 			<defs>
