@@ -3,6 +3,12 @@
   background: #fff;
   width: 100%;
 
+  p.header {
+    color: #00b4a0;
+    font-weight: 600;
+    font-size: 16px;
+  }
+
   .item:not(:first-child){
     margin-top: 26px;
   }

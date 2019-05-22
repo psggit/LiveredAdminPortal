@@ -160,6 +160,7 @@ class DsoDetailsForm extends React.Component {
           enableEdit={this.props.enableEdit}
           handleClick={this.props.enableEdit ? this.props.editDsoDetails : this.props.handleEdit}
           handleCancel={this.props.toggleEdit}
+          disableBtn={this.props.updatingDsoDetails}
         />
 
         <div className="content-section">

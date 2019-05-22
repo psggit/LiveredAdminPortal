@@ -1,55 +1,54 @@
-import React, { useState, useEffect } from "react"
-import * as Api from "../../api"
+import React from "react"
 import PageHeader from "Components/pageheader"
-// import "./dso-details.scss"
-import DsoDetailsForm from "./dso-details-form"
 import { getQueryObjByName } from "Utils/url-utils"
-import DsoNavbar from "./dso-navbar";
+import DsoContactForm from "./dso-contact-form"
+import DsoNavbar from "./../dso-details/dso-navbar"
+import * as Api from "./../../api"
 
-class EditDsoDetails extends React.Component {
+class EditContact extends React.Component {
   constructor() {
     super()
     this.state = {
+      dsoName: "",
+      loadingDsoDetails: false,
       dsoDetailsData: {},
-      loadingDsoDetails: true,
-      updatingDsoDetails: false,
-      //enableEdit: true
+      updatingDsoContactDetails: false
     }
 
     this.toggleEdit = this.toggleEdit.bind(this)
-    this.editDsoDetails = this.editDsoDetails.bind(this)
+    this.editDsoContactDetails = this.editDsoContactDetails.bind(this)
   }
 
   componentDidMount() {
     this.setState({
       loadingDsoDetails: true,
-      dsoName: getQueryObjByName("name"),
-      dsoId: getQueryObjByName("id")
+      dsoName: getQueryObjByName("name")
     })
     this.fetchDsoDetails({
       dso_id: getQueryObjByName("id")
     })
   }
 
-  editDsoDetails() {
-    // console.log("edit")
-    // console.log(this.dsoDetailsForm.getData())
-    const data = this.dsoDetailsForm.getData()
-    this.setState({ updatingDsoDetails: true })
-    Api.updateDsoDetails({
+  editDsoContactDetails() {
+    this.setState({ updatingDsoContactDetails: true })
+    const data = this.dsoContactForm.getData()
+    Api.editDsoContactDetails({
       dso_id: getQueryObjByName("id"),
-      dso_name: data.dsoName,
-      entity_type: data.entityType,
-      license_type: data.licenseType
+      head_office_city: data.headOfficeCity,
+      head_office_contact_phone: data.headOfficeContact,
+      head_office_address: data.headOfficeAddress,
+      reg_office_contact_name: data.regionalOfficeName,
+      reg_office_contact_email: data.regionalOfficeEmail,
+      reg_office_contact_phone: data.regionalOfficePhone
     })
       .then((response) => {
         this.toggleEdit()
-        this.setState({ updatingDsoDetails: false })
-        this.props.history.push(`/home/dso/view-details?id=${getQueryObjByName("id")}&name=${data.dsoName}`)
+        this.setState({ updatingDsoContactDetails: false })
+        this.props.history.push(`/home/view-contact?id=${getQueryObjByName("id")}&name=${this.state.dsoName}`)
       })
-      .catch((err) => {
-        console.log("Error in updating dso details", err)
-        this.setState({ updatingDsoDetails: false })
+      .then((err) => {
+        this.setState({ updatingDsoContactDetails: false })
+        console.log("Error in updating dso contact details", err)
       })
   }
 
@@ -68,12 +67,12 @@ class EditDsoDetails extends React.Component {
   }
 
   toggleEdit() {
-    this.props.history.push(`/home/dso/view-details?id=${getQueryObjByName("id")}&name=${getQueryObjByName("name")}`)
+    console.log("name", this.state.dsoName)
+    this.props.history.push(`/home/view-contact?id=${getQueryObjByName("id")}&name=${this.state.dsoName}`)
   }
 
   render() {
-    const { dsoName, updatingDsoDetails, dsoDetailsData, loadingDsoDetails } = this.state
-    //console.log("state", this.state.enableEdit)
+    const { dsoName, loadingDsoDetails, dsoDetailsData, updatingDsoContactDetails } = this.state
     return (
       <React.Fragment>
         <PageHeader pageName="Delivery Service Operators" text={dsoName} />
@@ -91,16 +90,14 @@ class EditDsoDetails extends React.Component {
               <div id="dsoDetails" style={{ width: '100%' }}>
                 <DsoNavbar />
                 <div className="content">
-                  <DsoDetailsForm
-                    ref={(node) => { this.dsoDetailsForm = node }}
+                  <DsoContactForm
+                    ref={(node) => this.dsoContactForm = node}
                     data={dsoDetailsData}
-                    // buttonTitle="Edit"
-                    // title="Edit Basic Details"
-                    updatingDsoDetails={updatingDsoDetails}
                     enableEdit={true}
                     toggleEdit={this.toggleEdit}
-                    editDsoDetails={this.editDsoDetails}
                     history={this.props.history}
+                    updatingDsoContactDetails={updatingDsoContactDetails}
+                    editDsoContactDetails={this.editDsoContactDetails}
                   />
                 </div>
               </div>
@@ -112,4 +109,4 @@ class EditDsoDetails extends React.Component {
   }
 }
 
-export default EditDsoDetails
+export default EditContact

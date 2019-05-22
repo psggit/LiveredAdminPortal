@@ -20,7 +20,7 @@ const DsoNavbar = () => {
       <a onClick={() => handleClick(`/home/dso/view-details`)} className={`${checkActiveClass("details")}`}>Details</a>
       <a onClick={() => handleClick("/home/view-credits")} className={`${checkActiveClass("credits")}`}>Credits</a>
       <a>Users</a>
-      <a>Contact</a>
+      <a onClick={() => handleClick("/home/view-contact")} className={`${checkActiveClass("contact")}`}>Contact</a>
     </div >
   )
 }

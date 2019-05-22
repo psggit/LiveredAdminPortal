@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from "react"
-import * as Api from "../../api"
+import React from "react"
 import PageHeader from "Components/pageheader"
-// import "./dso-details.scss"
-import DsoDetailsForm from "./dso-details-form"
-import DsoNavbar from "./dso-navbar"
 import { getQueryObjByName } from "Utils/url-utils"
+import DsoContactForm from "./dso-contact-form"
+import DsoNavbar from "./../dso-details/dso-navbar"
+import * as Api from "./../../api"
 
-class dsoDetails extends React.Component {
+class ViewContact extends React.Component {
   constructor() {
     super()
     this.state = {
-      dsoDetailsData: {},
-      loadingDsoDetails: true,
-      dsoName: ""
+      dsoName: "",
+      loadingDsoDetails: false,
+      dsoDetailsData: {}
     }
+
     this.handleEdit = this.handleEdit.bind(this)
   }
 
@@ -42,11 +42,11 @@ class dsoDetails extends React.Component {
   }
 
   handleEdit() {
-    this.props.history.push(`/home/dso/edit-details?id=${getQueryObjByName("id")}&name=${getQueryObjByName("name")}`)
+    this.props.history.push(`/home/edit-contact?id=${getQueryObjByName("id")}&name=${getQueryObjByName("name")}`)
   }
 
   render() {
-    const { dsoName, dsoDetailsData, loadingDsoDetails } = this.state
+    const { dsoName, loadingDsoDetails, dsoDetailsData } = this.state
     return (
       <React.Fragment>
         <PageHeader pageName="Delivery Service Operators" text={dsoName} />
@@ -64,10 +64,8 @@ class dsoDetails extends React.Component {
               <div id="dsoDetails" style={{ width: '100%' }}>
                 <DsoNavbar />
                 <div className="content">
-                  <DsoDetailsForm
+                  <DsoContactForm
                     data={dsoDetailsData}
-                    // buttonTitle="Edit"
-                    // title="Basic Details"
                     enableEdit={false}
                     handleEdit={this.handleEdit}
                     history={this.props.history}
@@ -82,4 +80,4 @@ class dsoDetails extends React.Component {
   }
 }
 
-export default dsoDetails
+export default ViewContact

@@ -18,6 +18,8 @@ import EditCreditDetails from "Container/manage-credits/edit-credits"
 import DSOManagement from "Container/manage-dso"
 import ViewDsoDetails from "Container/dso-details/view-dso-details"
 import EditDsoDetails from "Container/dso-details/edit-dso-details"
+import ViewContactDetails from "Container/manage-contact/view-contact"
+import EditContactDetails from "Container/manage-contact/edit-contact"
 import OttpDetails from "Container/ottp-details"
 import { createSession } from './login/session'
 
@@ -150,6 +152,24 @@ class App extends React.Component {
                       render={
                         props => (
                           <EditCreditDetails {...props} />
+                        )
+                      }
+                    />
+                    <Route
+                      exact
+                      path="/home/view-contact"
+                      render={
+                        props => (
+                          <ViewContactDetails {...props} />
+                        )
+                      }
+                    />
+                    <Route
+                      exact
+                      path="/home/edit-contact"
+                      render={
+                        props => (
+                          <EditContactDetails {...props} />
                         )
                       }
                     />
