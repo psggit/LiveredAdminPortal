@@ -1,7 +1,7 @@
 .main-header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  //justify-content: space-between;
   height: 60px;
   width: 100%;
   padding: 20px 26px;
@@ -14,7 +14,7 @@
     color: #9b9b9b;
     cursor: pointer;
     font-size: 14px;
-
+    // width: 100px;
     &:hover {
       color: #000;
       font-weight: 600;

@@ -68,8 +68,9 @@ class dsoDetails extends React.Component {
                     data={dsoDetailsData}
                     // buttonTitle="Edit"
                     // title="Basic Details"
+                    action="view"
                     enableEdit={false}
-                    handleEdit={this.handleEdit}
+                    handleClick={this.handleEdit}
                     history={this.props.history}
                   />
                 </div>

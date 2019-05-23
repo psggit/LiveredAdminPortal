@@ -1,10 +1,7 @@
 import React from "react"
 import { getQueryObjByName } from "Utils/url-utils"
 import "./dso-navbar.scss"
-
-const handleClick = (route) => {
-  location.href = `${route}?id=${getQueryObjByName("id")}&name=${getQueryObjByName("name")}`
-}
+import { dsoNavbarItems } from "./../../constants/nav-items"
 
 const checkActiveClass = (value) => {
   const url = location.href
@@ -14,13 +11,27 @@ const checkActiveClass = (value) => {
   return ''
 }
 
-const DsoNavbar = () => {
+const DsoNavbar = (props) => {
+
+  const handleClick = (route) => {
+    if (props.navbarItems) {
+      location.href = route
+    } else {
+      location.href = `${route}?id=${getQueryObjByName("id")}&name=${getQueryObjByName("name")}`
+    }
+  }
+
   return (
     <div className="main-header">
-      <a onClick={() => handleClick(`/home/dso/view-details`)} className={`${checkActiveClass("details")}`}>Details</a>
-      <a onClick={() => handleClick("/home/view-credits")} className={`${checkActiveClass("credits")}`}>Credits</a>
-      <a>Users</a>
-      <a onClick={() => handleClick("/home/view-contact")} className={`${checkActiveClass("contact")}`}>Contact</a>
+      {
+        !props.navbarItems
+          ? dsoNavbarItems.map((item, i) => (
+            <a onClick={() => handleClick(item.path)} className={`${checkActiveClass(item.value)}`}>{item.label}</a>
+          ))
+          : props.navbarItems.map((item, i) => (
+            <a onClick={() => handleClick(item.path)} className={`${checkActiveClass(item.value)}`}>{item.label}</a>
+          ))
+      }
     </div >
   )
 }

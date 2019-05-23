@@ -39,8 +39,16 @@ class EditDsoDetails extends React.Component {
     Api.updateDsoDetails({
       dso_id: getQueryObjByName("id"),
       dso_name: data.dsoName,
+      is_active: data.deliveryStatus,
       entity_type: data.entityType,
-      license_type: data.licenseType
+      license_type: data.licenseType,
+      license_status: data.licenseStatus,
+      license_expiry: new Date(data.licenseExpiry).toISOString(),
+      head_office_city: data.headOfficeCity,
+      head_office_address: data.headOfficeAddress,
+      head_office_contact_name: data.name,
+      head_office_contact_email: data.email,
+      head_office_contact_phone: data.phone
     })
       .then((response) => {
         this.toggleEdit()
@@ -56,7 +64,6 @@ class EditDsoDetails extends React.Component {
   fetchDsoDetails(payload) {
     Api.fetchDsoDetails(payload)
       .then((response) => {
-        console.log("response", response.dso)
         this.setState({
           dsoDetailsData: response.dso,
           loadingDsoDetails: false
@@ -98,8 +105,9 @@ class EditDsoDetails extends React.Component {
                     // title="Edit Basic Details"
                     updatingDsoDetails={updatingDsoDetails}
                     enableEdit={true}
-                    toggleEdit={this.toggleEdit}
-                    editDsoDetails={this.editDsoDetails}
+                    action="edit"
+                    handleCancel={this.toggleEdit}
+                    handleClick={this.editDsoDetails}
                     history={this.props.history}
                   />
                 </div>

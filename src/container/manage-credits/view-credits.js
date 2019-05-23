@@ -76,7 +76,7 @@ const ViewCredits = (props) => {
   }
 
   const handleEdit = () => {
-    props.history.push(`/home/edit-credits?id=${getQueryObjByName("id")}&name=${getQueryObjByName("name")}`)
+    props.history.push(`/home/dso/edit-credits?id=${getQueryObjByName("id")}&name=${getQueryObjByName("name")}`)
   }
 
   return (

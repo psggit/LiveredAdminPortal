@@ -71,7 +71,25 @@ export function addDsoStateDetails(payload) {
   })
 }
 
-export function editDsoContactDetails(payload) {
+export function createDsoDetails(payload) {
+  return POST({
+    api: `${dso}/livered/dso/createDso`,
+    handleError: true,
+    prependBaseUrl: false,
+    data: payload
+  })
+}
+
+export function creatingDsoLocationDetails(payload) {
+  return POST({
+    api: `${dso}/livered/dso/createDsoDetails`,
+    handleError: true,
+    prependBaseUrl: false,
+    data: payload
+  })
+}
+
+export function editDsoLocationDetails(payload) {
   return POST({
     api: `${dso}/livered/dso/updateDsoContactDetails`,
     handleError: true,
@@ -82,7 +100,7 @@ export function editDsoContactDetails(payload) {
 
 export function updateDsoDetails(payload) {
   return POST({
-    api: `${dso}/livered/dso/updateDsoBasicDetails`,
+    api: `${dso}/livered/dso/updateDsoDetails`,
     handleError: true,
     prependBaseUrl: false,
     data: payload

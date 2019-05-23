@@ -6,6 +6,7 @@ import Icon from "Components/icon"
 import { getQueryObjByName, getQueryUri } from "Utils/url-utils"
 import DataTable from "Components/table/custom-table"
 import Search from "Components/search"
+import Button from "Components/button"
 
 const dsoTableHeaders = [
   { title: "Name", icon: "" },
@@ -130,6 +131,10 @@ const ManageDSO = (props) => {
     props.history.push(`/home/dso/view-details?id=${data.dso_id}&name=${data.dso_name}`)
   }
 
+  const addNewDso = () => {
+    props.history.push(`/home/dso/create-details`)
+  }
+
   return (
     <React.Fragment >
       <PageHeader pageName="Delivery Service Operators" />
@@ -148,6 +153,12 @@ const ManageDSO = (props) => {
           handleSearch={handleSearch}
           clearSearch={clearSearchResults}
         />
+        <Button custom
+          icon="addWhiteIcon"
+          onClick={addNewDso}
+        >
+          Add new
+        </Button>
       </div>
       <div style={{
         background: '#fff',

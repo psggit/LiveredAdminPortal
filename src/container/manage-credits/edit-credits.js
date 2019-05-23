@@ -95,7 +95,9 @@ const EditCredits = (props) => {
 
   const handleUploadChange = (e) => {
     const file = e.target.files[0]
+    console.log("file", file)
     setFile(file)
+    submitUploadedImage()
   }
 
   const submitUploadedImage = () => {
@@ -116,7 +118,7 @@ const EditCredits = (props) => {
   }
 
   return (
-    <React.Fragment >
+    <React.Fragment>
       <PageHeader pageName="Delivery Service Operators" text={dsoName} />
       <div style={{
         display: "flex",
@@ -188,30 +190,14 @@ const EditCredits = (props) => {
             <div className="item">
               <Label>Upload supporting document</Label>
               {
-                <div>
-                  <input
-                    onChange={handleUploadChange}
-                    type="file"
-                    style={{
-                      marginTop: '15px',
-                      padding: '0',
-                      border: '0'
-                    }}
-                  />
-
-                  <Button
-                    disabled={uploadingImage}
-                    primary
-                    onClick={submitUploadedImage}
-                    style={{
-                      width: '100%',
-                      padding: '10px',
-                      borderRadius: '4px',
-                      cursor: uploadingImage ? 'progress' : 'pointer'
-                    }}
-                  >
-                    Upload
-                  </Button>
+                <div class="input-group">
+                  <input type="text" className="form-control" value={file ? file.name : ""} readonly />
+                  <div className="input-group-btn">
+                    <span className="fileUpload">
+                      <Button primary>UPLOAD</Button>
+                      <input type="file" className="upload up" id="up" onChange={handleUploadChange} />
+                    </span>
+                  </div>
                 </div>
               }
             </div>

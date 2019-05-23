@@ -16,10 +16,11 @@ import OTTPManagement from 'Container/manage-ottp'
 import ViewCreditDetails from "Container/manage-credits/view-credits"
 import EditCreditDetails from "Container/manage-credits/edit-credits"
 import DSOManagement from "Container/manage-dso"
+import CreateDso from "Container/dso-details/create-dso-details"
 import ViewDsoDetails from "Container/dso-details/view-dso-details"
 import EditDsoDetails from "Container/dso-details/edit-dso-details"
-import ViewContactDetails from "Container/manage-contact/view-contact"
-import EditContactDetails from "Container/manage-contact/edit-contact"
+import ViewLocationDetails from "Container/manage-locations/view-location"
+import EditLocationDetails from "Container/manage-locations/edit-location"
 import OttpDetails from "Container/ottp-details"
 import ViewRules from "Container/rule-engine/view-rules"
 import { createSession } from './login/session'
@@ -140,7 +141,7 @@ class App extends React.Component {
                     />
                     <Route
                       exact
-                      path="/home/view-credits"
+                      path="/home/dso/view-credits"
                       render={
                         props => (
                           <ViewCreditDetails {...props} />
@@ -149,7 +150,7 @@ class App extends React.Component {
                     />
                     <Route
                       exact
-                      path="/home/edit-credits"
+                      path="/home/dso/edit-credits"
                       render={
                         props => (
                           <EditCreditDetails {...props} />
@@ -176,24 +177,6 @@ class App extends React.Component {
                     /> */}
                     <Route
                       exact
-                      path="/home/view-contact"
-                      render={
-                        props => (
-                          <ViewContactDetails {...props} />
-                        )
-                      }
-                    />
-                    <Route
-                      exact
-                      path="/home/edit-contact"
-                      render={
-                        props => (
-                          <EditContactDetails {...props} />
-                        )
-                      }
-                    />
-                    <Route
-                      exact
                       path="/home/dso/view-details"
                       render={
                         props => (
@@ -207,6 +190,33 @@ class App extends React.Component {
                       render={
                         props => (
                           <EditDsoDetails {...props} />
+                        )
+                      }
+                    />
+                    <Route
+                      exact
+                      path="/home/dso/create-details"
+                      render={
+                        props => (
+                          <CreateDso {...props} />
+                        )
+                      }
+                    />
+                    <Route
+                      exact
+                      path="/home/dso/view-locations"
+                      render={
+                        props => (
+                          <ViewLocationDetails {...props} />
+                        )
+                      }
+                    />
+                    <Route
+                      exact
+                      path="/home/dso/edit-location"
+                      render={
+                        props => (
+                          <EditLocationDetails {...props} />
                         )
                       }
                     />

@@ -1,6 +1,8 @@
 import React from "react"
 import Button from "Components/button"
 import "Sass/wrapper.scss"
+//import "./dso-details.scss"
+import Moment from "moment"
 import DataTable from "Components/table/custom-table"
 import Label from "Components/label"
 import Select from "Components/select"
@@ -17,82 +19,114 @@ class DsoDetailsForm extends React.Component {
       dsoName: "",
       entityType: "",
       licenseType: "",
-      isActive: false,
-      selectedStateIdx: -1,
-      enableEdit: "",
-      stateList: [],
+      licenseStatus: "",
+      licenseExpiry: "",
+      headOfficeCity: "",
+      headOfficeAddress: "",
+      name: "",
+      email: "",
+      phone: "",
+      deliveryStatus: true,
+      isValidated: false,
+      isNotValidated: false,
+      //selectedStateIdx: -1,
+      //enableEdit: "",
+      //stateList: [],
       showDeliveryStatusModal: false,
-      showStateDeliveryStatusModal: false,
-      deliverableStateDetails: [],
-      deliverableStateMap: {}
+      //showStateDeliveryStatusModal: false,
+      //deliverableStateDetails: [],
+      //deliverableStateMap: {}
     }
 
-    this.mountModal = this.mountModal.bind(this)
-    this.unmountModal = this.unmountModal.bind(this)
-    this.handleChange = this.handleChange.bind(this)
+    this.setLicenseStatus = this.setLicenseStatus.bind(this)
+    // this.unmountModal = this.unmountModal.bind(this)
+    //this.handleChange = this.handleChange.bind(this)
     this.getData = this.getData.bind(this)
-    this.addDsoState = this.addDsoState.bind(this)
+    //this.addDsoState = this.addDsoState.bind(this)
     this.toggleDeliveryStatus = this.toggleDeliveryStatus.bind(this)
     this.handleTextFieldChange = this.handleTextFieldChange.bind(this)
-    this.toggleStateServiceStatus = this.toggleStateServiceStatus.bind(this)
+    //this.toggleStateServiceStatus = this.toggleStateServiceStatus.bind(this)
   }
 
   componentDidMount() {
-    const deliverableStateMap = {}
-    this.props.data.state_details.map((item) => {
-      deliverableStateMap[item.state_id] = item
-    })
+    const data = this.props.data
+    // const deliverableStateMap = {}
+    // this.props.data.state_details.map((item) => {
+    //   deliverableStateMap[item.state_id] = item
+    // })
 
-    this.setState({
-      deliverableStateDetails: this.props.data.state_details,
-      deliverableStateMap
-    })
-    if (this.props.enableEdit) {
-      Api.fetchStateAndCitiesList({})
-        .then((response) => {
-          const stateList = response.states.map((item) => {
-            return {
-              text: item.state_name,
-              value: item.id
-            }
-          })
-          this.setState({
-            stateList,
-            selectedStateIdx: stateList[0].value
-          })
-        })
-        .catch((err) => {
-          console.log("Error in fetching states and cities")
-        })
+    // this.setState({
+    //   deliverableStateDetails: this.props.data.state_details,
+    //   deliverableStateMap
+    // })
+    // if (this.props.enableEdit) {
+    //   Api.fetchStateAndCitiesList({})
+    //     .then((response) => {
+    //       const stateList = response.states.map((item) => {
+    //         return {
+    //           text: item.state_name,
+    //           value: item.id
+    //         }
+    //       })
+    //       this.setState({
+    //         stateList,
+    //         selectedStateIdx: stateList[0].value
+    //       })
+    //     })
+    //     .catch((err) => {
+    //       console.log("Error in fetching states and cities")
+    //     })
+    // }
+    if (this.props.data) {
+      this.setState({
+        // loadingDsoDetails: true,
+        dsoName: data.dso_name,
+        entityType: data.entity_type,
+        licenseType: data.license_type,
+        deliveryStatus: data.is_active,
+        licenseStatus: data.license_status,
+        licenseExpiry: data.license_expiry.slice(0, 10),
+        headOfficeCity: data.head_office.city,
+        headOfficeAddress: data.head_office.address,
+        name: data.head_office.contact.name,
+        email: data.head_office.contact.email,
+        phone: data.head_office.contact.phone,
+        isValidated: data.license_status ? true : false,
+        isNotValidated: !data.license_status ? true : false
+      })
     }
-    this.setState({
-      loadingDsoDetails: true,
-      dsoName: getQueryObjByName("name"),
-      entityType: this.props.data.entity_type,
-      licenseType: this.props.data.license_type,
-      isActive: this.props.data.is_active
-    })
   }
 
-  handleChange(e) {
-    selectedStateIdx: parseInt(e.target.value)
+  setLicenseStatus(status) {
+    if (status === "validated") {
+      this.setState({ isValidated: !this.state.isValidated, licenseStatus: true, isNotValidated: false })
+    } else {
+      this.setState({ isNotValidated: !this.state.isNotValidated, licenseStatus: false, isValidated: false })
+    }
   }
+
+  // handleChange(e) {
+  //   selectedStateIdx: parseInt(e.target.value)
+  // }
 
   toggleDeliveryStatus() {
-    Api.toggleDeliveryStatus({
-      dso_id: getQueryObjByName("id"),
-      is_active: !this.state.isActive
+    this.setState({
+      deliveryStatus: !this.state.deliveryStatus
     })
-      .then((response) => {
-        this.setState({
-          isActive: !this.state.isActive
-        })
-        this.unmountModal("DeliveryStatus")
-      })
-      .catch((err) => {
-        console.log("Error in changing delivery status", err)
-        this.unmountModal("DeliveryStatus")
-      })
+    // Api.toggleDeliveryStatus({
+    //   dso_id: getQueryObjByName("id"),
+    //   is_active: !this.state.deliveryStatus
+    // })
+    //   .then((response) => {
+    //     this.setState({
+    //       deliveryStatus: !this.state.deliveryStatus
+    //     })
+    //     this.unmountModal("DeliveryStatus")
+    //   })
+    //   .catch((err) => {
+    //     console.log("Error in changing delivery status", err)
+    //     this.unmountModal("DeliveryStatus")
+    //   })
   }
 
   handleTextFieldChange(e) {
@@ -101,125 +135,260 @@ class DsoDetailsForm extends React.Component {
     })
   }
 
-  mountModal(name) {
-    const flagName = (`show${name}Modal`)
-    this.setState({
-      [flagName]: true
-    })
-  }
+  // mountModal(name) {
+  //   const flagName = (`show${name}Modal`)
+  //   this.setState({
+  //     [flagName]: true
+  //   })
+  // }
 
-  unmountModal(name) {
-    const flagName = (`show${name}Modal`)
-    this.setState({
-      [flagName]: false
-    })
-  }
+  // unmountModal(name) {
+  //   const flagName = (`show${name}Modal`)
+  //   this.setState({
+  //     [flagName]: false
+  //   })
+  // }
 
-  addDsoState() {
-    Api.addDsoStateDetails({
-      dso_id: getQueryObjByName("id"),
-      state_id: this.state.selectedStateIdx,
-      service_status: true
-    })
-      .then((response) => {
-        location.reload()
-      })
-      .catch((err) => {
-        console.log("Error in adding dso state", err)
-      })
-  }
+  // addDsoState() {
+  //   Api.addDsoStateDetails({
+  //     dso_id: getQueryObjByName("id"),
+  //     state_id: this.state.selectedStateIdx,
+  //     service_status: true
+  //   })
+  //     .then((response) => {
+  //       location.reload()
+  //     })
+  //     .catch((err) => {
+  //       console.log("Error in adding dso state", err)
+  //     })
+  // }
 
-  toggleStateServiceStatus() {
-    Api.toggleStateServiceStatus({
-      state_id: this.stateId,
-      dso_id: getQueryObjByName("id"),
-      service_status: !this.serviceStatus
-    })
-      .then((response) => {
-        console.log("location", location.pathname)
-        this.unmountModal("StateDeliveryStatus")
-        location.reload()
-      })
-      .catch((err) => {
-        console.log("Error in updating state delivery status", err)
-        this.unmountModal("StateDeliveryStatus")
-      })
-  }
+  // toggleStateServiceStatus() {
+  //   Api.toggleStateServiceStatus({
+  //     state_id: this.stateId,
+  //     dso_id: getQueryObjByName("id"),
+  //     service_status: !this.serviceStatus
+  //   })
+  //     .then((response) => {
+  //       console.log("location", location.pathname)
+  //       this.unmountModal("StateDeliveryStatus")
+  //       location.reload()
+  //     })
+  //     .catch((err) => {
+  //       console.log("Error in updating state delivery status", err)
+  //       this.unmountModal("StateDeliveryStatus")
+  //     })
+  // }
 
   getData() {
     return this.state
   }
 
   render() {
-    const { showDeliveryStatusModal, showStateDeliveryStatusModal } = this.state
-    console.log("props", this.props.enableEdit)
     return (
       <React.Fragment>
         <TitleBar
-          title={this.props.enableEdit ? "Edit Basic Details" : "Basic Details"}
+          title={this.props.action !== "view"
+            ? this.props.action === "create" ? "Add New Details" : "Edit Basic Details"
+            : "Basic Details"}
           enableEdit={this.props.enableEdit}
-          handleClick={this.props.enableEdit ? this.props.editDsoDetails : this.props.handleEdit}
-          handleCancel={this.props.toggleEdit}
-          disableBtn={this.props.updatingDsoDetails}
+          handleClick={this.props.handleClick}
+          handleCancel={this.props.handleCancel}
+          disableBtn={this.props.updatingDsoDetails || this.props.creatingDsoDetails}
         />
-
         <div className="content-section">
-          <div className="item">
-            <Label>DSO</Label>
-            <input
-              type="text"
-              name="dsoName"
-              value={this.state.dsoName}
-              onChange={this.handleTextFieldChange}
-              disabled={!this.props.enableEdit}
-            />
-          </div>
-          <div className="item">
-            <Label>Entity type</Label>
-            <input
-              type="text"
-              name="entityType"
-              value={this.state.entityType}
-              disabled={!this.props.enableEdit}
-              onChange={this.handleTextFieldChange}
-            />
-          </div>
-          <div className="item">
-            <Label>License type</Label>
-            <input
-              type="text"
-              name="licenseType"
-              value={this.state.licenseType}
-              disabled={!this.props.enableEdit}
-              onChange={this.handleTextFieldChange}
-            />
-          </div>
-          <div className="item">
-            <Label
-              icon="info"
-              tooltipText="Minimum legal age limit to place an order"
-            >
-              Delivery Status
-            </Label>
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-              {
-                this.state.isActive
-                  ? <span style={{ marginRight: '10px' }} onClick={() => this.mountModal("DeliveryStatus")}>
-                    <Icon name="toggleGreen" />
-                  </span>
-                  : <span style={{ marginRight: '10px' }} onClick={() => this.mountModal("DeliveryStatus")}>
-                    <Icon name="toggleRed" />
-                  </span>
-              }
-              <span
-                onClick={() => this.mountModal("DeliveryStatus")}
-                style={{ cursor: 'pointer' }}
+          <div style={{ borderBottom: '1px solid #e2e5e8' }}>
+            <div className="item">
+              <Label>DSO</Label>
+              <input
+                type="text"
+                name="dsoName"
+                value={this.state.dsoName}
+                onChange={this.handleTextFieldChange}
+                disabled={!this.props.enableEdit}
+              />
+            </div>
+            <div className="item">
+              <Label
+                icon="info"
+                tooltipText="Minimum legal age limit to place an order"
               >
-                {this.state.isActive ? "Enabled" : "Disabled"}
-              </span>
+                Entity Type
+            </Label>
+              <input
+                type="text"
+                name="entityType"
+                value={this.state.entityType}
+                disabled={!this.props.enableEdit}
+                onChange={this.handleTextFieldChange}
+              />
+            </div>
+            <div className="item">
+              <Label
+                icon="info"
+                tooltipText="Minimum legal age limit to place an order"
+              >
+                License Type
+            </Label>
+              <input
+                type="text"
+                name="licenseType"
+                value={this.state.licenseType}
+                disabled={!this.props.enableEdit}
+                onChange={this.handleTextFieldChange}
+              />
+            </div>
+            <div className="item">
+              <Label
+                icon="info"
+                tooltipText="Minimum legal age limit to place an order"
+              >
+                License Status
+            </Label>
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <span
+                  onClick={() => this.setLicenseStatus('validated')}
+                  className="circle"
+                  style={{ marginRight: '10px', cursor: this.props.enableEdit ? 'pointer' : 'default' }}
+                >
+                  {
+                    !this.state.isValidated
+                      ? <Icon name="circle" />
+                      : <Icon name="filledCircle" />
+                  }
+                </span>
+                <span
+                  onClick={this.props.enableEdit ? () => this.setLicenseStatus('validated') : () => { }}
+                  className="value"
+                  style={{ marginRight: '20px', cursor: this.props.enableEdit ? 'pointer' : 'default' }}
+                >
+                  Active
+                </span>
+                <span
+                  onClick={this.props.enableEdit ? () => this.setLicenseStatus('notValidated') : () => { }}
+                  className="circle"
+                  style={{ marginRight: '10px', cursor: this.props.enableEdit ? 'pointer' : 'default' }}
+                >
+                  {
+                    !this.state.isNotValidated
+                      ? <Icon name="circle" />
+                      : <Icon name="filledCircle" />
+                  }
+                </span>
+                <span
+                  className="value"
+                  style={{ marginRight: '10px', cursor: this.props.enableEdit ? 'pointer' : 'default' }}
+                  onClick={this.props.enableEdit ? () => this.setLicenseStatus('notValidated') : () => { }}
+                >
+                  Inactive
+                </span>
+              </div>
+            </div>
+            <div className="item">
+              <Label
+                icon="info"
+                tooltipText="Minimum legal age limit to place an order"
+              >
+                License Expiry
+            </Label>
+              <input
+                type="date"
+                name="licenseExpiry"
+                defaultValue={this.state.licenseExpiry}
+                disabled={!this.props.enableEdit}
+                onChange={this.handleTextFieldChange}
+              />
+            </div>
+            <div className="item">
+              <Label
+                icon="info"
+                tooltipText="Minimum legal age limit to place an order"
+              >
+                Delivery Status
+              </Label>
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                {
+                  this.state.deliveryStatus
+                    ? <span style={{ marginRight: '10px' }} onClick={this.props.enableEdit ? () => this.toggleDeliveryStatus() : () => { }}>
+                      <Icon name="toggleGreen" />
+                    </span>
+                    : <span style={{ marginRight: '10px' }} onClick={this.props.enableEdit ? () => this.toggleDeliveryStatus() : () => { }}>
+                      <Icon name="toggleRed" />
+                    </span>
+                }
+                <span
+                  onClick={this.props.enableEdit ? () => this.toggleDeliveryStatus() : () => { }}
+                  style={{ cursor: this.props.enableEdit ? 'pointer' : 'default' }}
+                >
+                  {this.state.deliveryStatus ? "Enabled" : "Disabled"}
+                </span>
+              </div>
             </div>
           </div>
-          <div className="item">
+          <div style={{ display: 'flex' }}>
+            <div style={{ width: '50%' }}>
+              <p className="header">Headquarters</p>
+              <div className="item">
+                <Label>City</Label>
+                <input
+                  type="text"
+                  name="headOfficeCity"
+                  style={{ width: '300px' }}
+                  value={this.state.headOfficeCity}
+                  onChange={this.handleTextFieldChange}
+                  disabled={!this.props.enableEdit}
+                />
+              </div>
+              <div className="item">
+                <Label>Address</Label>
+                <textarea
+                  name="headOfficeAddress"
+                  style={{ width: '300px' }}
+                  rows={4}
+                  value={this.state.headOfficeAddress}
+                  onChange={this.handleTextFieldChange}
+                  disabled={!this.props.enableEdit}
+                />
+              </div>
+            </div>
+            <div style={{ width: '50%' }}>
+              <p className="header">Primary Contact</p>
+              <div className="item">
+                <Label>Name</Label>
+                <input
+                  type="text"
+                  name="name"
+                  style={{ width: '300px' }}
+                  value={this.state.name}
+                  onChange={this.handleTextFieldChange}
+                  disabled={!this.props.enableEdit}
+                />
+              </div>
+              <div className="item">
+                <Label>Email Address</Label>
+                <input
+                  type="text"
+                  name="email"
+                  style={{ width: '300px' }}
+                  value={this.state.email}
+                  onChange={this.handleTextFieldChange}
+                  disabled={!this.props.enableEdit}
+                />
+              </div>
+              <div className="item">
+                <Label>Phone</Label>
+                <input
+                  type="text"
+                  name="phone"
+                  style={{ width: '300px' }}
+                  value={this.state.phone}
+                  onChange={this.handleTextFieldChange}
+                  disabled={!this.props.enableEdit}
+                />
+              </div>
+            </div>
+          </div>
+          {/* <div className="item">
             <DataTable
               loadingData={false}
               message="No states added. Add states from the dropdown"
@@ -253,18 +422,13 @@ class DsoDetailsForm extends React.Component {
                           </span>
                         </div>
                       </td>
-                      {/* <td>
-                        <span style={{ cursor: 'pointer' }}>
-                          {this.props.enableEdit ? <Icon name="deleteIcon" /> : ""}
-                        </span>
-                      </td> */}
                     </tr>
                   )
                 })
               }
             </DataTable>
-          </div>
-          {
+          </div> */}
+          {/* {
             this.props.enableEdit &&
             <div className="item">
               <div className="icon">
@@ -283,9 +447,9 @@ class DsoDetailsForm extends React.Component {
                 </div>
               </div>
             </div>
-          }
+          } */}
         </div>
-        {
+        {/* {
           showDeliveryStatusModal &&
           (
             <Dialog
@@ -300,8 +464,8 @@ class DsoDetailsForm extends React.Component {
               ]}
             />
           )
-        }
-        {
+        } */}
+        {/* {
           showStateDeliveryStatusModal &&
           (
             <Dialog
@@ -316,7 +480,7 @@ class DsoDetailsForm extends React.Component {
               ]}
             />
           )
-        }
+        } */}
       </React.Fragment>
     )
   }
