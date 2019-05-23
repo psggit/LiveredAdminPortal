@@ -1,7 +1,8 @@
 #sidemenu {
  
   .side-menu {
-  position: fixed;
+    position: fixed;
+    z-index: 1;
     // top: 76px;
     // left: 0;
     width: 70px;
@@ -9,7 +10,7 @@
     background: #008571;
     padding-top: 20px;
     padding-bottom: 82px;
-    overflow: auto;
+    // overflow: auto;
   
     .side-menu__item {
       text-align: -webkit-center;
@@ -25,12 +26,12 @@
         box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.1);
         background-color:#152935;
         top: 10px;
-        left: 50px;
+        left: 60px;
         position: absolute;
         width: 150px;
         max-width: 200px;
         padding: 6px;
-        z-index: 2;
+        //z-index: 2;
         font-size: 14px;
         font-weight: normal;
         line-height: 1.29;
@@ -47,6 +48,7 @@
         position: absolute;
         top: 50%;
         right: 100%;
+        left: -10px;
         margin-top: -5px;
         border-width: 5px;
         border-style: solid;

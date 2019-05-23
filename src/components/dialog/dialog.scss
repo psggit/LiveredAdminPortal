@@ -4,7 +4,7 @@
   height: 100%;
   position: fixed;
   width: 100%;
-  z-index: 5003;
+  //z-index: 5003;
   background: rgba(0, 0, 0, 0.7);
   .dialog--container {
     * {
@@ -20,7 +20,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: 1;
+    //z-index: 1;
   }
   
   .dialog--body {

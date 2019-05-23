@@ -8,7 +8,7 @@ const mainDivStyleWithSideMenu = {
   backgroundColor: '#f8f8f8',
   height: 'calc(100vh - 76px)',
   overflow: 'auto',
-  zIndex: '3',
+  //zIndex: '3',
   marginLeft: '70px'
 }
 
@@ -20,7 +20,7 @@ const mainDivStyleWithoutSideMenu = {
   backgroundColor: '#f8f8f8',
   height: 'calc(100vh - 76px)',
   overflow: 'auto',
-  zIndex: '3'
+  //zIndex: '3'
   //marginLeft: '250px' 
 }
 
