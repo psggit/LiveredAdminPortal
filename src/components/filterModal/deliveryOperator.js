@@ -67,6 +67,7 @@ class DeliveryOperator extends React.Component {
           <Select
             options={this.state.dsoList ? this.state.dsoList : []}
             name="Delivery Operator"
+            placeholder="Delivery Operator"
             onChange={e => this.handleChange(e)}
             value={this.state.dso.idx}
           />

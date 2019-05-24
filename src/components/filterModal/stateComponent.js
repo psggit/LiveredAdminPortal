@@ -75,6 +75,7 @@ class State extends React.Component {
         <Select
           options={this.state.stateList ? this.state.stateList : []}
           name="State"
+          placeholder="State"
           onChange={e => this.handleChange(e)}
           value={this.state.stateObj.idx}
         />

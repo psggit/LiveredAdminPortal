@@ -23,6 +23,7 @@ import ViewLocationDetails from "Container/manage-locations/view-location"
 import EditLocationDetails from "Container/manage-locations/edit-location"
 import OttpDetails from "Container/ottp-details"
 import ViewRules from "Container/rule-engine/view-rules"
+import Reports from "Container/manage-reports"
 import { createSession } from './login/session'
 
 const history = createHistory()
@@ -217,6 +218,15 @@ class App extends React.Component {
                       render={
                         props => (
                           <EditLocationDetails {...props} />
+                        )
+                      }
+                    />
+                    <Route
+                      exact
+                      path="/home/reports"
+                      render={
+                        props => (
+                          <Reports {...props} />
                         )
                       }
                     />

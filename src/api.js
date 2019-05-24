@@ -17,6 +17,26 @@ export function fetchAllOttps(payload) {
   })
 }
 
+export function generateCreditReport(payload) {
+  return POST({
+    api: `${credit}/livered/credits/creditReports`,
+    handleError: true,
+    prependBaseUrl: false,
+    data: payload,
+    parseType: "text"
+  })
+}
+
+export function generateOttpReport(payload) {
+  return POST({
+    api: `${ottp}/livered/ottp/ottpReports`,
+    handleError: true,
+    prependBaseUrl: false,
+    data: payload,
+    parseType: "text"
+  })
+}
+
 export function cancelOttp(payload) {
   return POST({
     api: `${ottp}/livered/ottp/cancelOttp`,

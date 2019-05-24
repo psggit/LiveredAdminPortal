@@ -47,6 +47,7 @@ class PermitStatus extends React.Component {
         <Select
           options={permitStatus}
           name="Permit Status"
+          placeholder="Permit Status"
           onChange={e => this.handleChange(e)}
           value={this.state.permitStatus.idx}
         />

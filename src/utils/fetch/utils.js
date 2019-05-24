@@ -27,7 +27,7 @@ function getHeaders(type) {
     case "Public":
       return Object.assign({}, json_headers)
     case 'RSS':
-      return Object.assign({}, {'Accept': 'application/xml', 'Content-Type': 'application/xml'})
+      return Object.assign({}, { 'Accept': 'application/xml', 'Content-Type': 'application/xml' })
     default:
       return Object.assign({}, json_headers, getToken())
   }
@@ -80,20 +80,28 @@ export function constructFetchUtility(options) {
     headers: getHeaders(type),
   }
 
-  if(cors) fetchOptions.mode = 'cors'
+  if (cors) fetchOptions.mode = 'cors'
   // add data to request
   if (data) {
-    fetchOptions.body = constructBody({type, data})
+    fetchOptions.body = constructBody({ type, data })
   }
 
-  return (options.handleError)
+  return (options.parseType === undefined)
     ? fetch(url, fetchOptions)
       .then(checkStatus)
       .then(parseJSON)
+      .then((responseData) => responseData)
     : fetch(url, fetchOptions)
-      .then(parseJSON)
+      .then(checkStatus)
+      .then(parseText)
+      .then((responseData) => responseData)
 }
 
 function parseJSON(response) {
   return response.json()
 }
+
+function parseText(response) {
+  return response.text()
+}
+

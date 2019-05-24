@@ -18,12 +18,13 @@ const Select = (props) => {
         className={`select ${props.small ? 'small' : ''}`}
         name={props.name}
         onChange={handleChange}
+        style={{ width: props.width ? props.width : "225px" }}
       //value={props.value ? props.value : value}
       >
         {
           props.name && props.value === -1 &&
           <option value="" disabled selected>
-            Choose a {props.name}
+            Choose a {props.placeholder}
           </option>
         }
         {

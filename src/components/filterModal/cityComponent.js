@@ -75,6 +75,7 @@ class City extends React.Component {
         <Select
           options={this.state.cityList ? this.state.cityList : []}
           name="City"
+          placeholder="City"
           onChange={e => this.handleChange(e)}
           value={parseInt(this.state.city.idx)}
         />

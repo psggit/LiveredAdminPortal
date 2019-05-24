@@ -3,7 +3,6 @@
   margin: 20px 60px;
   padding: 30px;
 }
-
 .content {
   padding: 30px;
   background: #fff;
@@ -14,6 +13,11 @@
     font-weight: 600;
     font-size: 16px;
     margin-top: 26px;
+  }
+
+  p.note {
+    font-size: 14px;
+    color: #152935;
   }
 
   .item:not(:first-child){
