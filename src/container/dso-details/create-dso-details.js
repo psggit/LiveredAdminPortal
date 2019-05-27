@@ -64,9 +64,6 @@ class CreateDso extends React.Component {
             <div className="content">
               <DsoDetailsForm
                 ref={(node) => { this.dsoDetailsForm = node }}
-                //data={dsoDetailsData}
-                // buttonTitle="Edit"
-                // title="Edit Basic Details"
                 creatingDsoDetails={creatingDsoDetails}
                 enableEdit={true}
                 action="create"

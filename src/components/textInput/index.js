@@ -3,12 +3,14 @@ import "./text-input.scss";
 
 class TextInput extends React.Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props)
+
     this.state = {
-      value: "",
+      value: props ? props.defaultValue : "",
       errorStatus: false,
-      errorMessage: ""
+      errorMessage: "",
+      touched: false
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -16,7 +18,7 @@ class TextInput extends React.Component {
   }
 
   validation(e) {
-    let errorMessage = "", errorStatus = false;
+    let errorMessage = "", errorStatus = false, touched = true;
 
     if (this.props.isRequired && e.target.value === "") {
       errorStatus = true;
@@ -29,6 +31,7 @@ class TextInput extends React.Component {
     this.setState({
       errorMessage,
       errorStatus,
+      touched,
       value: e.target.value
     });
   }
