@@ -84,9 +84,9 @@ class ManageReports extends React.Component {
     this.setState({ requestingReport: true })
     this.generateReport({
       data_type: formData.dataType,
-      state_id: formData.selectedStateIdx.toString(),
-      city_id: formData.selectedCityIdx.toString(),
-      dso_id: formData.selectedDsoIdx.toString(),
+      state_id: formData.selectedStateIdx !== -1 ? formData.selectedStateIdx.toString() : "",
+      city_id: formData.selectedCityIdx !== -1 ? formData.selectedCityIdx.toString() : "",
+      dso_id: formData.selectedDsoIdx !== -1 ? formData.selectedDsoIdx.toString() : "",
       from_date: new Date(formData.fromDate).toISOString(),
       to_date: new Date(formData.toDate).toISOString(),
       file_name: formData.reportName
@@ -102,7 +102,7 @@ class ManageReports extends React.Component {
    * @param {Object} payloadObj - payload object
    */
   generateReport(payloadObj) {
-    console.log("payload", payloadObj.data_type)
+    console.log("payload", payloadObj)
     if (payloadObj.data_type.indexOf("credits") === -1) {
       Api.generateOttpReport(payloadObj)
         .then((response) => {

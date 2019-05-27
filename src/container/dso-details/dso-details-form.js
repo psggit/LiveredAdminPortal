@@ -10,6 +10,7 @@ import Icon from "Components/icon"
 import { getQueryObjByName } from "Utils/url-utils"
 import * as Api from "./../../api"
 import Dialog from "Components/dialog"
+import TextInput from "Components/textInput"
 import TitleBar from "Components/titlebar"
 
 class DsoDetailsForm extends React.Component {
@@ -200,13 +201,28 @@ class DsoDetailsForm extends React.Component {
           <div style={{ borderBottom: '1px solid #e2e5e8' }}>
             <div className="item">
               <Label>DSO</Label>
-              <input
+              <TextInput
+                // type="text"
+                // name="dsoName"
+                // value={this.state.dsoName}
+                // onChange={this.handleTextFieldChange}
+                // disabled={!this.props.enableEdit}
+                ref={input => (this.dsoName = input)}
+                name="dsoName"
+                pattern="[a-zA-Z]*"
+                isRequired={true}
+                placeholder="dso name"
+                disabled={!this.props.enableEdit}
+                errorMessage="Dso name is invalid"
+                emptyMessage="Dso name is required"
+              />
+              {/* <input
                 type="text"
                 name="dsoName"
                 value={this.state.dsoName}
                 onChange={this.handleTextFieldChange}
                 disabled={!this.props.enableEdit}
-              />
+              /> */}
             </div>
             <div className="item">
               <Label
@@ -215,12 +231,22 @@ class DsoDetailsForm extends React.Component {
               >
                 Entity Type
             </Label>
-              <input
+              {/* <input
                 type="text"
                 name="entityType"
                 value={this.state.entityType}
                 disabled={!this.props.enableEdit}
                 onChange={this.handleTextFieldChange}
+              /> */}
+              <TextInput
+                ref={input => (this.entityType = input)}
+                name="entityType"
+                pattern="[a-zA-Z]*"
+                isRequired={true}
+                disabled={!this.props.enableEdit}
+                placeholder="entity type"
+                errorMessage="Entity type is invalid"
+                emptyMessage="Entity type is required"
               />
             </div>
             <div className="item">
@@ -230,12 +256,22 @@ class DsoDetailsForm extends React.Component {
               >
                 License Type
             </Label>
-              <input
+              {/* <input
                 type="text"
                 name="licenseType"
                 value={this.state.licenseType}
                 disabled={!this.props.enableEdit}
                 onChange={this.handleTextFieldChange}
+              /> */}
+              <TextInput
+                ref={input => (this.licenseType = input)}
+                name="licenseType"
+                pattern="[a-zA-Z]*"
+                isRequired={true}
+                disabled={!this.props.enableEdit}
+                placeholder="license type"
+                errorMessage="License type is invalid"
+                emptyMessage="License type is required"
               />
             </div>
             <div className="item">
@@ -330,13 +366,23 @@ class DsoDetailsForm extends React.Component {
               <p className="header">Headquarters</p>
               <div className="item">
                 <Label>City</Label>
-                <input
+                {/* <input
                   type="text"
                   name="headOfficeCity"
                   style={{ width: '300px' }}
                   value={this.state.headOfficeCity}
                   onChange={this.handleTextFieldChange}
                   disabled={!this.props.enableEdit}
+                /> */}
+                <TextInput
+                  ref={input => (this.headOfficeCity = input)}
+                  name="headOfficeCity"
+                  pattern="[a-zA-Z]*"
+                  isRequired={true}
+                  placeholder="city"
+                  disabled={!this.props.enableEdit}
+                  errorMessage="City is invalid"
+                  emptyMessage="City is required"
                 />
               </div>
               <div className="item">
@@ -355,34 +401,65 @@ class DsoDetailsForm extends React.Component {
               <p className="header">Primary Contact</p>
               <div className="item">
                 <Label>Name</Label>
-                <input
+                {/* <input
                   type="text"
                   name="name"
                   style={{ width: '300px' }}
                   value={this.state.name}
                   onChange={this.handleTextFieldChange}
                   disabled={!this.props.enableEdit}
+                /> */}
+                <TextInput
+                  ref={input => (this.name = input)}
+                  name="name"
+                  pattern="[a-zA-Z]*"
+                  isRequired={true}
+                  placeholder="name"
+                  errorMessage="Name is invalid"
+                  emptyMessage="Name is required"
+                  disabled={!this.props.enableEdit}
                 />
               </div>
               <div className="item">
                 <Label>Email Address</Label>
-                <input
+                {/* <input
                   type="text"
                   name="email"
                   style={{ width: '300px' }}
                   value={this.state.email}
                   onChange={this.handleTextFieldChange}
                   disabled={!this.props.enableEdit}
+                /> */}
+                <TextInput
+                  ref={input => (this.email = input)}
+                  name="email"
+                  pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+                  isRequired={true}
+                  placeholder="email"
+                  errorMessage="Email is invalid"
+                  emptyMessage="Email is required"
+                  disabled={!this.props.enableEdit}
                 />
               </div>
               <div className="item">
                 <Label>Phone</Label>
-                <input
+                {/* <input
                   type="text"
                   name="phone"
                   style={{ width: '300px' }}
                   value={this.state.phone}
                   onChange={this.handleTextFieldChange}
+                  disabled={!this.props.enableEdit}
+                /> */}
+                <TextInput
+                  ref={input => (this.phone = input)}
+                  name="phone"
+                  pattern="[0-9]*"
+                  isRequired={true}
+                  placeholder="phone"
+                  disabled={!this.props.enableEdit}
+                  errorMessage="Phone is invalid"
+                  emptyMessage="Phone is required"
                   disabled={!this.props.enableEdit}
                 />
               </div>

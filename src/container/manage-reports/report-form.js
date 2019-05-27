@@ -2,23 +2,27 @@ import React from "react"
 import Label from "Components/label"
 import Select from "Components/select"
 import Button from "Components/button"
+import Icon from "Components/icon"
 import "Sass/wrapper.scss"
+import "./reports.scss"
 
 class ReportForm extends React.Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
+    console.log("props", props)
     this.state = {
+      dataType: "",
       selectedDataTypeIdx: -1,
-      selectedReportTypeIdx: -1,
+      selectedReportTypeIdx: 1,
       selectedCityIdx: -1,
       selectedStateIdx: -1,
-      selectedDsoIdx: -1,
       selectedDsoIdx: -1,
       stateList: [],
       cityList: [],
       fromDate: "",
       toDate: ""
     }
+
     this.exciseDataType = [
       { text: "All transport permits", value: 1 },
       { text: "Past transport permits", value: 2 },
@@ -52,6 +56,9 @@ class ReportForm extends React.Component {
     if (this.props.stateList !== newProps.stateList) {
       this.setState({ stateList: newProps.stateList })
     }
+    if (this.props.dsoList !== newProps.dsoList) {
+      this.setState({ dsoList: newProps.dsoList })
+    }
   }
 
   handleTextFieldChange(e) {
@@ -65,13 +72,6 @@ class ReportForm extends React.Component {
    * @param {Object} e 
    */
   handleSelectChange(e) {
-    // const errName = `${e.target.name}Err`
-    // this.setState({
-    //   [errName]: {
-    //     value: "",
-    //     status: false
-    //   }
-    // })
     switch (e.target.name) {
       case 'exciseDataType':
         this.setState({
@@ -82,7 +82,7 @@ class ReportForm extends React.Component {
 
       case 'dsoDataType':
         this.setState({
-          selectedDsoIdx: parseInt(e.target.value),
+          selectedDataTypeIdx: parseInt(e.target.value),
           dataType: this.dsoDataType.find((item) => item.value === parseInt(e.target.value)).text
         })
         break;
@@ -119,7 +119,6 @@ class ReportForm extends React.Component {
   updateCityList(stateId) {
     let cityList = this.props.stateMap[stateId].cities
     cityList = cityList.map((item) => {
-      console.log("cities", item)
       return {
         text: item.city_name,
         value: item.city_id
@@ -129,6 +128,8 @@ class ReportForm extends React.Component {
   }
 
   render() {
+    const { selectedCityIdx, selectedDataTypeIdx, selectedDsoIdx, selectedStateIdx, fromDate, toDate } = this.state
+    const disableDownload = selectedDataTypeIdx === -1 || fromDate.length === 0 || toDate.length === 0
     return (
       <React.Fragment>
         <div className="wrapper">
@@ -206,7 +207,7 @@ class ReportForm extends React.Component {
               />
             </div>
             <div className="item">
-              <Label>Report Name</Label>
+              <Label>Report Name (Optional)</Label>
               <input
                 type="text"
                 name="reportName"
@@ -218,7 +219,10 @@ class ReportForm extends React.Component {
             <div className="item" style={{ display: 'flex' }}>
               <div>
                 <Label>From <span class="impo">*</span></Label>
-                <div>
+                <div style={{ position: 'relative' }}>
+                  <span className="calendar-icon">
+                    <Icon name="calendarIcon" />
+                  </span>
                   <input
                     type="date"
                     name="fromDate"
@@ -229,7 +233,10 @@ class ReportForm extends React.Component {
               </div>
               <div>
                 <Label>To <span class="impo">*</span></Label>
-                <div>
+                <div style={{ position: 'relative' }}>
+                  <span className="calendar-icon">
+                    <Icon name="calendarIcon" />
+                  </span>
                   <input
                     type="date"
                     name="toDate"
@@ -243,7 +250,7 @@ class ReportForm extends React.Component {
               <Button
                 primary
                 onClick={this.props.handleSubmit}
-                disabled={this.props.disableRequestReport}
+                disabled={this.props.disableRequestReport || disableDownload}
               >
                 Download Report
               </Button>

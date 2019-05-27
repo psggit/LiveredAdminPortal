@@ -253,6 +253,18 @@ export default {
 			</g>
 		</svg>
 	),
+	calendarIcon: (
+		<svg width="14" height="16">
+			<defs>
+				<clipPath id="clip_0">
+					<rect x="-1347" y="-328" width="1440" height="1124" clip-rule="evenodd" />
+				</clipPath>
+			</defs>
+			<g clip-path="url(#clip_0)">
+				<path fill="rgb(0,180,160)" stroke="none" d="M3 0L4 0L4 1L3 1L3 0ZM3 2L3 1L1.5 1C0.671573 1 0 1.67157 0 2.5L0 5L1 5L1 6L0 6L0 14.5C0 15.3284 0.671573 16 1.5 16L12.5 16C13.3284 16 14 15.3284 14 14.5L14 6L13 6L13 5L14 5L14 2.5C14 1.67157 13.3284 1 12.5 1L11 1L11 0L10 0L10 1L4 1L4 2L3 2ZM10 2L10 1L11 1L11 2L10 2ZM10 2L10 4L11 4L11 2L12.5 2C12.7761 2 13 2.22386 13 2.5L13 5L1 5L1 2.5C1 2.22386 1.22386 2 1.5 2L3 2L3 4L4 4L4 2L10 2ZM13 6L1 6L1 14.5C1 14.7761 1.22386 15 1.5 15L12.5 15C12.7761 15 13 14.7761 13 14.5L13 6Z" fill-rule="evenodd" />
+			</g>
+		</svg>
+	),
 	'calendar': (
 		<svg width="14" height="16">
 			<defs>
