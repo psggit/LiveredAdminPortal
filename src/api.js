@@ -55,6 +55,15 @@ export function fetchDSOList(payload) {
   })
 }
 
+export function fetchExciseList(payload) {
+  return POST({
+    api: `${dso}/livered/dso/listExcise`,
+    handleError: true,
+    prependBaseUrl: false,
+    data: payload
+  })
+}
+
 export function fetchDsoDetails(payload) {
   return POST({
     api: `${dso}/livered/dso/dsoDetails`,

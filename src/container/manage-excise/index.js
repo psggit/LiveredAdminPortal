@@ -2,77 +2,78 @@ import React, { useState, useEffect } from "react"
 import * as Api from "./../../api"
 import Pagination from "Components/pagination"
 import PageHeader from "Components/pageheader"
-import Icon from "Components/icon"
 import { getQueryObjByName, getQueryUri } from "Utils/url-utils"
 import DataTable from "Components/table/custom-table"
 import Search from "Components/search"
+import Button from "Components/button"
 
 const exciseTableHeaders = [
   { title: "Name", icon: "" },
   { title: "State/City", icon: "" },
-  { title: "States started on", icon: "info", tooltipText: "Date when LiveRed operations began in a state" },
-  { title: "Delivery Status", icon: "info", tooltipText: "Current status of delivery operations in a state" }
+  { title: "Contact Name", icon: "", tooltipText: "" },
+  { title: "Email ID", icon: "", tooltipText: "" },
+  { title: "Contact Number", icon: "", tooltipText: "" }
 ]
 
 const ManageExcise = (props) => {
   const pageLimit = parseInt(getQueryObjByName("limit")) || 10
   const pageNo = parseInt(getQueryObjByName("activePage")) || 1
-  const searchedDsoName = getQueryObjByName("filter") !== undefined &&
+  const searchedExciseName = getQueryObjByName("filter") !== undefined &&
     Object.keys(getQueryObjByName("filter")).length > 0 &&
     (JSON.parse(decodeURI(getQueryObjByName("filter")))).find((item) => item.filterby === "DsoName") !== undefined
     ? (JSON.parse(decodeURI(getQueryObjByName("filter")))).find((item) => item.filterby === "DsoName").value
     : ""
   const filterParams = getQueryObjByName("filter") !== undefined && Object.keys(getQueryObjByName("filter")).length > 0 ? JSON.parse(decodeURI(getQueryObjByName("filter"))) : []
   const [activePage, setActivePage] = useState(pageNo)
-  const [loadingDso, setLoadingDso] = useState(true)
-  const [dsoData, setDsoData] = useState([])
-  const [dsoDataCount, setDsoDataCount] = useState(0)
-  const [isSearchApplied, setIsSearchApplied] = useState(searchedDsoName ? true : false)
+  const [loadingExcise, setLoadingExcise] = useState(true)
+  const [exciseData, setExciseData] = useState([])
+  const [exciseDataCount, setExciseDataCount] = useState(0)
+  const [isSearchApplied, setIsSearchApplied] = useState(searchedExciseName ? true : false)
   const [limit, setLimit] = useState(pageLimit)
   const [filter, setFilter] = useState(filterParams)
-  const [dsoName, setDsoName] = useState(searchedDsoName)
+  const [exciseName, setExciseName] = useState(searchedExciseName)
 
   /**
-   * Payload for fetching dso list
+   * Payload for fetching excise list
    */
-  const dsoReqParams = {
+  const exciseReqParams = {
     limit,
     offset: limit * parseInt(activePage - 1)
   }
 
   /**
-  * Updates the dso payload with filter option
+  * Updates the excise payload with filter option
   */
   if (filter.length > 0) {
-    dsoReqParams.filter = filter
+    exciseReqParams.filter = filter
   }
 
   /**
-   * OnChange in activePage/limit/filter, it fetches the dso list
+   * OnChange in activePage/limit/filter, it fetches the excise list
    */
   useEffect(() => {
-    fetchDsoList(dsoReqParams)
+    fetchExciseList(exciseReqParams)
   }, [activePage, limit, filter])
 
-  const fetchDsoList = (payload) => {
-    setLoadingDso(true)
-    setDsoData([])
-    Api.fetchDSOList(payload)
+  const fetchExciseList = (payload) => {
+    setLoadingExcise(true)
+    setExciseData([])
+    Api.fetchExciseList(payload)
       .then((response) => {
-        setLoadingDso(false)
-        setDsoData(response.dso)
-        setDsoDataCount(response.count)
+        setLoadingExcise(false)
+        setExciseData(response.excise)
+        setExciseDataCount(response.count)
       })
       .catch((err) => {
-        console.log("Error in fetching dso list")
+        console.log("Error in fetching excise list")
       })
   }
 
   /**
    * Navigates to next page
    * @param {object} pagerObj - Passed from pagination component
-   * @param {Integer} pagerObj.activePage - Used to calculate the offset to fetch next set of dso's
-   * @param {Integer} pagerObj.pageSize - Used as limit to fetch next set of dso's
+   * @param {Integer} pagerObj.activePage - Used to calculate the offset to fetch next set of excise
+   * @param {Integer} pagerObj.pageSize - Used as limit to fetch next set of excise
    */
   const handlePageChange = (pagerObj) => {
     let queryParamsObj = {}
@@ -91,17 +92,17 @@ const ManageExcise = (props) => {
       }
     }
 
-    props.history.push(`/home/dso-management?${getQueryUri(queryParamsObj)}`)
+    props.history.push(`/home/excise-management?${getQueryUri(queryParamsObj)}`)
   }
 
   /**
-   * Fetches the dso details of given dsoName
-   * @param {string} searchQuery - dsoName passed from searchComponent, used for filtering the dsoList
+   * Fetches the dso details of given exciseName
+   * @param {string} searchQuery - exciseName passed from searchComponent, used for filtering the exciseList
    */
   const handleSearch = () => {
     const filterObj = {
-      filterby: "DsoName",
-      value: dsoName
+      filterby: "ExciseName",
+      value: exciseName
     }
     const urlParams = {
       limit: 10,
@@ -111,27 +112,27 @@ const ManageExcise = (props) => {
     setActivePage(1)
     setFilter([filterObj])
     setIsSearchApplied(true)
-    props.history.push(`/home/dso-management?${(getQueryUri(urlParams))}`)
+    props.history.push(`/home/excise-management?${(getQueryUri(urlParams))}`)
   }
 
   /**
-  * Clears the applied search and renders all the dso
+  * Clears the applied search and renders all the excise
   */
   const clearSearchResults = () => {
     if (filter.length > 0) {
-      props.history.push(`/home/dso-management`)
+      props.history.push(`/home/excise-management`)
       setFilter([])
     }
-    setDsoName("")
+    setExciseName("")
   }
 
-  const handleRowClick = (data) => {
-    props.history.push(`/home/dso/view-details?id=${data.dso_id}&name=${data.dso_name}`)
-  }
+  // const handleRowClick = (data) => {
+  //   props.history.push(`/home/dso/view-details?id=${data.dso_id}&name=${data.dso_name}`)
+  // }
 
   return (
     <React.Fragment >
-      <PageHeader pageName="Delivery Service Operators" />
+      <PageHeader pageName="Excise Departments" />
       <div style={{
         display: "flex",
         marginTop: "30px",
@@ -141,12 +142,18 @@ const ManageExcise = (props) => {
       }}
       >
         <Search
-          placeholder="Search by dso name"
-          setSearchText={setDsoName}
-          searchText={dsoName}
+          placeholder="Search by excise name"
+          setSearchText={setExciseName}
+          searchText={exciseName}
           handleSearch={handleSearch}
           clearSearch={clearSearchResults}
         />
+         <Button custom
+          icon="addWhiteIcon"
+          onClick={() => {}}
+        >
+          Add new
+        </Button>
       </div>
       <div style={{
         background: '#fff',
@@ -158,7 +165,7 @@ const ManageExcise = (props) => {
             <Pagination
               activePage={activePage}
               pageSize={limit}
-              totalItemsCount={dsoDataCount}
+              totalItemsCount={exciseDataCount}
               onChangePage={handlePageChange}
             />
           </div>
@@ -166,19 +173,20 @@ const ManageExcise = (props) => {
         {
           <div style={{ overflow: 'auto' }}>
             <DataTable
-              headings={dsoTableHeaders}
-              loadingData={loadingDso}
+              headings={exciseTableHeaders}
+              loadingData={loadingExcise}
+              message="No excise deparments found"
             >
               {
-                dsoData.length > 0 &&
-                dsoData.map((item, i) => {
+                exciseData.length > 0 &&
+                exciseData.map((item, i) => {
                   return (
-                    <tr key={i} onClick={() => { handleRowClick(item) }} className="clickable">
-                      <td>{item.dso_name}</td>
-                      <td>{item.head_office.city}</td>
-                      <td></td>
-                      <td>{item.is_validated ? "Validated" : "Not Validated"}</td>
-                      <td>{item.is_active ? "Enabled" : "Disabled"}</td>
+                    <tr key={i} className="clickable">
+                      <td>{item.name}</td>
+                      <td>{item.state}</td>
+                      <td>{item.primary_contact_name}</td>
+                      <td>{item.primary_contact_email}</td>
+                      <td>{item.primary_contact_phone}</td>
                     </tr>
                   )
                 })

@@ -15,6 +15,7 @@ import Layout from 'Components/layout'
 import OTTPManagement from 'Container/manage-ottp'
 import ViewCreditDetails from "Container/manage-credits/view-credits"
 import EditCreditDetails from "Container/manage-credits/edit-credits"
+import ExciseManagement from "Container/manage-excise"
 import DSOManagement from "Container/manage-dso"
 import CreateDso from "Container/dso-details/create-dso-details"
 import ViewDsoDetails from "Container/dso-details/view-dso-details"
@@ -128,6 +129,15 @@ class App extends React.Component {
                       render={
                         props => (
                           <OttpDetails {...props} />
+                        )
+                      }
+                    />
+                    <Route
+                      exact
+                      path="/home/excise-management"
+                      render={
+                        props => (
+                          <ExciseManagement {...props} />
                         )
                       }
                     />
