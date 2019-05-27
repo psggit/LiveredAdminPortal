@@ -3,6 +3,7 @@ import TitleBar from "Components/titlebar"
 import Label from "Components/label"
 import DataTable from "Components/table/custom-table"
 import { formatStateAndCityList } from "Utils/helpers"
+import Icon from "Components/icon"
 
 class DsoContactForm extends React.Component {
 
@@ -68,19 +69,19 @@ class DsoContactForm extends React.Component {
           enableEdit={this.props.enableEdit}
           handleClick={this.props.handleClick}
           handleCancel={this.props.handleCancel}
-          disableBtn={this.props.updatingDsoLocationDetails || this.props.creatingDsoLocationDetails}
+          //disableBtn={this.props.updatingDsoLocationDetails || this.props.creatingDsoLocationDetails}
         />
         <div className="item">
           <DataTable
             loadingData={false}
-            message="No states added. Add states from the dropdown"
+            message="No states added"
             headings={[
               { title: "State", icon: "", tooltipText: "" },
               { title: "Cities", icon: "", tooltipText: "" },
               { title: "Regional Office (City)", icon: "", tooltipText: "" },
               { title: "Address", icon: "", tooltipText: "" },
               { title: "Primary Contact", icon: "", tooltipText: "" },
-              { title: "Delivery Status", icon: "info", tooltipText: "Current status of delivery operations for a delivery service operator" },
+              { title: "", icon: "", tooltipText: "" },
             ]}
           >
             {
@@ -89,29 +90,12 @@ class DsoContactForm extends React.Component {
                 return (
                   <tr>
                     <td>{item.state_name}</td>
-                    <td>{item.cities}</td>
+                    <td>{item.city_list.substring(0, (item.city_list.length - 1))}</td>
                     <td>{item.reg_office_city}</td>
                     <td>{item.reg_office_address}</td>
-
                     <td>{item.reg_office_contact_phone}</td>
-                    <td>{item.reg_office_address}</td>
                     <td>
-                      <div className="text-icon">
-                        {
-                          item.service_status
-                            ? <span style={{ marginRight: '10px' }}><Icon name="toggleGreen" /></span>
-                            : <span style={{ marginRight: '10px' }}><Icon name="toggleRed" /></span>
-                        }
-                        <span style={{ cursor: 'pointer' }}
-                          onClick={() => {
-                            this.stateId = item.state_id,
-                              this.serviceStatus = item.service_status,
-                              this.mountModal("StateDeliveryStatus")
-                          }}
-                        >
-                          {item.service_status ? "Enabled" : "Disabled"}
-                        </span>
-                      </div>
+                      <a>Edit</a>
                     </td>
                   </tr>
                 )
