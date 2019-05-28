@@ -32,23 +32,25 @@ class EditLocation extends React.Component {
   editDsoLocationDetails() {
     this.setState({ updatingDsoLocationDetails: true })
     const data = this.dsoLocationForm.getData()
+    console.log("data", data)
     Api.editDsoLocationDetails({
       dso_id: getQueryObjByName("id"),
-      head_office_city: data.headOfficeCity,
-      head_office_contact_phone: data.headOfficeContact,
-      head_office_address: data.headOfficeAddress,
-      reg_office_contact_name: data.regionalOfficeName,
-      reg_office_contact_email: data.regionalOfficeEmail,
-      reg_office_contact_phone: data.regionalOfficePhone
+      state_id: data.selectedStateIdx,
+      service_status: true,
+      reg_office_city: data.regionalOfficeCity,
+      reg_office_address: data.regionalOfficeAddress,
+      reg_office_contact_name: data.name,
+      reg_office_contact_email: data.email,
+      reg_office_contact_phone: data.phone
     })
       .then((response) => {
-        this.toggleEdit()
+        // this.toggleEdit()
         this.setState({ updatingDsoLocationDetails: false })
-        this.props.history.push(`/home/view-location?id=${getQueryObjByName("id")}&name=${this.state.dsoName}`)
+        //this.props.history.push(`/home/dso/view-locations?id=${getQueryObjByName("id")}&name=${this.state.dsoName}`)
       })
       .then((err) => {
         this.setState({ updatingDsoLocationDetails: false })
-        console.log("Error in updating dso contact details", err)
+        console.log("Error in updating dso location details", err)
       })
   }
 
@@ -72,7 +74,7 @@ class EditLocation extends React.Component {
   }
 
   render() {
-    const { dsoName, loadingDsoDetails, dsoDetailsData, updatingDsoContactDetails } = this.state
+    const { dsoName, loadingDsoDetails, dsoDetailsData, updatingDsoLocationDetails } = this.state
     return (
       <React.Fragment>
         <PageHeader pageName="Delivery Service Operators" text={dsoName} />
@@ -97,7 +99,7 @@ class EditLocation extends React.Component {
                     handleCancel={this.handleCancel}
                     history={this.props.history}
                     updatingDsoLocationDetails={updatingDsoLocationDetails}
-                    handleClick={this.editDsoContactDetails}
+                    handleClick={this.editDsoLocationDetails}
                   />
                 </div>
               </div>

@@ -87,18 +87,25 @@
     cursor: pointer;
   }
   
-  table tbody tr.clickable:hover {
-    background-color: rgba(85, 150, 230, 0.1);
+  table tbody tr.clickable:hover, tr.clickable.highlight {
+    background-color: rgba(0, 180, 160, 0.1);
     td {
-      border-bottom: 1px solid #5596e6;
-      border-top: 1px solid #5596e6;
+      border-bottom: 1px solid #00b4a0;
+      border-top: 1px solid #00b4a0;
     }
     td:first-child {
-      border-left: 1px solid #5596e6;
+      border-left: 1px solid #00b4a0;
     }
   
     td:last-child {
-      border-right: 1px solid #5596e6;
+      border-right: 1px solid #00b4a0;
+    }
+  }
+
+  table tbody tr.clickable.highlight {
+    a {
+      color: #9b9b9b;
+      border-bottom: 1px solid #9b9b9b;
     }
   }
 

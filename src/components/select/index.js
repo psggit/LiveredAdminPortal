@@ -9,17 +9,17 @@ const Select = (props) => {
     //setValue(e.target.value)
     props.onChange(e)
   }
-
+  console.log("props", props)
   return (
     <div className="select--container">
       <Icon name="down-small" size="10" />
       <select
         placeholder={props.placeholder}
-        className={`select ${props.small ? 'small' : ''}`}
+        className={`select ${props.small ? 'small' : props.large ? 'large' : ''}`}
         name={props.name}
         onChange={handleChange}
         style={{ width: props.width ? props.width : "225px" }}
-      //value={props.value ? props.value : value}
+        value={props.value !== -1 ? props.value : ""}
       >
         {
           props.name && props.value === -1 &&

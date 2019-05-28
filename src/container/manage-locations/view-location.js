@@ -42,7 +42,7 @@ class ViewLocation extends React.Component {
   }
 
   handleEdit() {
-    this.props.history.push(`/home/edit-location?id=${getQueryObjByName("id")}&name=${getQueryObjByName("name")}`)
+    this.props.history.push(`/home/dso/edit-locations?id=${getQueryObjByName("id")}&name=${getQueryObjByName("name")}`)
   }
 
   render() {

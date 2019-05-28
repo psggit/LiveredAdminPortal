@@ -120,7 +120,7 @@ export function creatingDsoLocationDetails(payload) {
 
 export function editDsoLocationDetails(payload) {
   return POST({
-    api: `${dso}/livered/dso/updateDsoContactDetails`,
+    api: `${dso}/livered/dso/addDsoStateDetails`,
     handleError: true,
     prependBaseUrl: false,
     data: payload

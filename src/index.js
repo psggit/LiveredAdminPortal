@@ -224,7 +224,7 @@ class App extends React.Component {
                     />
                     <Route
                       exact
-                      path="/home/dso/edit-location"
+                      path="/home/dso/edit-locations"
                       render={
                         props => (
                           <EditLocationDetails {...props} />

@@ -17,6 +17,16 @@ class TextInput extends React.Component {
     this.validation = this.validation.bind(this);
   }
 
+  componentWillReceiveProps(newProps) {
+    console.log("new prop", newProps, "old props", this.props)
+    if(this.props.defaultValue !== newProps.defaultValue) {
+      console.log("hello")
+      this.setState({
+        value: newProps.defaultValue
+      })
+    }
+  }
+
   validation(e) {
     let errorMessage = "", errorStatus = false, touched = true;
 
