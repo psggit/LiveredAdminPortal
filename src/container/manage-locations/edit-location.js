@@ -16,6 +16,8 @@ class EditLocation extends React.Component {
     }
 
     this.handleCancel = this.handleCancel.bind(this)
+    this.removeCityToDso = this.removeCityToDso.bind(this)
+    this.addCityToDso = this.addCityToDso.bind(this)
     this.editDsoLocationDetails = this.editDsoLocationDetails.bind(this)
   }
 
@@ -37,7 +39,7 @@ class EditLocation extends React.Component {
       dso_id: getQueryObjByName("id"),
       state_id: data.selectedStateIdx,
       service_status: true,
-      reg_office_city: data.regionalOfficeCity,
+      reg_office_city_id: 1,
       reg_office_address: data.regionalOfficeAddress,
       reg_office_contact_name: data.name,
       reg_office_contact_email: data.email,
@@ -46,9 +48,10 @@ class EditLocation extends React.Component {
       .then((response) => {
         // this.toggleEdit()
         this.setState({ updatingDsoLocationDetails: false })
-        //this.props.history.push(`/home/dso/view-locations?id=${getQueryObjByName("id")}&name=${this.state.dsoName}`)
+        //location.reload()
+        this.props.history.push(`/home/dso-management`)
       })
-      .then((err) => {
+      .catch((err) => {
         this.setState({ updatingDsoLocationDetails: false })
         console.log("Error in updating dso location details", err)
       })
@@ -70,7 +73,40 @@ class EditLocation extends React.Component {
 
   handleCancel() {
     console.log("name", this.state.dsoName)
-    this.props.history.push(`/home/view-contact?id=${getQueryObjByName("id")}&name=${this.state.dsoName}`)
+    this.props.history.push(`/home/dso-management`)
+  }
+
+  addCityToDso(id, value, callback) {
+    const data = this.dsoLocationForm.getData()
+    Api.addCityToDso({
+      dso_id: getQueryObjByName("id"),
+      city_id: id,
+      state_id: data.selectedStateIdx,
+      service_status_on: new Date().toISOString(),
+      service_status: true
+    })
+      .then((response) => {
+        console.log("Successfully added city to dso")
+      })
+      .catch((err) => {
+        console.log("value", value)
+        callback(value)
+        console.log("Error in adding city to dso", err)
+      })
+  }
+
+  removeCityToDso(id, value, callback) {
+    Api.deleteCityToDso({
+      dso_id: getQueryObjByName("id"),
+      city_id: id
+    })
+      .then((response) => {
+        console.log("Successfully removed city from dso")
+      })
+      .catch((err) => {
+        callback(value)
+        console.log("Error in removing city from dso", err)
+      })
   }
 
   render() {
@@ -96,10 +132,14 @@ class EditLocation extends React.Component {
                     ref={(node) => this.dsoLocationForm = node}
                     data={dsoDetailsData}
                     enableEdit={true}
+                    action="edit"
                     handleCancel={this.handleCancel}
                     history={this.props.history}
                     updatingDsoLocationDetails={updatingDsoLocationDetails}
                     handleClick={this.editDsoLocationDetails}
+                    removeCity={this.removeCity}
+                    addCityToDso={this.addCityToDso}
+                    removeCityToDso={this.removeCityToDso}
                   />
                 </div>
               </div>

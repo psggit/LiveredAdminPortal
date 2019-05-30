@@ -39,7 +39,7 @@ class CreateDso extends React.Component {
       head_office_contact_phone: data.phone
     })
       .then((response) => {
-        this.props.history.push(`/home/dso/view-locations?id=${response.dso_id}&name=${response.dso_name}`)
+        this.props.history.push(`/home/dso/create-locations?id=${response.dso_id}&name=${response.dso_name}`)
       })
       .catch((err) => {
         console.log("Error in creating dso", err)

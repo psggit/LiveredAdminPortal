@@ -6,6 +6,7 @@ import { formatStateAndCityList } from "Utils/helpers"
 import Icon from "Components/icon"
 import Button from "Components/button"
 import Select from "Components/select"
+import MultiSelect from "Components/multiselect"
 import {fetchStateAndCitiesList} from "./../../api"
 import TextInput from "Components/textInput"
 
@@ -35,11 +36,12 @@ class DsoLocationForm extends React.Component {
     this.handleRowClick = this.handleRowClick.bind(this)
     this.handleCityChange = this.handleCityChange.bind(this)
     this.updateCityList = this.updateCityList.bind(this)
+    //this.setUnselectedCities = this.setUnselectedCities.bind(this)
     this.handleSave = this.handleSave.bind(this)
   }
 
   componentDidMount() {
-    if (Object.keys(this.props.data).length > 0) {
+    if (this.props.data && Object.keys(this.props.data).length > 0) {
       this.setState({
         dsoLocationDetails: this.props.data.state_details
       })
@@ -61,13 +63,14 @@ class DsoLocationForm extends React.Component {
 
 
   formatResponse(response) {
-    const cityList = response.cities.map((item) => {
-      return {
-        text: item.city_name,
-        value: item.id,
-        //stateId: item.StateId
-      }
-    })
+    // const cityList = response.cities.map((item) => {
+    //   return {
+    //     value: item.city_name,
+    //     id: item.id
+    //   }
+    // })
+
+    //console.log("city list", cityList)
 
     const stateList = response.states.map((item) => {
       return {
@@ -76,15 +79,15 @@ class DsoLocationForm extends React.Component {
       }
     })
 
-    this.setState({ stateList, cityList, stateMap: response.stateCity })
+    this.setState({ stateList, stateMap: response.stateCity })
   }
 
   updateCityList(stateId) {
     let cityList = this.state.stateMap[stateId].cities
     cityList = cityList.map((item) => {
       return {
-        text: item.city_name,
-        value: item.city_id
+        value: item.city_name,
+        id: item.city_id
       }
     })
     this.setState({ cityList })
@@ -122,7 +125,27 @@ class DsoLocationForm extends React.Component {
     }
   }
 
+  // setUnselectedCities(dsoLocationDetail) {
+  //   const deliverableCityList = item.city_list.trim().substring(0, item.city_list.length - 2).split(",")
+
+  //   let cityList = this.state.stateMap[item.state_id]
+
+  //   cityList = cityList.filter((item) => {
+  //     console.log("city", deliverableCityList.find((city) => item.text === city))
+  //     if(item.text !== deliverableCityList.find((city) => item.text === city)) {
+  //       return item
+  //     }
+  //   })
+
+  //   this.setState({
+  //     cityList,
+  //     deliverableCityList
+  //   })
+
+  // }
+
   handleRowClick(item) {
+    //this.setUnselectedCities(item)
     this.setState({
       selectedStateIdx: parseInt(item.state_id),
       regionalOfficeCity: item.reg_office_city,
@@ -130,7 +153,8 @@ class DsoLocationForm extends React.Component {
       name: item.reg_office_contact_name,
       email: item.reg_office_contact_email,
       phone: item.reg_office_contact_phone,
-      deliverableCityList: item.city_list.trim().substring(0, item.city_list.length - 2).split(",")
+      cityList: this.state.stateMap[item.state_id].cities.map((item) => {return {value: item.city_name}}),
+      deliverableCityList: item.city_list.trim().substring(0, item.city_list.length - 2).split(",").map((item) => item.trim())
     })
   }
 
@@ -197,6 +221,7 @@ class DsoLocationForm extends React.Component {
                   placeholder="state"
                   onChange={e => this.handleChange(e)}
                   value={this.state.selectedStateIdx}
+                  disabled={this.state.deliverableCityList.length > 0}
                 />
               </div>
               <div style={{ display: 'flex' }}>
@@ -312,20 +337,23 @@ class DsoLocationForm extends React.Component {
                  <span><Icon name="addIcon" /></span>
                  <Label>Add cities</Label>
                </div>
-               <Select
+               <MultiSelect
                  options={this.state.cityList}
                  name="City"
-                 large
-                 placeholder="city"
+                 multiple
+                 placeholder="Please choose city"
+                 selectedValues={this.state.deliverableCityList}
                  onChange={e => this.handleCityChange(e)}
                  value={this.state.selectedCityIdx}
+                 addOption={this.props.addCityToDso}
+                 removeOption={this.props.removeCityToDso}
                />
             </div>
             <div style={{marginTop: '20px'}}>
               <Button 
                 secondary 
                 onClick={() => this.handleSave()}
-                disabled={this.props.updatingDsoLocationDetails}
+                disabled={this.props.updatingDsoLocationDetails || this.props.creatingDsoLocationDetails}
               >
                 {
                   location.href.indexOf("edit") !== -1 ? 'Update' : 'Add State'

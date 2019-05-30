@@ -20,6 +20,7 @@ import DSOManagement from "Container/manage-dso"
 import CreateDso from "Container/dso-details/create-dso-details"
 import ViewDsoDetails from "Container/dso-details/view-dso-details"
 import EditDsoDetails from "Container/dso-details/edit-dso-details"
+import CreateLocationDetails from "Container/manage-locations/create-location"
 import ViewLocationDetails from "Container/manage-locations/view-location"
 import EditLocationDetails from "Container/manage-locations/edit-location"
 import OttpDetails from "Container/ottp-details"
@@ -228,6 +229,15 @@ class App extends React.Component {
                       render={
                         props => (
                           <EditLocationDetails {...props} />
+                        )
+                      }
+                    />
+                    <Route
+                      exact
+                      path="/home/dso/create-locations"
+                      render={
+                        props => (
+                          <CreateLocationDetails {...props} />
                         )
                       }
                     />

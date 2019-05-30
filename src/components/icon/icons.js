@@ -291,15 +291,39 @@ export default {
 		</svg>
 	),
 	'down-small': (
-		<svg width="10px" height="5px" viewBox="0 0 10 5" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
-			<g id="Rule-Engine" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
-				<g id="04-Rule-Engine-Edit" transform="translate(-537.000000, -429.000000)" fill="#3D70B2">
-					<g id="Group-2" transform="translate(310.000000, 288.000000)">
-						<polygon id="Shape" transform="translate(232.000000, 143.500000) scale(1, -1) translate(-232.000000, -143.500000) " points="227 146 232 141 237 146"></polygon>
-					</g>
-				</g>
+		// <svg width="10px" height="5px" viewBox="0 0 10 5" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
+		// 	<g id="Rule-Engine" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
+		// 		<g id="04-Rule-Engine-Edit" transform="translate(-537.000000, -429.000000)" fill="#3D70B2">
+		// 			<g id="Group-2" transform="translate(310.000000, 288.000000)">
+		// 				<polygon id="Shape" transform="translate(232.000000, 143.500000) scale(1, -1) translate(-232.000000, -143.500000) " points="227 146 232 141 237 146"></polygon>
+		// 			</g>
+		// 		</g>
+		// 	</g>
+		// </svg>
+		<svg width="10" height="5">
+			<defs>
+				<clipPath id="clip_0">
+					<rect x="-510" y="-244" width="1440" height="1004" clip-rule="evenodd"/>
+				</clipPath>
+			</defs>
+			<g clip-path="url(#clip_0)">
+				<path fill="rgb(45,63,73)" stroke="none" transform="matrix(1 0 0 -1 0 5)" d="M0 5L5 0L10 5L0 5Z"/>
 			</g>
+		
 		</svg>
+	),
+	'up-small': (
+	<svg width="10" height="5">
+		<defs>
+			<clipPath id="clip_0">
+				<rect x="-364" y="-824" width="1440" height="2519" clip-rule="evenodd"/>
+			</clipPath>
+		</defs>
+		<g clip-path="url(#clip_0)">
+			<path fill="rgb(45,63,73)" stroke="none" d="M0 5L5 0L10 5L0 5Z"/>
+		</g>
+
+	</svg>
 	),
 	'active': (
 		<svg width="8" height="8">
@@ -494,6 +518,18 @@ export default {
 				<path fill="none" stroke="rgb(255,80,80)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" transform="translate(5 9.45001)" d="M0 0L6 0L6 2.1L0 2.1L0 0Z" />
 			</g>
 
+		</svg>
+	),
+	redDeleteIcon: (
+		<svg width="20" height="20">
+			<defs>
+				<clipPath id="clip_0">
+					<rect x="-570" y="-657" width="1440" height="1234" clip-rule="evenodd"/>
+				</clipPath>
+			</defs>
+			<g clip-path="url(#clip_0)">
+				<path fill="rgb(255,80,80)" stroke="none" d="M0 10C0 4.4812 4.4812 0 10 0C15.5188 0 20 4.4812 20 10C20 15.5188 15.5188 20 10 20C4.4812 20 0 15.5188 0 10ZM17.9172 10.0016C17.9172 9.38748 17.4141 8.8828 16.8008 8.8828L3.1992 8.8828C2.58592 8.8828 2.0828 9.3875 2.0828 10.0016C2.0828 10.6148 2.58592 11.1172 3.1992 11.1172L16.8008 11.1172C17.4141 11.1172 17.9172 10.6148 17.9172 10.0016Z" fill-rule="evenodd"/>
+			</g>
 		</svg>
 	)
 }

@@ -18,6 +18,7 @@ const Select = (props) => {
         className={`select ${props.small ? 'small' : props.large ? 'large' : ''}`}
         name={props.name}
         onChange={handleChange}
+        disabled={props.disabled}
         style={{ width: props.width ? props.width : "225px" }}
         value={props.value !== -1 ? props.value : ""}
       >

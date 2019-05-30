@@ -1,10 +1,10 @@
 import { POST, GET } from 'Utils/fetch'
 //const ipAddress = "192.168.43.10"
 //const ipAddress = "183.82.32.28"
-const ottp = "https://7ef57341.ngrok.io"
-const dso = "https://53945c72.ngrok.io"
-const credit = "https://9e39c565.ngrok.io"
-const rule = "https://c55d2267.ngrok.io"
+const ottp = "https://a5080078.ngrok.io"
+const dso = "https://ba23a0fe.ngrok.io"
+const credit = "https://a0ac223a.ngrok.io"
+const rule = "https://5b16684d.ngrok.io"
 // const consumer = ""
 // const credit = ""
 
@@ -55,9 +55,36 @@ export function fetchDSOList(payload) {
   })
 }
 
+export function addCityToDso(payload) {
+  return POST({
+    api: `${dso}/livered/dso/addCityToDso`,
+    handleError: true,
+    prependBaseUrl: false,
+    data: payload
+  })
+}
+
+export function deleteCityToDso(payload) {
+  return POST({
+    api: `${dso}/livered/dso/deleteCityFromDso`,
+    handleError: true,
+    prependBaseUrl: false,
+    data: payload
+  })
+}
+
 export function fetchExciseList(payload) {
   return POST({
     api: `${dso}/livered/dso/listExcise`,
+    handleError: true,
+    prependBaseUrl: false,
+    data: payload
+  })
+}
+
+export function editDsoLocationDetails(payload) {
+  return POST({
+    api: `${dso}/livered/dso/updateDsoStateDetails`,
     handleError: true,
     prependBaseUrl: false,
     data: payload
@@ -110,15 +137,6 @@ export function createDsoDetails(payload) {
 }
 
 export function creatingDsoLocationDetails(payload) {
-  return POST({
-    api: `${dso}/livered/dso/createDsoDetails`,
-    handleError: true,
-    prependBaseUrl: false,
-    data: payload
-  })
-}
-
-export function editDsoLocationDetails(payload) {
   return POST({
     api: `${dso}/livered/dso/addDsoStateDetails`,
     handleError: true,
