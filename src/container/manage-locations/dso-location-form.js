@@ -196,6 +196,7 @@ class DsoLocationForm extends React.Component {
           handleCancel={this.props.handleCancel}
           disableBtn={this.props.updatingDsoLocationDetails || this.props.creatingDsoLocationDetails}
         />
+        <div style={{marginTop: '50px'}}>
           <DataTable
             loadingData={false}
             message="No states added"
@@ -419,6 +420,7 @@ class DsoLocationForm extends React.Component {
             </div>
            </React.Fragment>
           }
+          </div>
       </React.Fragment>
     )
   }

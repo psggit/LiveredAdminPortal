@@ -45,7 +45,7 @@ class Table extends React.Component {
   render() {
     const { headings, rows } = this.props;
     return (
-      <div className="table-wrapper">
+      <div className="table-wrapper" style={this.props.style}>
         <table className={`${this.props.className ? 'logs' : ''}`}>
           <thead>
             <tr>

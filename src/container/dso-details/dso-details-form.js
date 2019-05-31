@@ -160,7 +160,7 @@ class DsoDetailsForm extends React.Component {
           handleCancel={this.props.handleCancel}
           disableBtn={this.props.updatingDsoDetails || this.props.creatingDsoDetails}
         />
-        <div className="content-section">
+        <div className="content-section" style={{marginTop: '50px'}}>
           <div style={{ borderBottom: '1px solid #e2e5e8' }}>
             <div className="item">
               <Label>DSO</Label>

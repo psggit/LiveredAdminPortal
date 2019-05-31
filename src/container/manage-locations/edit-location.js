@@ -125,7 +125,7 @@ class EditLocation extends React.Component {
           {
             !loadingDsoDetails &&
             <React.Fragment>
-              <div id="dsoDetails" style={{ width: '100%' }}>
+              <div id="dsoDetails" style={{ width: '100%',position: 'relative' }}>
                 <DsoNavbar />
                 <div className="content">
                   <DsoLocationForm

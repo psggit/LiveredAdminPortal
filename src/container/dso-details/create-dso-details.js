@@ -59,7 +59,7 @@ class CreateDso extends React.Component {
           padding: '0px 60px'
         }}
         >
-          <div id="dsoDetails" style={{ width: '100%' }}>
+          <div id="dsoDetails" style={{ width: '100%', position: 'relative'  }}>
             <DsoNavbar navbarItems={this.navbarOptions} />
             <div className="content">
               <DsoDetailsForm
