@@ -2,7 +2,7 @@ import React from "react"
 import Button from "Components/button"
 import "./titlebar.scss"
 
-const Titlebar = ({ title, enableEdit, handleClick, handleCancel, disableBtn }) => {
+const Titlebar = ({ title, enableEdit, handleClick, handleCancel, disableBtn, handleSubmit }) => {
   return (
     <div className="title-section">
       <div>
@@ -21,13 +21,25 @@ const Titlebar = ({ title, enableEdit, handleClick, handleCancel, disableBtn }) 
         enableEdit &&
         <div className="button">
           <span style={{ marginRight: '10px' }}>
-            <Button
+            {
+              handleSubmit == undefined &&
+              <Button
               primary
               onClick={handleClick}
               disabled={disableBtn ? disableBtn : false}
             >
               Save
             </Button>
+            }
+            {
+              handleSubmit !== undefined &&
+              <Button
+              primary
+              disabled={disableBtn ? disableBtn : false}
+            >
+              Save
+            </Button>
+            }
           </span>
           <span><Button secondary onClick={handleCancel}>Cancel</Button></span>
         </div>

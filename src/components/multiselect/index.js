@@ -40,10 +40,10 @@ class Select extends React.Component {
     }));
   }
 
-  onDeleteOption(value) {
-    const id = this.props.options.find((item) => item.value === value).id
-    this.removeOption(value)
-    this.props.removeOption(id, value, this.addOption)
+  onDeleteOption(text) {
+    const id = this.props.options.find((item) => item.text === text).id
+    this.removeOption(text)
+    this.props.removeOption(id, text, this.addOption)
   }
 
   addOption(value) {
@@ -72,9 +72,9 @@ class Select extends React.Component {
     });
   }
 
-  onClickOption(value, id) {
-    this.addOption(value)
-    this.props.addOption(id, value, this.removeOption)
+  onClickOption(text, value) {
+    this.addOption(text)
+    this.props.addOption(value, text, this.removeOption)
   }
 
   // removeOption(value) {
@@ -127,16 +127,17 @@ class Select extends React.Component {
 
   renderOption(option, index) {
     const { values } = this.state;
-    const { value, id } = option;
-    const selected = values.includes(value);
+    // const { value, id } = option;
+    const {text, value} = option;
+    const selected = values.includes(text);
     return (
       <div
-        key={value}
+        key={text}
         className={`option ${selected ? "selected" : ""}`}
-        onClick={() => this.onClickOption(value, id)}
+        onClick={() => this.onClickOption(text, value)}
       >
         <span className="checkbox">{selected ? <Check /> : null}</span>
-        {value}
+        {text}
       </div>
     );
   }

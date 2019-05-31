@@ -40,7 +40,7 @@ class CreateLocation extends React.Component {
       dso_id: getQueryObjByName("id"),
       service_status: true,
       state_id: data.selectedStateIdx,
-      reg_office_city: data.regionalOfficeCity,
+      reg_office_city_id: data.selectedRegionalCityIdx,
       reg_office_address: data.regionalOfficeAddress,
       reg_office_contact_name: data.name,
       reg_office_contact_email: data.email,
@@ -48,7 +48,8 @@ class CreateLocation extends React.Component {
     })
       .then((response) => {
         this.setState({ creatingDsoLocationDetails: false })
-        this.props.history.push(`/home/dso-management`)
+        //this.props.history.push(`/home/dso-management`)
+        this.props.history.push(`/home/dso/view-locations?id=${getQueryObjByName("id")}&name=${getQueryObjByName("name")}`)
       })
       .catch((err) => {
         this.setState({ creatingDsoLocationDetails: false })

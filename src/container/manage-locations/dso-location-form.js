@@ -22,8 +22,10 @@ class DsoLocationForm extends React.Component {
       deliverableCityList: [],
       selectedStateIdx: -1,
       selectedCityIdx: -1,
+      selectedRegionalCityIdx: -1,
       regionalOfficeCity: "",
       regionalOfficeAddress: "",
+      deliveryStatus: true,
       name: "",
       email: "",
       phone: ""
@@ -32,10 +34,12 @@ class DsoLocationForm extends React.Component {
     this.handleTextFieldChange = this.handleTextFieldChange.bind(this)
     this.getData = this.getData.bind(this)
     this.formatResponse = this.formatResponse.bind(this)
-    this.handleChange = this.handleChange.bind(this)
-    this.handleRowClick = this.handleRowClick.bind(this)
+    this.handleStateChange = this.handleStateChange.bind(this)
     this.handleCityChange = this.handleCityChange.bind(this)
+    this.handleRowClick = this.handleRowClick.bind(this)
+    this.handleRegionalOfficeCityChange = this.handleRegionalOfficeCityChange.bind(this)
     this.updateCityList = this.updateCityList.bind(this)
+    this.toggleDeliveryStatus = this.toggleDeliveryStatus.bind(this)
     //this.setUnselectedCities = this.setUnselectedCities.bind(this)
     this.handleSave = this.handleSave.bind(this)
   }
@@ -86,8 +90,10 @@ class DsoLocationForm extends React.Component {
     let cityList = this.state.stateMap[stateId].cities
     cityList = cityList.map((item) => {
       return {
-        value: item.city_name,
-        id: item.city_id
+        // value: item.city_name,
+        // id: item.city_id
+        text: item.city_name,
+        value:  item.city_id
       }
     })
     this.setState({ cityList })
@@ -97,7 +103,13 @@ class DsoLocationForm extends React.Component {
     return this.state
   }
 
-  handleChange(e) {
+  handleRegionalOfficeCityChange(e) {
+    this.setState({
+      selectedRegionalCityIdx: parseInt(e.target.value)
+    })
+  }
+
+  handleStateChange(e) {
     this.setState({
       selectedStateIdx: parseInt(e.target.value)
     })
@@ -110,10 +122,16 @@ class DsoLocationForm extends React.Component {
     })
   }
 
+  toggleDeliveryStatus() {
+    this.setState({
+      deliveryStatus: !this.state.deliveryStatus
+    })
+  }
+
   handleSave() {
     if(this.props.enableEdit) {
       this.setState({
-        regionalOfficeCity: this.regOfficeCity.state.value,
+        regionalOfficeCity: this.state.selectedRegionalCityIdx,
         name: this.name.state.value,
         email: this.email.state.value,
         phone: this.phone.state.value
@@ -148,12 +166,14 @@ class DsoLocationForm extends React.Component {
     //this.setUnselectedCities(item)
     this.setState({
       selectedStateIdx: parseInt(item.state_id),
+      selectedRegionalCityIdx: item.reg_office_city_id,
+      deliveryStatus: item.service_status,
       regionalOfficeCity: item.reg_office_city,
       regionalOfficeAddress: item.reg_office_address,
       name: item.reg_office_contact_name,
       email: item.reg_office_contact_email,
       phone: item.reg_office_contact_phone,
-      cityList: this.state.stateMap[item.state_id].cities.map((item) => {return {value: item.city_name}}),
+      cityList: this.state.stateMap[item.state_id].cities.map((item) => {return {text: item.city_name, value: item.city_id}}),
       deliverableCityList: item.city_list.trim().substring(0, item.city_list.length - 2).split(",").map((item) => item.trim())
     })
   }
@@ -192,7 +212,10 @@ class DsoLocationForm extends React.Component {
               this.state.dsoLocationDetails.length > 0 &&
               this.state.dsoLocationDetails.map((item) => {
                 return (
-                  <tr className={`clickable ${this.state.selectedStateIdx === item.state_id ? 'highlight' : ''}`} onClick={() => this.handleRowClick(item)}>
+                  <tr 
+                    className={`clickable ${this.state.selectedStateIdx === item.state_id ? 'highlight' : ''}`} 
+                    onClick={this.props.action === "edit" ? () => this.handleRowClick(item) : ()=>{}}
+                  >
                     <td>{item.state_name}</td>
                     <td>{item.city_list.substring(0, (item.city_list.length - 1))}</td>
                     <td>{item.reg_office_city}</td>
@@ -219,10 +242,35 @@ class DsoLocationForm extends React.Component {
                   options={this.state.stateList}
                   name="State"
                   placeholder="state"
-                  onChange={e => this.handleChange(e)}
+                  onChange={e => this.handleStateChange(e)}
                   value={this.state.selectedStateIdx}
                   disabled={this.state.deliverableCityList.length > 0}
                 />
+              </div>
+              <div className="item">
+                <Label
+                  icon="info"
+                  tooltipText="Minimum legal age limit to place an order"
+                >
+                  Delivery Status
+                </Label>
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  {
+                    this.state.deliveryStatus
+                      ? <span style={{ marginRight: '10px' }} onClick={this.props.enableEdit ? () => this.toggleDeliveryStatus() : () => { }}>
+                        <Icon name="toggleGreen" />
+                      </span>
+                      : <span style={{ marginRight: '10px' }} onClick={this.props.enableEdit ? () => this.toggleDeliveryStatus() : () => { }}>
+                        <Icon name="toggleRed" />
+                      </span>
+                  }
+                  <span
+                    onClick={this.props.enableEdit ? () => this.toggleDeliveryStatus() : () => { }}
+                    style={{ cursor: this.props.enableEdit ? 'pointer' : 'default' }}
+                  >
+                    {this.state.deliveryStatus ? "Enabled" : "Disabled"}
+                  </span>
+                </div>
               </div>
               <div style={{ display: 'flex' }}>
                 <div style={{ width: '50%' }}>
@@ -237,7 +285,16 @@ class DsoLocationForm extends React.Component {
                       onChange={this.handleTextFieldChange}
                       disabled={!this.props.enableEdit}
                     /> */}
-                    <TextInput
+                    <Select
+                      options={this.state.cityList}
+                      name="regionalOfficeCity"
+                      placeholder="city"
+                      onChange={e => this.handleRegionalOfficeCityChange(e)}
+                      value={this.state.selectedRegionalCityIdx}
+                      disabled={!this.props.enableEdit}
+                      // ref={input => (this.regOfficeCity = input)}
+                    />
+                    {/* <TextInput
                       ref={input => (this.regOfficeCity = input)}
                       name="regionalOfficeCity"
                       pattern="[a-zA-Z]*"
@@ -247,7 +304,7 @@ class DsoLocationForm extends React.Component {
                       disabled={!this.props.enableEdit}
                       errorMessage="City is invalid"
                       emptyMessage="City is required"
-                    />
+                    /> */}
                   </div>
                   <div className="item">
                     <Label>Address</Label>
@@ -344,7 +401,7 @@ class DsoLocationForm extends React.Component {
                  placeholder="Please choose city"
                  selectedValues={this.state.deliverableCityList}
                  onChange={e => this.handleCityChange(e)}
-                 value={this.state.selectedCityIdx}
+                 //value={this.state.selectedCityIdx}
                  addOption={this.props.addCityToDso}
                  removeOption={this.props.removeCityToDso}
                />

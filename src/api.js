@@ -163,6 +163,15 @@ export function changeOrderStatus(payload) {
   })
 }
 
+export function addDsoCredits(payload) {
+  return POST({
+    api: `${credit}/livered/credits/addCredit`,
+    handleError: true,
+    prependBaseUrl: false,
+    data: payload
+  })
+}
+
 export function toggleDeliveryStatus(payload) {
   return POST({
     api: `${dso}/livered/dso/changeDsoStatus`,

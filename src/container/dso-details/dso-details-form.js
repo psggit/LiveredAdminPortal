@@ -4,6 +4,8 @@ import Label from "Components/label"
 import Icon from "Components/icon"
 import TextInput from "Components/textInput"
 import TitleBar from "Components/titlebar"
+import Select from "Components/select"
+import {fetchStateAndCitiesList} from "./../../api"
 
 class DsoDetailsForm extends React.Component {
   constructor() {
@@ -14,7 +16,9 @@ class DsoDetailsForm extends React.Component {
       licenseType: "",
       licenseStatus: "",
       licenseExpiry: "",
-      headOfficeCity: "",
+      //headOfficeCity: "",
+      selectedCityIdx: -1,
+      cityList: [],
       headOfficeAddress: "",
       name: "",
       email: "",
@@ -27,6 +31,9 @@ class DsoDetailsForm extends React.Component {
     this.setLicenseStatus = this.setLicenseStatus.bind(this)
     this.handleSave = this.handleSave.bind(this)
     this.getData = this.getData.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+    this.fetchCityAndStates = this.fetchCityAndStates.bind(this)
+    // this.formatResponse = this.formatResponse.bind(this)
     this.toggleDeliveryStatus = this.toggleDeliveryStatus.bind(this)
     this.handleTextFieldChange = this.handleTextFieldChange.bind(this)
   }
@@ -41,6 +48,7 @@ class DsoDetailsForm extends React.Component {
         deliveryStatus: data.is_active,
         licenseStatus: data.license_status,
         licenseExpiry: data.license_expiry.slice(0, 10),
+        selectedCityIdx: data.head_office.city_id,
         // headOfficeCity: data.head_office.city,
         headOfficeAddress: data.head_office.address,
         // name: data.head_office.contact.name,
@@ -50,7 +58,38 @@ class DsoDetailsForm extends React.Component {
         isNotValidated: !data.license_status ? true : false
       })
     }
+    if(this.props.enableEdit) {
+      this.fetchCityAndStates()
+    }
   }
+
+  fetchCityAndStates() {
+    fetchStateAndCitiesList()
+      .then((response) => {
+        const cityList = response.cities.map((item) => {
+          return {
+            text: item.city_name,
+            value: item.id
+          }
+        })
+        console.log("city lis", cityList)
+        this.setState({cityList})
+      })
+      .catch((err) => {
+        console.log("Error in fetching state and cities")
+      })
+  }
+
+  // formatResponse() {
+  //   const cityList = response.cities.map((item) => {
+  //     return {
+  //       text: item.city_name,
+  //       value: item.id
+  //     }
+  //   })
+  //   console.log("city lis", cityList)
+  //   this.setState({cityList})
+  // }
 
   setLicenseStatus(status) {
     if (status === "validated") {
@@ -63,6 +102,12 @@ class DsoDetailsForm extends React.Component {
   toggleDeliveryStatus() {
     this.setState({
       deliveryStatus: !this.state.deliveryStatus
+    })
+  }
+
+  handleChange(e) {
+    this.setState({
+      selectedCityIdx: parseInt(e.target.value)
     })
   }
 
@@ -81,7 +126,7 @@ class DsoDetailsForm extends React.Component {
       if(!this.dsoName.state.errorStatus && this.dsoName.state.touched &&
         !this.entityType.state.errorStatus && this.entityType.state.touched &&
         !this.licenseType.state.errorStatus && this.licenseType.state.touched && 
-        !this.headOfficeCity.state.errorStatus && this.headOfficeCity.state.touched &&
+        //!this.headOfficeCity.state.errorStatus && this.headOfficeCity.state.touched &&
         !this.name.state.errorStatus && this.name.state.touched &&
         !this.email.state.errorStatus && this.email.state.touched &&
         !this.phone.state.errorStatus && this.phone.state.touched
@@ -90,7 +135,7 @@ class DsoDetailsForm extends React.Component {
           dsoName: this.dsoName.state.value,
           entityType: this.entityType.state.value,
           licenseType: this.licenseType.state.value,
-          headOfficeCity: this.headOfficeCity.state.value,
+          //headOfficeCity: this.headOfficeCity.state.value,
           name: this.name.state.value,
           email: this.email.state.value,
           phone: this.phone.state.value
@@ -261,7 +306,16 @@ class DsoDetailsForm extends React.Component {
               <p className="header">Headquarters</p>
               <div className="item">
                 <Label>City</Label>
-                <TextInput
+                <Select
+                  options={this.state.cityList}
+                  name="headOfficeCity"
+                  placeholder="city"
+                  onChange={e => this.handleChange(e)}
+                  value={this.state.selectedCityIdx}
+                  disabled={!this.props.enableEdit}
+                  // ref={input => (this.regOfficeCity = input)}
+                />
+                {/* <TextInput
                   ref={input => (this.headOfficeCity = input)}
                   name="headOfficeCity"
                   pattern="[a-zA-Z]*"
@@ -271,7 +325,7 @@ class DsoDetailsForm extends React.Component {
                   disabled={!this.props.enableEdit}
                   errorMessage="City is invalid"
                   emptyMessage="City is required"
-                />
+                /> */}
               </div>
               <div className="item">
                 <Label>Address</Label>

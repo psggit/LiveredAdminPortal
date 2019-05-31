@@ -10,27 +10,32 @@ import { getQueryObjByName, getQueryUri } from "Utils/url-utils"
 import DataTable from "Components/table/custom-table"
 import DsoNavbar from "../dso-details/dso-navbar"
 import TitleBar from "Components/titlebar"
+import { POST, GET } from 'Utils/fetch'
+import Notify from "Components/notification"
 
 const creditTableHeaders = [
   { title: "Transaction ID", icon: "" },
   { title: "Date", icon: "" },
   { title: "Time", icon: "", tooltipText: "" },
-  { title: "Mode of Payment", icon: "", tooltipText: "" },
   { title: "Total Amount", icon: "", tooltipText: "" }
 ]
+const dso = "https://ba23a0fe.ngrok.io"
+let uploadedImageUrl = ""
 
 const EditCredits = (props) => {
   const pageLimit = parseInt(getQueryObjByName("limit")) || 10
   const pageNo = parseInt(getQueryObjByName("activePage")) || 1
   const [activePage, setActivePage] = useState(pageNo)
-  const [amount, setAmount] = useState(0)
+  const [amount, setAmount] = useState()
   const [uploadingImage, setUploadingImage] = useState(false)
   const [loadingCredits, setLoadingCredits] = useState(true)
   const [enableEdit, setEnableEdit] = useState(true)
-  const [file, setFile] = useState()
+  const [addingCredits, setAddingCredits] = useState(false)
+  const [file, setFile] = useState({})
   const [creditsData, setCreditsData] = useState([])
   const [creditsDataCount, setCreditsDataCount] = useState(0)
   const [limit, setLimit] = useState(pageLimit)
+  const [dsoId, setDsoId] = useState(getQueryObjByName("id"))
   const [dsoName, setDsoName] = useState(getQueryObjByName("name")) || ""
 
   /**
@@ -62,6 +67,24 @@ const EditCredits = (props) => {
       })
   }
 
+  const addDsoCredits = () => {
+    setAddingCredits(true)
+    Api.addDsoCredits({
+      dso_id: dsoId,
+      amount: parseFloat(amount),
+      supporting_document: uploadedImageUrl
+    })
+      .then((response) => {
+        setAddingCredits(false)
+        props.history.push(`/home/dso/view-credits?id=${getQueryObjByName("id")}&name=${getQueryObjByName("name")}`)
+      })
+      .catch((err) => {
+        setAddingCredits(false)
+        //Notify(err.message, "warning")
+        console.log("Error in adding credits", err)
+      })
+  }
+
   /**
    * Navigates to next page
    * @param {object} pagerObj - Passed from pagination component
@@ -78,12 +101,12 @@ const EditCredits = (props) => {
       limit: pagerObj.pageSize
     }
 
-    props.history.push(`/home/view-credits?${getQueryUri(queryParamsObj)}`)
+    props.history.push(`/home/dso/view-credits?${getQueryUri(queryParamsObj)}`)
   }
 
   const toggleEnableEdit = () => {
     setEnableEdit(false)
-    props.history.push(`/home/view-credits?id=${getQueryObjByName("id")}&name=${getQueryObjByName("name")}`)
+    props.history.push(`/home/dso/view-credits?id=${getQueryObjByName("id")}&name=${getQueryObjByName("name")}`)
   }
 
   const handleTextFieldChange = (e) => {
@@ -95,26 +118,35 @@ const EditCredits = (props) => {
 
   const handleUploadChange = (e) => {
     const file = e.target.files[0]
-    console.log("file", file)
+    // console.log("file", file)
     setFile(file)
-    submitUploadedImage()
+    submitUploadedImage(file)
   }
 
-  const submitUploadedImage = () => {
+  const handleSubmit = e => {
+    console.log("submittting")
+    e.preventDefault()
+    addDsoCredits()
+  }
+
+  const submitUploadedImage = (file) => {
     const formData = new FormData()
+    console.log("file", file)
     formData.append('file', file)
     setUploadingImage(true)
-    // POST({
-    //   api: '/upload',
-    //   type: 'FormData',
-    //   apiBase: 'api2',
-    //   data: formData,
-    //   handleError: true
-    // })
-    //   .then((json) => {
-    //     this.uploadedImageUrl = `${Api.api2}/get?fs_url=${json[0]}`
-    //     this.setState({ isImageUploaded: true, isImageUploading: false, image_url: json[0] })
-    //   })
+    POST({
+      api: `${dso}/livered/dso/uploadFile`,
+      type: 'FormData',
+      data: formData,
+      prependBaseUrl: false,
+      handleError: true
+    })
+      .then((json) => {
+        console.log("json", json)
+        setUploadingImage(false)
+        uploadedImageUrl = json.url
+        // this.setState({ isImageUploaded: true, isImageUploading: false, image_url: json[0] })
+      })
   }
 
   return (
@@ -129,16 +161,11 @@ const EditCredits = (props) => {
         width: '100%'
       }}
       >
-        <div id="credits" style={{ width: '100%' }}>
+        <div id="credits" style={{ width: '100%', position: 'relative' }}>
           <DsoNavbar />
-          <div className="content">
-            <TitleBar
-              title="Edit Credits"
-              enableEdit={enableEdit}
-              handleCancel={toggleEnableEdit}
-            />
+          <div className="content"> 
             {(
-              <div>
+              <div style={{marginTop: '50px'}}>
                 <Pagination
                   activePage={activePage}
                   pageSize={limit}
@@ -148,7 +175,7 @@ const EditCredits = (props) => {
               </div>
             )}
             {
-              <div style={{ overflow: 'auto' }}>
+              <div style={{ overflow: 'auto'}}>
                 <DataTable
                   headings={creditTableHeaders}
                   loadingData={loadingCredits}
@@ -162,7 +189,6 @@ const EditCredits = (props) => {
                           <td>{item.transaction_id}</td>
                           <td>{Moment(item.created_at).format("DD-MM-YYYY")}</td>
                           <td>{Moment(item.created_at).format("h:mm A")}</td>
-                          <td>{item.payment_mode}</td>
                           <td>{item.amount}</td>
                         </tr>
                       )
@@ -171,36 +197,46 @@ const EditCredits = (props) => {
                 </DataTable>
               </div>
             }
-            <div className="item">
-              <div className="icon">
-                <span><Icon name="addIcon" /></span>
-                <Label>Add credits</Label>
-              </div>
-            </div>
-            <div className="item">
-              <Label>Amount</Label>
-              <input
-                type="text"
-                name="amount"
-                pattern="[0-9]*"
-                value={amount}
-                onChange={(e) => handleTextFieldChange(e)}
+            <form onSubmit={handleSubmit} id="edit-credits-form">
+              <TitleBar
+                title="Edit Credits"
+                enableEdit={enableEdit}
+                handleCancel={toggleEnableEdit}
+                //handleClick={addDsoCredits}
+                disableBtn={addingCredits || uploadingImage}
               />
-            </div>
-            <div className="item">
-              <Label>Upload supporting document</Label>
-              {
-                <div class="input-group">
-                  <input type="text" className="form-control" value={file ? file.name : ""} readonly />
-                  <div className="input-group-btn">
-                    <span className="fileUpload">
-                      <Button primary>UPLOAD</Button>
-                      <input type="file" className="upload up" id="up" onChange={handleUploadChange} />
-                    </span>
-                  </div>
+              <div className="item">
+                <div className="icon">
+                  <span><Icon name="addIcon" /></span>
+                  <Label>Add credits</Label>
                 </div>
-              }
-            </div>
+              </div>
+              <div className="item">
+                <Label>Amount</Label>
+                <input
+                  required
+                  type="text"
+                  name="amount"
+                  pattern="[0-9.]*"
+                  value={amount}
+                  onChange={(e) => handleTextFieldChange(e)}
+                />
+              </div>
+              <div className="item">
+                <Label>Upload supporting document</Label>
+                {
+                  <div class="input-group">
+                    <input type="text" className="form-control" value={file ? file.name : ""} readonly />
+                    <div className="input-group-btn">
+                      <span className="fileUpload">
+                        <Button primary disabled={uploadingImage}>UPLOAD</Button>
+                        <input type="file" className="upload up" id="up" onChange={handleUploadChange} />
+                      </span>
+                    </div>
+                  </div>
+                }
+              </div>
+            </form>
           </div>
         </div>
       </div>

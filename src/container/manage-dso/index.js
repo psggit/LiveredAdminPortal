@@ -188,7 +188,7 @@ const ManageDSO = (props) => {
                     <tr key={i} onClick={() => { handleRowClick(item) }} className="clickable">
                       <td>{item.dso_name}</td>
                       <td>{item.head_office.city}</td>
-                      <td></td>
+                      <td>{item.state_servicable ? item.state_servicable.join(",") : ''}</td>
                       <td>{item.is_validated ? "Validated" : "Not Validated"}</td>
                       <td>{item.is_active ? "Enabled" : "Disabled"}</td>
                     </tr>

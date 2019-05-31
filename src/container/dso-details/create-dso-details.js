@@ -32,7 +32,7 @@ class CreateDso extends React.Component {
       license_type: data.licenseType,
       license_status: data.licenseStatus,
       license_expiry: new Date(data.licenseExpiry).toISOString(),
-      head_office_city: data.headOfficeCity,
+      head_office_city_id: data.selectedCityIdx,
       head_office_address: data.headOfficeAddress,
       head_office_contact_name: data.name,
       head_office_contact_email: data.email,

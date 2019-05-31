@@ -38,8 +38,8 @@ class EditLocation extends React.Component {
     Api.editDsoLocationDetails({
       dso_id: getQueryObjByName("id"),
       state_id: data.selectedStateIdx,
-      service_status: true,
-      reg_office_city_id: 1,
+      service_status: data.deliveryStatus,
+      reg_office_city_id: data.selectedRegionalCityIdx,
       reg_office_address: data.regionalOfficeAddress,
       reg_office_contact_name: data.name,
       reg_office_contact_email: data.email,
@@ -49,7 +49,7 @@ class EditLocation extends React.Component {
         // this.toggleEdit()
         this.setState({ updatingDsoLocationDetails: false })
         //location.reload()
-        this.props.history.push(`/home/dso-management`)
+        this.props.history.push(`/home/dso/view-locations?id=${getQueryObjByName("id")}&name=${getQueryObjByName("name")}`)
       })
       .catch((err) => {
         this.setState({ updatingDsoLocationDetails: false })

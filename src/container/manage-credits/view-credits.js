@@ -13,7 +13,6 @@ const creditTableHeaders = [
   { title: "Transaction ID", icon: "" },
   { title: "Date", icon: "" },
   { title: "Time", icon: "", tooltipText: "" },
-  { title: "Mode of Payment", icon: "", tooltipText: "" },
   { title: "Total Amount", icon: "", tooltipText: "" }
 ]
 
@@ -91,7 +90,7 @@ const ViewCredits = (props) => {
         width: '100%'
       }}
       >
-        <div id="credits" style={{ width: '100%' }}>
+        <div id="credits" style={{ width: '100%', position: 'relative' }}>
           <DsoNavbar />
           <div className="content">
             <TitleBar
@@ -100,7 +99,7 @@ const ViewCredits = (props) => {
               handleClick={handleEdit}
             />
             {(
-              <div>
+              <div style={{marginTop: '50px'}}>
                 <Pagination
                   activePage={activePage}
                   pageSize={limit}
@@ -124,7 +123,6 @@ const ViewCredits = (props) => {
                           <td>{item.transaction_id}</td>
                           <td>{Moment(item.created_at).format("DD-MM-YYYY")}</td>
                           <td>{Moment(item.created_at).format("h:mm A")}</td>
-                          <td>{item.payment_mode}</td>
                           <td>{item.amount}</td>
                         </tr>
                       )
