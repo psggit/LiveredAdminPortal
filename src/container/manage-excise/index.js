@@ -126,10 +126,6 @@ const ManageExcise = (props) => {
     setExciseName("")
   }
 
-  // const handleRowClick = (data) => {
-  //   props.history.push(`/home/dso/view-details?id=${data.dso_id}&name=${data.dso_name}`)
-  // }
-
   return (
     <React.Fragment >
       <PageHeader pageName="Excise Departments" />
@@ -148,9 +144,9 @@ const ManageExcise = (props) => {
           handleSearch={handleSearch}
           clearSearch={clearSearchResults}
         />
-         <Button custom
+        <Button custom
           icon="addWhiteIcon"
-          onClick={() => {}}
+          onClick={() => { }}
         >
           Add new
         </Button>

@@ -28,9 +28,6 @@ class CreateLocation extends React.Component {
       loadingDsoDetails: true,
       dsoName: getQueryObjByName("name")
     })
-    // this.fetchDsoDetails({
-    //   dso_id: getQueryObjByName("id")
-    // })
   }
 
   createDsoLocationDetails() {
@@ -48,7 +45,6 @@ class CreateLocation extends React.Component {
     })
       .then((response) => {
         this.setState({ creatingDsoLocationDetails: false })
-        //this.props.history.push(`/home/dso-management`)
         this.props.history.push(`/home/dso/view-locations?id=${getQueryObjByName("id")}&name=${getQueryObjByName("name")}`)
       })
       .catch((err) => {

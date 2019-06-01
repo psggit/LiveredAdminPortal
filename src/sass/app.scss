@@ -114,6 +114,10 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
   cursor: pointer;
 }
 
+input.pristine:invalid {
+  border: 1px solid #d0021b;
+}
+
 input.error {
   border: 1px solid #d0021b !important;
 }

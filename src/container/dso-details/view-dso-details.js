@@ -66,8 +66,6 @@ class dsoDetails extends React.Component {
                 <div className="content">
                   <DsoDetailsForm
                     data={dsoDetailsData}
-                    // buttonTitle="Edit"
-                    // title="Basic Details"
                     action="view"
                     enableEdit={false}
                     handleClick={this.handleEdit}

@@ -1,10 +1,10 @@
 import { POST, GET } from 'Utils/fetch'
 //const ipAddress = "192.168.43.10"
 //const ipAddress = "183.82.32.28"
-const ottp = "https://a5080078.ngrok.io"
-const dso = "https://ba23a0fe.ngrok.io"
-const credit = "https://a0ac223a.ngrok.io"
-const rule = "https://5b16684d.ngrok.io"
+const ottp = "https://85598819.ngrok.io"
+const dso = "https://a05cdc47.ngrok.io"
+const credit = "https://8bca0046.ngrok.io"
+const rule = "https://bc6d119c.ngrok.io"
 // const consumer = ""
 // const credit = ""
 

@@ -110,7 +110,7 @@ const EditCredits = (props) => {
   }
 
   const handleTextFieldChange = (e) => {
-    console.log("e.validity", e.target.validity)
+    document.getElementById([e.target.name]).className = "pristine"
     if (!e.target.validity.patternMismatch) {
       setAmount(e.target.value)
     }
@@ -118,20 +118,17 @@ const EditCredits = (props) => {
 
   const handleUploadChange = (e) => {
     const file = e.target.files[0]
-    // console.log("file", file)
     setFile(file)
     submitUploadedImage(file)
   }
 
   const handleSubmit = e => {
-    console.log("submittting")
     e.preventDefault()
     addDsoCredits()
   }
 
   const submitUploadedImage = (file) => {
     const formData = new FormData()
-    console.log("file", file)
     formData.append('file', file)
     setUploadingImage(true)
     POST({
@@ -142,10 +139,8 @@ const EditCredits = (props) => {
       handleError: true
     })
       .then((json) => {
-        console.log("json", json)
         setUploadingImage(false)
         uploadedImageUrl = json.url
-        // this.setState({ isImageUploaded: true, isImageUploading: false, image_url: json[0] })
       })
   }
 
@@ -163,9 +158,9 @@ const EditCredits = (props) => {
       >
         <div id="credits" style={{ width: '100%', position: 'relative' }}>
           <DsoNavbar />
-          <div className="content"> 
+          <div className="content">
             {(
-              <div style={{marginTop: '50px'}}>
+              <div style={{ marginTop: '50px' }}>
                 <Pagination
                   activePage={activePage}
                   pageSize={limit}
@@ -175,7 +170,7 @@ const EditCredits = (props) => {
               </div>
             )}
             {
-              <div style={{ overflow: 'auto'}}>
+              <div style={{ overflow: 'auto' }}>
                 <DataTable
                   headings={creditTableHeaders}
                   loadingData={loadingCredits}
@@ -197,7 +192,7 @@ const EditCredits = (props) => {
                 </DataTable>
               </div>
             }
-            <form onSubmit={handleSubmit} id="edit-credits-form">
+            <form onSubmit={handleSubmit}>
               <TitleBar
                 title="Edit Credits"
                 enableEdit={enableEdit}
@@ -214,6 +209,7 @@ const EditCredits = (props) => {
               <div className="item">
                 <Label>Amount</Label>
                 <input
+                  id="amount"
                   required
                   type="text"
                   name="amount"

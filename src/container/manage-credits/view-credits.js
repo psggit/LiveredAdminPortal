@@ -30,6 +30,7 @@ const ViewCredits = (props) => {
    * Payload for fetching credit list
    */
   const creditsReqParams = {
+    dso_id: getQueryObjByName("id"),
     limit,
     offset: limit * parseInt(activePage - 1)
   }
@@ -99,7 +100,7 @@ const ViewCredits = (props) => {
               handleClick={handleEdit}
             />
             {(
-              <div style={{marginTop: '50px'}}>
+              <div style={{ marginTop: '50px' }}>
                 <Pagination
                   activePage={activePage}
                   pageSize={limit}

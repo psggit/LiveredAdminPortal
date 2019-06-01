@@ -30,7 +30,6 @@ class ViewLocation extends React.Component {
   fetchDsoDetails(payload) {
     Api.fetchDsoDetails(payload)
       .then((response) => {
-        console.log("response", response.dso)
         this.setState({
           dsoDetailsData: response.dso,
           loadingDsoDetails: false

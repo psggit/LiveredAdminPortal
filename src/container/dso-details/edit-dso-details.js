@@ -80,7 +80,6 @@ class EditDsoDetails extends React.Component {
 
   render() {
     const { dsoName, updatingDsoDetails, dsoDetailsData, loadingDsoDetails } = this.state
-    //console.log("state", this.state.enableEdit)
     return (
       <React.Fragment>
         <PageHeader pageName="Delivery Service Operators" text={dsoName} />
@@ -101,8 +100,6 @@ class EditDsoDetails extends React.Component {
                   <DsoDetailsForm
                     ref={(node) => { this.dsoDetailsForm = node }}
                     data={dsoDetailsData}
-                    // buttonTitle="Edit"
-                    // title="Edit Basic Details"
                     updatingDsoDetails={updatingDsoDetails}
                     enableEdit={true}
                     action="edit"

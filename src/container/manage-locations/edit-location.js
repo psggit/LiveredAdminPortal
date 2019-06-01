@@ -34,7 +34,6 @@ class EditLocation extends React.Component {
   editDsoLocationDetails() {
     this.setState({ updatingDsoLocationDetails: true })
     const data = this.dsoLocationForm.getData()
-    console.log("data", data)
     Api.editDsoLocationDetails({
       dso_id: getQueryObjByName("id"),
       state_id: data.selectedStateIdx,
@@ -46,9 +45,7 @@ class EditLocation extends React.Component {
       reg_office_contact_phone: data.phone
     })
       .then((response) => {
-        // this.toggleEdit()
         this.setState({ updatingDsoLocationDetails: false })
-        //location.reload()
         this.props.history.push(`/home/dso/view-locations?id=${getQueryObjByName("id")}&name=${getQueryObjByName("name")}`)
       })
       .catch((err) => {
@@ -60,7 +57,6 @@ class EditLocation extends React.Component {
   fetchDsoDetails(payload) {
     Api.fetchDsoDetails(payload)
       .then((response) => {
-        console.log("response", response.dso)
         this.setState({
           dsoDetailsData: response.dso,
           loadingDsoDetails: false
@@ -72,7 +68,6 @@ class EditLocation extends React.Component {
   }
 
   handleCancel() {
-    console.log("name", this.state.dsoName)
     this.props.history.push(`/home/dso-management`)
   }
 
@@ -125,7 +120,7 @@ class EditLocation extends React.Component {
           {
             !loadingDsoDetails &&
             <React.Fragment>
-              <div id="dsoDetails" style={{ width: '100%',position: 'relative' }}>
+              <div id="dsoDetails" style={{ width: '100%', position: 'relative' }}>
                 <DsoNavbar />
                 <div className="content">
                   <DsoLocationForm

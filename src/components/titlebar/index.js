@@ -21,25 +21,13 @@ const Titlebar = ({ title, enableEdit, handleClick, handleCancel, disableBtn, ha
         enableEdit &&
         <div className="button">
           <span style={{ marginRight: '10px' }}>
-            {
-              handleSubmit == undefined &&
-              <Button
+            <Button
               primary
               onClick={handleClick}
               disabled={disableBtn ? disableBtn : false}
             >
               Save
             </Button>
-            }
-            {
-              handleSubmit !== undefined &&
-              <Button
-              primary
-              disabled={disableBtn ? disableBtn : false}
-            >
-              Save
-            </Button>
-            }
           </span>
           <span><Button secondary onClick={handleCancel}>Cancel</Button></span>
         </div>
