@@ -4,12 +4,10 @@ import Icon from './../icon'
 
 const Select = (props) => {
   //const [value, setValue] = useState("")
-
   const handleChange = (e) => {
     //setValue(e.target.value)
     props.onChange(e)
   }
-  console.log("props", props)
   return (
     <div className="select--container">
       <Icon name="down-small" size="10" />

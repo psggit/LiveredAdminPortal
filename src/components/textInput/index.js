@@ -18,9 +18,7 @@ class TextInput extends React.Component {
   }
 
   componentWillReceiveProps(newProps) {
-    console.log("new prop", newProps, "old props", this.props)
-    if(this.props.defaultValue !== newProps.defaultValue) {
-      console.log("hello")
+    if (this.props.defaultValue !== newProps.defaultValue) {
       this.setState({
         value: newProps.defaultValue
       })
@@ -57,8 +55,8 @@ class TextInput extends React.Component {
           type="text"
           value={this.state.value}
           name={this.props.name}
-          errorMessage={this.props.errorMessage}
-          emptyMessage={this.props.emptyMessage}
+          // errorMessage={this.props.errorMessage}
+          // emptyMessage={this.props.emptyMessage}
           pattern={this.props.pattern}
           required={this.props.isRequired}
           placeholder={this.props.placeholder}

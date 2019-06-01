@@ -5,7 +5,7 @@ import Icon from "./../icon"
 class Select extends React.Component {
   constructor(props) {
     super(props);
-  
+
     this.state = {
       values: this.props.selectedValues
     };
@@ -21,7 +21,7 @@ class Select extends React.Component {
   }
 
   componentWillReceiveProps(newProps) {
-    if(this.props.selectedValues !== newProps.selectedValues) {
+    if (this.props.selectedValues !== newProps.selectedValues) {
       this.setState({
         values: newProps.selectedValues
       })
@@ -77,11 +77,6 @@ class Select extends React.Component {
     this.props.addOption(value, text, this.removeOption)
   }
 
-  // removeOption(value) {
-  //   console.log("callback val", value)
-  //   this.onDeleteOption(value)
-  // }
-
   stopPropagation(e) {
     e.stopPropagation();
   }
@@ -102,7 +97,7 @@ class Select extends React.Component {
             onClick={this.stopPropagation}
             className="multiple value"
           >
-            <span style={{marginRight: '10px'}}>{value}</span>
+            <span style={{ marginRight: '10px' }}>{value}</span>
             <span onClick={() => this.onDeleteOption(value)} className="delete">
               <Icon name="redDeleteIcon" />
             </span>
@@ -127,8 +122,7 @@ class Select extends React.Component {
 
   renderOption(option, index) {
     const { values } = this.state;
-    // const { value, id } = option;
-    const {text, value} = option;
+    const { text, value } = option;
     const selected = values.includes(text);
     return (
       <div

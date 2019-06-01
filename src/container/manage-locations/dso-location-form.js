@@ -65,6 +65,16 @@ class DsoLocationForm extends React.Component {
       })
   }
 
+  updateCityList(stateId) {
+    let cityList = this.state.stateMap[stateId].cities
+    cityList = cityList.map((item) => {
+      return {
+        text: item.city_name,
+        value: item.city_id
+      }
+    })
+    this.setState({ cityList, selectedRegionalCityIdx: cityList[0].value })
+  }
 
   formatResponse(response) {
     const stateList = response.states.map((item) => {
@@ -74,18 +84,12 @@ class DsoLocationForm extends React.Component {
       }
     })
 
-    this.setState({ stateList, stateMap: response.stateCity })
-  }
-
-  updateCityList(stateId) {
-    let cityList = this.state.stateMap[stateId].cities
-    cityList = cityList.map((item) => {
-      return {
-        text: item.city_name,
-        value: item.city_id
-      }
+    this.setState({
+      stateList,
+      stateMap: response.stateCity,
+      selectedStateIdx: stateList[0].value
     })
-    this.setState({ cityList })
+    this.updateCityList(parseInt(stateList[0].value))
   }
 
   getData() {
@@ -176,9 +180,10 @@ class DsoLocationForm extends React.Component {
           >
             {
               this.state.dsoLocationDetails.length > 0 &&
-              this.state.dsoLocationDetails.map((item) => {
+              this.state.dsoLocationDetails.map((item, i) => {
                 return (
                   <tr
+                    key={i}
                     className={`clickable ${this.state.selectedStateIdx === item.state_id ? 'highlight' : ''}`}
                     onClick={this.props.action === "edit" ? () => this.handleRowClick(item) : () => { }}
                   >

@@ -21,7 +21,6 @@ const CustomTable = ({ headings, rows, className, children, loadingData, message
       </th>
     )
   }
-  console.log("children", Object.keys(children))
   return (
 
     <div className="table-wrapper">

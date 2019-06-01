@@ -26,10 +26,10 @@ const DsoNavbar = (props) => {
       {
         !props.navbarItems
           ? dsoNavbarItems.map((item, i) => (
-            <a onClick={() => handleClick(item.path)} className={`${checkActiveClass(item.value)}`}>{item.label}</a>
+            <a key={i} onClick={() => handleClick(item.path)} className={`${checkActiveClass(item.value)}`}>{item.label}</a>
           ))
           : props.navbarItems.map((item, i) => (
-            <a onClick={() => handleClick(item.path)} className={`${checkActiveClass(item.value)}`}>{item.label}</a>
+            <a key={i} onClick={() => handleClick(item.path)} className={`${checkActiveClass(item.value)}`}>{item.label}</a>
           ))
       }
     </div >

@@ -16,7 +16,7 @@ class EditDsoDetails extends React.Component {
       //enableEdit: true
     }
 
-    this.toggleEdit = this.toggleEdit.bind(this)
+    this.handleCancel = this.handleCancel.bind(this)
     this.editDsoDetails = this.editDsoDetails.bind(this)
   }
 
@@ -32,8 +32,6 @@ class EditDsoDetails extends React.Component {
   }
 
   editDsoDetails() {
-    // console.log("edit")
-    // console.log(this.dsoDetailsForm.getData())
     const data = this.dsoDetailsForm.getData()
     this.setState({ updatingDsoDetails: true })
     Api.updateDsoDetails({
@@ -51,7 +49,6 @@ class EditDsoDetails extends React.Component {
       head_office_contact_phone: data.phone
     })
       .then((response) => {
-        this.toggleEdit()
         this.setState({ updatingDsoDetails: false })
         this.props.history.push(`/home/dso/view-details?id=${getQueryObjByName("id")}&name=${data.dsoName}`)
       })
@@ -74,7 +71,7 @@ class EditDsoDetails extends React.Component {
       })
   }
 
-  toggleEdit() {
+  handleCancel() {
     this.props.history.push(`/home/dso/view-details?id=${getQueryObjByName("id")}&name=${getQueryObjByName("name")}`)
   }
 
@@ -103,7 +100,7 @@ class EditDsoDetails extends React.Component {
                     updatingDsoDetails={updatingDsoDetails}
                     enableEdit={true}
                     action="edit"
-                    handleCancel={this.toggleEdit}
+                    handleCancel={this.handleCancel}
                     handleClick={this.editDsoDetails}
                     history={this.props.history}
                   />

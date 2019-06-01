@@ -62,8 +62,7 @@ class DsoDetailsForm extends React.Component {
             value: item.id
           }
         })
-        console.log("city lis", cityList)
-        this.setState({ cityList })
+        this.setState({ cityList, selectedCityIdx: cityList[0].value })
       })
       .catch((err) => {
         console.log("Error in fetching state and cities")
