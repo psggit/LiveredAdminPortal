@@ -17,39 +17,37 @@ class dsoDetails extends React.Component {
     this.handleEdit = this.handleEdit.bind(this)
   }
 
-  componentDidMount() {
-    this.setState({
-      loadingDsoDetails: true,
-      dsoName: getQueryObjByName("name")
-    })
-    this.fetchDsoDetails({
-      dso_id: getQueryObjByName("id")
-    })
-  }
+  // componentDidMount() {
+  //   this.setState({
+  //     loadingDsoDetails: true,
+  //     dsoName: getQueryObjByName("name")
+  //   })
+  //   this.fetchDsoDetails({
+  //     dso_id: getQueryObjByName("id")
+  //   })
+  // }
 
-  fetchDsoDetails(payload) {
-    Api.fetchDsoDetails(payload)
-      .then((response) => {
-        console.log("response", response.dso)
-        this.setState({
-          dsoDetailsData: response.dso,
-          loadingDsoDetails: false
-        })
-      })
-      .catch((err) => {
-        console.log("Error in fetching dso details", err)
-      })
-  }
+  // fetchDsoDetails(payload) {
+  //   Api.fetchDsoDetails(payload)
+  //     .then((response) => {
+  //       this.setState({
+  //         dsoDetailsData: response.dso,
+  //         loadingDsoDetails: false
+  //       })
+  //     })
+  //     .catch((err) => {
+  //       console.log("Error in fetching dso details", err)
+  //     })
+  // }
 
   handleEdit() {
     this.props.history.push(`/home/dso/edit-details?id=${getQueryObjByName("id")}&name=${getQueryObjByName("name")}`)
   }
 
   render() {
-    const { dsoName, dsoDetailsData, loadingDsoDetails } = this.state
     return (
       <React.Fragment>
-        <PageHeader pageName="Delivery Service Operators" text={dsoName} />
+        <PageHeader pageName="Delivery Service Operators" text={getQueryObjByName("name")} />
         <div style={{
           display: "flex",
           marginTop: "30px",
@@ -59,13 +57,12 @@ class dsoDetails extends React.Component {
         }}
         >
           {
-            !loadingDsoDetails &&
             <React.Fragment>
               <div id="dsoDetails" style={{ width: '100%', position: 'relative' }}>
                 <DsoNavbar />
                 <div className="content">
                   <DsoDetailsForm
-                    data={dsoDetailsData}
+                    // data={dsoDetailsData}
                     action="view"
                     enableEdit={false}
                     handleClick={this.handleEdit}

@@ -8,36 +8,8 @@ import * as Api from "../../api"
 class ViewLocation extends React.Component {
   constructor() {
     super()
-    this.state = {
-      dsoName: "",
-      loadingDsoDetails: false,
-      dsoDetailsData: {}
-    }
 
     this.handleEdit = this.handleEdit.bind(this)
-  }
-
-  componentDidMount() {
-    this.setState({
-      loadingDsoDetails: true,
-      dsoName: getQueryObjByName("name")
-    })
-    this.fetchDsoDetails({
-      dso_id: getQueryObjByName("id")
-    })
-  }
-
-  fetchDsoDetails(payload) {
-    Api.fetchDsoDetails(payload)
-      .then((response) => {
-        this.setState({
-          dsoDetailsData: response.dso,
-          loadingDsoDetails: false
-        })
-      })
-      .catch((err) => {
-        console.log("Error in fetching dso details", err)
-      })
   }
 
   handleEdit() {
@@ -45,10 +17,9 @@ class ViewLocation extends React.Component {
   }
 
   render() {
-    const { dsoName, loadingDsoDetails, dsoDetailsData } = this.state
     return (
       <React.Fragment>
-        <PageHeader pageName="Delivery Service Operators" text={dsoName} />
+        <PageHeader pageName="Delivery Service Operators" text={getQueryObjByName("name")} />
         <div style={{
           display: "flex",
           marginTop: "30px",
@@ -58,13 +29,11 @@ class ViewLocation extends React.Component {
         }}
         >
           {
-            !loadingDsoDetails &&
             <React.Fragment>
               <div id="dsoDetails" style={{ width: '100%', position: 'relative' }}>
                 <DsoNavbar />
                 <div className="content">
                   <DsoLocationForm
-                    data={dsoDetailsData}
                     enableEdit={false}
                     action="view"
                     handleClick={this.handleEdit}

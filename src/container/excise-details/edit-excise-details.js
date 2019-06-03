@@ -18,15 +18,6 @@ class EditExciseDetails extends React.Component {
     this.editExciseDetails = this.editExciseDetails.bind(this)
   }
 
-  componentDidMount() {
-    this.setState({
-      loadingExciseDetails: true,
-    })
-    this.fetchExciseDetails({
-      state_id: parseInt(getQueryObjByName("stateId"))
-    })
-  }
-
   editExciseDetails() {
     const data = this.exciseDetailsForm.getData()
     this.setState({ updatingExciseDetails: true })
@@ -49,25 +40,12 @@ class EditExciseDetails extends React.Component {
       })
   }
 
-  fetchExciseDetails(payload) {
-    Api.fetchExciseDetails(payload)
-      .then((response) => {
-        this.setState({
-          exciseDetailsData: response.excise,
-          loadingExciseDetails: false
-        })
-      })
-      .catch((err) => {
-        console.log("Error in fetching excise details", err)
-      })
-  }
-
   handleCancel() {
     this.props.history.push(`/home/excise/view-details?stateId=${getQueryObjByName("stateId")}&name=${getQueryObjByName("name")}`)
   }
 
   render() {
-    const { updatingExciseDetails, exciseDetailsData, loadingExciseDetails } = this.state
+    const { updatingExciseDetails } = this.state
     return (
       <React.Fragment>
         <PageHeader pageName="Excise Departments" text={getQueryObjByName("name")} />
@@ -80,14 +58,12 @@ class EditExciseDetails extends React.Component {
         }}
         >
           {
-            !loadingExciseDetails &&
             <React.Fragment>
               <div id="exciseDetails" style={{ width: '100%', position: 'relative' }}>
                 <ExciseNavbar />
                 <div className="content">
                   <ExciseDetailsForm
                     ref={(node) => { this.exciseDetailsForm = node }}
-                    data={exciseDetailsData}
                     updatingExciseDetails={updatingExciseDetails}
                     enableEdit={true}
                     action="edit"

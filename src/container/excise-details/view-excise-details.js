@@ -9,35 +9,8 @@ import { getQueryObjByName } from "Utils/url-utils"
 class exciseDetails extends React.Component {
   constructor() {
     super()
-    this.state = {
-      exciseDetailsData: {},
-      loadingExciseDetails: true
-    }
+
     this.handleEdit = this.handleEdit.bind(this)
-  }
-
-  componentDidMount() {
-    this.setState({
-      loadingExciseDetails: true,
-      //dsoName: getQueryObjByName("name")
-    })
-    this.fetchExciseDetails({
-      state_id: parseInt(getQueryObjByName("stateId"))
-    })
-  }
-
-  fetchExciseDetails(payload) {
-    Api.fetchExciseDetails(payload)
-      .then((response) => {
-        console.log("response", response.excise)
-        this.setState({
-          exciseDetailsData: response.excise,
-          loadingExciseDetails: false
-        })
-      })
-      .catch((err) => {
-        console.log("Error in fetching excise details", err)
-      })
   }
 
   handleEdit() {
@@ -45,7 +18,6 @@ class exciseDetails extends React.Component {
   }
 
   render() {
-    const { exciseDetailsData, loadingExciseDetails } = this.state
     return (
       <React.Fragment>
         <PageHeader pageName="Excise Departments" text={getQueryObjByName("name")} />
@@ -58,13 +30,11 @@ class exciseDetails extends React.Component {
         }}
         >
           {
-            !loadingExciseDetails &&
             <React.Fragment>
               <div id="dsoDetails" style={{ width: '100%', position: 'relative' }}>
                 <ExciseNavbar />
                 <div className="content">
                   <ExciseDetailsForm
-                    data={exciseDetailsData}
                     action="view"
                     enableEdit={false}
                     handleClick={this.handleEdit}

@@ -6,6 +6,8 @@ import TextInput from "Components/textInput"
 import TitleBar from "Components/titlebar"
 import Select from "Components/select"
 import { fetchStateAndCitiesList } from "./../../api"
+import { getQueryObjByName } from "Utils/url-utils"
+import * as Api from "../../api"
 
 class DsoDetailsForm extends React.Component {
   constructor() {
@@ -25,6 +27,7 @@ class DsoDetailsForm extends React.Component {
       deliveryStatus: true,
       isValidated: false,
       isNotValidated: false,
+      //dsoDetailsData: {}
     }
 
     this.setLicenseStatus = this.setLicenseStatus.bind(this)
@@ -38,19 +41,49 @@ class DsoDetailsForm extends React.Component {
   }
 
   componentDidMount() {
-    const data = this.props.data
-    if (this.props.data) {
-      this.setState({
-        deliveryStatus: data.is_active,
-        licenseStatus: data.license_status,
-        licenseExpiry: data.license_expiry.slice(0, 10),
-        selectedCityIdx: data.head_office.city_id,
-        headOfficeAddress: data.head_office.address,
-        isValidated: data.license_status ? true : false,
-        isNotValidated: !data.license_status ? true : false
+    // const data = this.props.data
+    // if (this.props.data) {
+    //   this.setState({
+    //     deliveryStatus: data.is_active,
+    //     licenseStatus: data.license_status,
+    //     licenseExpiry: data.license_expiry.slice(0, 10),
+    //     selectedCityIdx: data.head_office.city_id,
+    //     headOfficeAddress: data.head_office.address,
+    //     isValidated: data.license_status ? true : false,
+    //     isNotValidated: !data.license_status ? true : false
+    //   })
+    // }
+    if (this.props.action !== "create") {
+      this.fetchDsoDetails({
+        dso_id: getQueryObjByName("id")
       })
     }
     this.fetchCityAndStates()
+  }
+
+  fetchDsoDetails(payload) {
+    Api.fetchDsoDetails(payload)
+      .then((response) => {
+        const data = response.dso
+        this.setState({
+          dsoName: data.dso_name,
+          entityType: data.entity_type,
+          licenseType: data.license_type,
+          deliveryStatus: data.is_active,
+          licenseStatus: data.license_status,
+          licenseExpiry: data.license_expiry.slice(0, 10),
+          selectedCityIdx: data.head_office.city_id,
+          headOfficeAddress: data.head_office.address,
+          isValidated: data.license_status ? true : false,
+          isNotValidated: !data.license_status ? true : false,
+          name: data.head_office.contact.name,
+          email: data.head_office.contact.email,
+          phone: data.head_office.contact.phone
+        })
+      })
+      .catch((err) => {
+        console.log("Error in fetching dso details", err)
+      })
   }
 
   fetchCityAndStates() {
@@ -127,6 +160,7 @@ class DsoDetailsForm extends React.Component {
   }
 
   render() {
+    const { dsoDetailsData } = this.state
     return (
       <React.Fragment>
         <div className="content-section" style={{ marginTop: '50px' }}>
@@ -146,7 +180,7 @@ class DsoDetailsForm extends React.Component {
                 <TextInput
                   ref={input => (this.dsoName = input)}
                   name="dsoName"
-                  defaultValue={this.props.data ? this.props.data.dso_name : ""}
+                  defaultValue={this.state.dsoName}
                   pattern="^[^-\s][a-zA-Z0-9_\s-]+$"
                   isRequired={true}
                   //autoComplete={false}
@@ -168,7 +202,7 @@ class DsoDetailsForm extends React.Component {
                   name="entityType"
                   pattern="^[^-\s][a-zA-Z0-9_\s-]+$"
                   isRequired={true}
-                  defaultValue={this.props.data ? this.props.data.entity_type : ""}
+                  defaultValue={this.state.entityType}
                   disabled={!this.props.enableEdit}
                   placeholder="entity type"
                   errorMessage="Entity type is invalid"
@@ -187,7 +221,7 @@ class DsoDetailsForm extends React.Component {
                   name="licenseType"
                   pattern="^[^-\s][a-zA-Z0-9_\s-]+$"
                   isRequired={true}
-                  defaultValue={this.props.data ? this.props.data.license_type : ""}
+                  defaultValue={this.state.licenseType}
                   disabled={!this.props.enableEdit}
                   placeholder="license type"
                   errorMessage="License type is invalid"
@@ -317,7 +351,7 @@ class DsoDetailsForm extends React.Component {
                     name="name"
                     pattern="^[^-\s][a-zA-Z0-9_\s-]+$"
                     isRequired={true}
-                    defaultValue={this.props.data ? this.props.data.head_office.contact.name : ""}
+                    defaultValue={this.state.name}
                     placeholder="name"
                     errorMessage="Name is invalid"
                     emptyMessage="Name is required"
@@ -332,7 +366,7 @@ class DsoDetailsForm extends React.Component {
                     pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
                     isRequired={true}
                     placeholder="email"
-                    defaultValue={this.props.data ? this.props.data.head_office.contact.email : ""}
+                    defaultValue={this.state.email}
                     errorMessage="Email is invalid"
                     emptyMessage="Email is required"
                     disabled={!this.props.enableEdit}
@@ -347,7 +381,7 @@ class DsoDetailsForm extends React.Component {
                     maxLength={10}
                     isRequired={true}
                     placeholder="phone"
-                    defaultValue={this.props.data ? this.props.data.head_office.contact.phone : ""}
+                    defaultValue={this.state.phone}
                     disabled={!this.props.enableEdit}
                     errorMessage="Phone is invalid"
                     emptyMessage="Phone is required"

@@ -91,10 +91,10 @@ class CreateLocation extends React.Component {
   }
 
   render() {
-    const { dsoName, creatingDsoLocationDetails } = this.state
+    const { creatingDsoLocationDetails } = this.state
     return (
       <React.Fragment>
-        <PageHeader pageName="Delivery Service Operators" text={dsoName} />
+        <PageHeader pageName="Delivery Service Operators" text={getQueryObjByName("name")} />
         <div style={{
           display: "flex",
           marginTop: "30px",

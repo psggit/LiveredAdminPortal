@@ -9,9 +9,6 @@ class EditLocation extends React.Component {
   constructor() {
     super()
     this.state = {
-      dsoName: "",
-      loadingDsoDetails: false,
-      dsoDetailsData: {},
       updatingDsoLocationDetails: false
     }
 
@@ -19,16 +16,6 @@ class EditLocation extends React.Component {
     this.removeCityToDso = this.removeCityToDso.bind(this)
     this.addCityToDso = this.addCityToDso.bind(this)
     this.editDsoLocationDetails = this.editDsoLocationDetails.bind(this)
-  }
-
-  componentDidMount() {
-    this.setState({
-      loadingDsoDetails: true,
-      dsoName: getQueryObjByName("name")
-    })
-    this.fetchDsoDetails({
-      dso_id: getQueryObjByName("id")
-    })
   }
 
   editDsoLocationDetails() {
@@ -51,19 +38,6 @@ class EditLocation extends React.Component {
       .catch((err) => {
         this.setState({ updatingDsoLocationDetails: false })
         console.log("Error in updating dso location details", err)
-      })
-  }
-
-  fetchDsoDetails(payload) {
-    Api.fetchDsoDetails(payload)
-      .then((response) => {
-        this.setState({
-          dsoDetailsData: response.dso,
-          loadingDsoDetails: false
-        })
-      })
-      .catch((err) => {
-        console.log("Error in fetching dso details", err)
       })
   }
 
@@ -105,10 +79,10 @@ class EditLocation extends React.Component {
   }
 
   render() {
-    const { dsoName, loadingDsoDetails, dsoDetailsData, updatingDsoLocationDetails } = this.state
+    const { updatingDsoLocationDetails } = this.state
     return (
       <React.Fragment>
-        <PageHeader pageName="Delivery Service Operators" text={dsoName} />
+        <PageHeader pageName="Delivery Service Operators" text={getQueryObjByName("name")} />
         <div style={{
           display: "flex",
           marginTop: "30px",
@@ -118,21 +92,18 @@ class EditLocation extends React.Component {
         }}
         >
           {
-            !loadingDsoDetails &&
             <React.Fragment>
               <div id="dsoDetails" style={{ width: '100%', position: 'relative' }}>
                 <DsoNavbar />
                 <div className="content">
                   <DsoLocationForm
                     ref={(node) => this.dsoLocationForm = node}
-                    data={dsoDetailsData}
                     enableEdit={true}
                     action="edit"
                     handleCancel={this.handleCancel}
                     history={this.props.history}
                     updatingDsoLocationDetails={updatingDsoLocationDetails}
                     handleClick={this.editDsoLocationDetails}
-                    removeCity={this.removeCity}
                     addCityToDso={this.addCityToDso}
                     removeCityToDso={this.removeCityToDso}
                   />

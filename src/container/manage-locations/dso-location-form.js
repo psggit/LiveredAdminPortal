@@ -8,11 +8,13 @@ import Select from "Components/select"
 import MultiSelect from "Components/multiselect"
 import { fetchStateAndCitiesList } from "./../../api"
 import TextInput from "Components/textInput"
+import { getQueryObjByName } from "Utils/url-utils"
+import * as Api from "../../api"
 
 class DsoLocationForm extends React.Component {
 
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
       dsoLocationDetails: [],
       stateList: [],
@@ -44,14 +46,27 @@ class DsoLocationForm extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.data && Object.keys(this.props.data).length > 0) {
-      this.setState({
-        dsoLocationDetails: this.props.data.state_details
-      })
-    }
     if (this.props.enableEdit) {
       this.fetchCityAndStates()
     }
+
+    if (this.props.action !== "create") {
+      this.fetchDsoDetails({
+        dso_id: getQueryObjByName("id")
+      })
+    }
+  }
+
+  fetchDsoDetails(payload) {
+    Api.fetchDsoDetails(payload)
+      .then((response) => {
+        this.setState({
+          dsoLocationDetails: response.dso.state_details,
+        })
+      })
+      .catch((err) => {
+        console.log("Error in fetching dso details", err)
+      })
   }
 
   fetchCityAndStates() {

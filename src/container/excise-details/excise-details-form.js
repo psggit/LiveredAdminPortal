@@ -6,6 +6,8 @@ import TextInput from "Components/textInput"
 import TitleBar from "Components/titlebar"
 import Select from "Components/select"
 import { fetchStateAndCitiesList } from "./../../api"
+import { getQueryObjByName } from "Utils/url-utils"
+import * as Api from "../../api"
 
 class ExciseDetailsForm extends React.Component {
   constructor() {
@@ -35,19 +37,32 @@ class ExciseDetailsForm extends React.Component {
   }
 
   componentDidMount() {
-    const data = this.props.data
-    if (this.props.data) {
-      this.setState({
-        selectedCityIdx: data.head_office_city_id,
-        selectedStateIdx: data.state_id,
-        exciseName: data.name,
-        headOfficeAddress: data.head_office_address,
-        name: data.primary_contact_name,
-        email: data.primary_contact_email,
-        phone: data.primary_contact_phone
+    if (this.props.action !== "create") {
+      this.fetchExciseDetails({
+        state_id: parseInt(getQueryObjByName("stateId"))
       })
     }
     this.fetchCityAndStates()
+  }
+
+  fetchExciseDetails(payload) {
+    Api.fetchExciseDetails(payload)
+      .then((response) => {
+        console.log("response", response.excise)
+        const data = response.excise
+        this.setState({
+          selectedCityIdx: data.head_office_city_id,
+          selectedStateIdx: data.state_id,
+          exciseName: data.name,
+          headOfficeAddress: data.head_office_address,
+          name: data.primary_contact_name,
+          email: data.primary_contact_email,
+          phone: data.primary_contact_phone
+        })
+      })
+      .catch((err) => {
+        console.log("Error in fetching excise details", err)
+      })
   }
 
   fetchCityAndStates() {
@@ -174,7 +189,7 @@ class ExciseDetailsForm extends React.Component {
                 <TextInput
                   ref={input => (this.exciseName = input)}
                   name="exciseName"
-                  defaultValue={this.props.data ? this.props.data.name : ""}
+                  defaultValue={this.state.exciseName}
                   pattern="^[^-\s][a-zA-Z0-9_\s-]+$"
                   isRequired={true}
                   //autoComplete={false}
@@ -220,7 +235,7 @@ class ExciseDetailsForm extends React.Component {
                     name="name"
                     pattern="^[^-\s][a-zA-Z0-9_\s-]+$"
                     isRequired={true}
-                    defaultValue={this.props.data ? this.props.data.primary_contact_name : ""}
+                    defaultValue={this.state.name}
                     placeholder="name"
                     errorMessage="Name is invalid"
                     emptyMessage="Name is required"
@@ -235,7 +250,7 @@ class ExciseDetailsForm extends React.Component {
                     pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
                     isRequired={true}
                     placeholder="email"
-                    defaultValue={this.props.data ? this.props.data.primary_contact_email : ""}
+                    defaultValue={this.state.email}
                     errorMessage="Email is invalid"
                     emptyMessage="Email is required"
                     disabled={!this.props.enableEdit}
@@ -249,7 +264,7 @@ class ExciseDetailsForm extends React.Component {
                     pattern="[0-9]*"
                     isRequired={true}
                     placeholder="phone"
-                    defaultValue={this.props.data ? this.props.data.primary_contact_phone : ""}
+                    defaultValue={this.state.phone}
                     disabled={!this.props.enableEdit}
                     maxLength={10}
                     errorMessage="Phone is invalid"

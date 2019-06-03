@@ -10,8 +10,8 @@ class EditDsoDetails extends React.Component {
   constructor() {
     super()
     this.state = {
-      dsoDetailsData: {},
-      loadingDsoDetails: true,
+      // dsoDetailsData: {},
+      // loadingDsoDetails: true,
       updatingDsoDetails: false,
       //enableEdit: true
     }
@@ -20,16 +20,16 @@ class EditDsoDetails extends React.Component {
     this.editDsoDetails = this.editDsoDetails.bind(this)
   }
 
-  componentDidMount() {
-    this.setState({
-      loadingDsoDetails: true,
-      dsoName: getQueryObjByName("name"),
-      dsoId: getQueryObjByName("id")
-    })
-    this.fetchDsoDetails({
-      dso_id: getQueryObjByName("id")
-    })
-  }
+  // componentDidMount() {
+  //   this.setState({
+  //     loadingDsoDetails: true,
+  //     dsoName: getQueryObjByName("name"),
+  //     dsoId: getQueryObjByName("id")
+  //   })
+  //   this.fetchDsoDetails({
+  //     dso_id: getQueryObjByName("id")
+  //   })
+  // }
 
   editDsoDetails() {
     const data = this.dsoDetailsForm.getData()
@@ -58,18 +58,18 @@ class EditDsoDetails extends React.Component {
       })
   }
 
-  fetchDsoDetails(payload) {
-    Api.fetchDsoDetails(payload)
-      .then((response) => {
-        this.setState({
-          dsoDetailsData: response.dso,
-          loadingDsoDetails: false
-        })
-      })
-      .catch((err) => {
-        console.log("Error in fetching dso details", err)
-      })
-  }
+  // fetchDsoDetails(payload) {
+  //   Api.fetchDsoDetails(payload)
+  //     .then((response) => {
+  //       this.setState({
+  //         dsoDetailsData: response.dso,
+  //         loadingDsoDetails: false
+  //       })
+  //     })
+  //     .catch((err) => {
+  //       console.log("Error in fetching dso details", err)
+  //     })
+  // }
 
   handleCancel() {
     this.props.history.push(`/home/dso/view-details?id=${getQueryObjByName("id")}&name=${getQueryObjByName("name")}`)
@@ -96,7 +96,7 @@ class EditDsoDetails extends React.Component {
                 <div className="content">
                   <DsoDetailsForm
                     ref={(node) => { this.dsoDetailsForm = node }}
-                    data={dsoDetailsData}
+                    // data={dsoDetailsData}
                     updatingDsoDetails={updatingDsoDetails}
                     enableEdit={true}
                     action="edit"
