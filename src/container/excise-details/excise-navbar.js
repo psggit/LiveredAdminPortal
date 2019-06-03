@@ -13,7 +13,7 @@ const ExciseNavbar = (props) => {
           ? exciseNavbarItems.map((item, i) => (
             <NavLink
               className={`nav-link ${checkActiveClass(item.value)}`}
-              to={`${item.path}?id=${getQueryObjByName("id")}&name=${getQueryObjByName("name")}`}
+              to={`${item.path}?stateId=${getQueryObjByName("stateId")}&name=${getQueryObjByName("name")}`}
             >
               {item.label}
             </NavLink>

@@ -6,7 +6,7 @@ import Icon from "Components/icon"
 import { getQueryObjByName, getQueryUri } from "Utils/url-utils"
 import DataTable from "Components/table/custom-table"
 import Moment from "moment"
-import Search from "Components/search"
+import Dialog from "Components/dialog"
 import Button from "Components/button"
 import FilteredParams from "Components/filteredParams"
 import Filter from "Components/filterModal"
@@ -17,6 +17,7 @@ const exciseOperationTableHeaders = [
   { title: "Delivery Operator", icon: "", tooltipText: "" },
   { title: "Delivery Status", icon: "info", tooltipText: "The retailer/retail outlet which received the order" },
 ]
+const toggleExciseDeliveryReqParams = {}
 
 const ManageOperations = (props) => {
   const pageLimit = parseInt(getQueryObjByName("limit")) || 10
@@ -29,6 +30,8 @@ const ManageOperations = (props) => {
   const [operationsDataCount, setOperationsDataCount] = useState(0)
   const [isFilterApplied, setIsFilterApplied] = useState(false)
   const [limit, setLimit] = useState(pageLimit)
+  const [mountModal, setMountModal] = useState(false)
+  const [togglingDeliveryStatus, setToggleDeliveryStatus] = useState(false)
   const [filter, setFilter] = useState(filterParams)
   const [selectedCityIdx, setCityIdx] = useState(-1)
   const [key, setKey] = useState(0)
@@ -208,19 +211,29 @@ const ManageOperations = (props) => {
     setMountFilter(!mountFilter)
   }
 
-  const updatedKey = () => {
+  const updateKey = () => {
     setKey(key + 1)
   }
 
-  const toggleDeliveryStatus = (e, exciseDetail) => {
+  const unmountActionModal = () => {
+    setMountModal(false)
+  }
+
+  const mountActionModal = (e, exciseDetail) => {
     e.stopPropagation()
-    Api.changeExciseDeliveryStatus({
-      city_id: exciseDetail.city_id,
-      dso_id: exciseDetail.dso_id,
-      service_status: !exciseDetail.service_status
-    })
+    toggleExciseDeliveryReqParams.city_id = exciseDetail.city_id
+    toggleExciseDeliveryReqParams.dso_id = exciseDetail.dso_id
+    toggleExciseDeliveryReqParams.service_status = !exciseDetail.service_status
+    setMountModal(true)
+  }
+
+  const toggleDeliveryStatus = () => {
+    setToggleDeliveryStatus(true)
+    Api.changeExciseDeliveryStatus(toggleExciseDeliveryReqParams)
       .then((response) => {
-        updatedKey()
+        updateKey()
+        setToggleDeliveryStatus(false)
+        unmountActionModal()
       })
       .catch((err) => {
         console.log("Error in changing excise delivery status", err)
@@ -302,15 +315,15 @@ const ManageOperations = (props) => {
                         <div style={{ display: 'flex', alignItems: 'center' }}>
                           {
                             item.service_status
-                              ? <span style={{ marginRight: '10px' }} onClick={(e) => toggleDeliveryStatus(e, item)}>
+                              ? <span style={{ marginRight: '10px' }} onClick={(e) => mountActionModal(e, item)}>
                                 <Icon name="toggleGreen" />
                               </span>
-                              : <span style={{ marginRight: '10px' }} onClick={(e) => toggleDeliveryStatus(e, item)}>
+                              : <span style={{ marginRight: '10px' }} onClick={(e) => mountActionModal(e, item)}>
                                 <Icon name="toggleRed" />
                               </span>
                           }
                           <span
-                            onClick={(e) => toggleDeliveryStatus(e, item)}
+                            onClick={(e) => mountActionModal(e, item)}
                             style={{ cursor: 'pointer' }}
                           >
                             {item.service_status ? "Enabled" : "Disabled"}
@@ -323,6 +336,21 @@ const ManageOperations = (props) => {
               }
             </DataTable>
           </div>
+        }
+        {
+          mountModal &&
+          <Dialog
+            title="Are you sure you want to perform this action?"
+            onClick={unmountActionModal}
+            actions={[
+              <Button disabled={togglingDeliveryStatus} onClick={() => unmountActionModal()} secondary>
+                No
+              </Button>,
+              <Button disabled={togglingDeliveryStatus} onClick={() => toggleDeliveryStatus()} primary>
+                Yes
+              </Button>
+            ]}
+          />
         }
       </div>
     </React.Fragment >
