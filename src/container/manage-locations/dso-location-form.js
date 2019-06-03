@@ -2,7 +2,6 @@ import React from "react"
 import TitleBar from "Components/titlebar"
 import Label from "Components/label"
 import DataTable from "Components/table/custom-table"
-import { formatStateAndCityList } from "Utils/helpers"
 import Icon from "Components/icon"
 import Button from "Components/button"
 import Select from "Components/select"
@@ -303,7 +302,7 @@ class DsoLocationForm extends React.Component {
                         <TextInput
                           ref={input => (this.name = input)}
                           name="name"
-                          pattern="[a-zA-Z]*"
+                          pattern="^[^-\s][a-zA-Z0-9_\s-]+$"
                           isRequired={true}
                           placeholder="name"
                           defaultValue={this.state.name}

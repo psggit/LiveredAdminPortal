@@ -62,7 +62,12 @@ class DsoDetailsForm extends React.Component {
             value: item.id
           }
         })
-        this.setState({ cityList, selectedCityIdx: cityList[0].value })
+        this.setState({ cityList })
+        if (this.state.selectedCityIdx === -1) {
+          this.setState({
+            selectedCityIdx: cityList[0].value
+          })
+        }
       })
       .catch((err) => {
         console.log("Error in fetching state and cities")
@@ -106,24 +111,16 @@ class DsoDetailsForm extends React.Component {
 
   handleSave() {
     if (location.pathname.indexOf("create-details") !== -1) {
-      if (!this.dsoName.state.errorStatus && this.dsoName.state.touched &&
-        !this.entityType.state.errorStatus && this.entityType.state.touched &&
-        !this.licenseType.state.errorStatus && this.licenseType.state.touched &&
-        !this.name.state.errorStatus && this.name.state.touched &&
-        !this.email.state.errorStatus && this.email.state.touched &&
-        !this.phone.state.errorStatus && this.phone.state.touched
-      ) {
-        this.setState({
-          dsoName: this.dsoName.state.value,
-          entityType: this.entityType.state.value,
-          licenseType: this.licenseType.state.value,
-          name: this.name.state.value,
-          email: this.email.state.value,
-          phone: this.phone.state.value
-        }, () => {
-          this.props.handleClick()
-        })
-      }
+      this.setState({
+        dsoName: this.dsoName.state.value,
+        entityType: this.entityType.state.value,
+        licenseType: this.licenseType.state.value,
+        name: this.name.state.value,
+        email: this.email.state.value,
+        phone: this.phone.state.value
+      }, () => {
+        this.props.handleClick()
+      })
     } else {
       this.props.handleClick()
     }
@@ -150,7 +147,7 @@ class DsoDetailsForm extends React.Component {
                   ref={input => (this.dsoName = input)}
                   name="dsoName"
                   defaultValue={this.props.data ? this.props.data.dso_name : ""}
-                  pattern="[a-zA-Z]*"
+                  pattern="^[^-\s][a-zA-Z0-9_\s-]+$"
                   isRequired={true}
                   //autoComplete={false}
                   placeholder="dso name"
@@ -165,11 +162,11 @@ class DsoDetailsForm extends React.Component {
                   tooltipText="Minimum legal age limit to place an order"
                 >
                   Entity Type
-            </Label>
+                </Label>
                 <TextInput
                   ref={input => (this.entityType = input)}
                   name="entityType"
-                  pattern="[a-zA-Z]*"
+                  pattern="^[^-\s][a-zA-Z0-9_\s-]+$"
                   isRequired={true}
                   defaultValue={this.props.data ? this.props.data.entity_type : ""}
                   disabled={!this.props.enableEdit}
@@ -188,7 +185,7 @@ class DsoDetailsForm extends React.Component {
                 <TextInput
                   ref={input => (this.licenseType = input)}
                   name="licenseType"
-                  pattern="[a-zA-Z]*"
+                  pattern="^[^-\s][a-zA-Z0-9_\s-]+$"
                   isRequired={true}
                   defaultValue={this.props.data ? this.props.data.license_type : ""}
                   disabled={!this.props.enableEdit}
@@ -318,7 +315,7 @@ class DsoDetailsForm extends React.Component {
                   <TextInput
                     ref={input => (this.name = input)}
                     name="name"
-                    pattern="[a-zA-Z]*"
+                    pattern="^[^-\s][a-zA-Z0-9_\s-]+$"
                     isRequired={true}
                     defaultValue={this.props.data ? this.props.data.head_office.contact.name : ""}
                     placeholder="name"
@@ -347,6 +344,7 @@ class DsoDetailsForm extends React.Component {
                     ref={input => (this.phone = input)}
                     name="phone"
                     pattern="[0-9]*"
+                    maxLength={10}
                     isRequired={true}
                     placeholder="phone"
                     defaultValue={this.props.data ? this.props.data.head_office.contact.phone : ""}

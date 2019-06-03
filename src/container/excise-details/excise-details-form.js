@@ -175,7 +175,7 @@ class ExciseDetailsForm extends React.Component {
                   ref={input => (this.exciseName = input)}
                   name="exciseName"
                   defaultValue={this.props.data ? this.props.data.name : ""}
-                  pattern="[a-zA-Z]*"
+                  pattern="^[^-\s][a-zA-Z0-9_\s-]+$"
                   isRequired={true}
                   //autoComplete={false}
                   placeholder="excise name"
@@ -218,7 +218,7 @@ class ExciseDetailsForm extends React.Component {
                   <TextInput
                     ref={input => (this.name = input)}
                     name="name"
-                    pattern="[a-zA-Z]*"
+                    pattern="^[^-\s][a-zA-Z0-9_\s-]+$"
                     isRequired={true}
                     defaultValue={this.props.data ? this.props.data.primary_contact_name : ""}
                     placeholder="name"
@@ -251,6 +251,7 @@ class ExciseDetailsForm extends React.Component {
                     placeholder="phone"
                     defaultValue={this.props.data ? this.props.data.primary_contact_phone : ""}
                     disabled={!this.props.enableEdit}
+                    maxLength={10}
                     errorMessage="Phone is invalid"
                     emptyMessage="Phone is required"
                     disabled={!this.props.enableEdit}

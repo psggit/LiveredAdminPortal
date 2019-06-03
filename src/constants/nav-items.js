@@ -12,11 +12,11 @@ export const dsoNavbarItems = [
   { label: "Details", value: "details", path: "/home/dso/view-details" },
   { label: "Locations", value: "locations", path: "/home/dso/view-locations" },
   { label: "Credits", value: "credits", path: "/home/dso/view-credits" },
-  { label: "Users", value: "users", path: "" }
+  // { label: "Users", value: "users", path: "/home/dso/view-users" }
 ]
 
 export const exciseNavbarItems = [
   { label: "Details", value: "details", path: "/home/excise/view-details" },
   { label: "Operations", value: "operations", path: "/home/excise/view-operations" },
-  { label: "Users", value: "users", path: "/home/excise/view-users" }
+  // { label: "Users", value: "users", path: "/home/excise/view-users" }
 ]
