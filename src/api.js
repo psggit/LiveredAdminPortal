@@ -1,16 +1,28 @@
 import { POST, GET } from 'Utils/fetch'
 //const ipAddress = "192.168.43.10"
 //const ipAddress = "183.82.32.28"
-const ottp = "https://85598819.ngrok.io"
-const dso = "https://a05cdc47.ngrok.io"
-const credit = "https://8bca0046.ngrok.io"
-const rule = "https://bc6d119c.ngrok.io"
-// const consumer = ""
+const ottp = "https://09ff87d5.ngrok.io"
+const dso = "https://cdfb47c0.ngrok.io"
+const credit = "https://4e95da13.ngrok.io"
+const rule = "https://15add635.ngrok.io"
+
+// const ottp = ""
+// const dso = ""
 // const credit = ""
+// const rule = ""
 
 export function fetchAllOttps(payload) {
   return POST({
     api: `${ottp}/livered/ottp/allOttps`,
+    handleError: true,
+    prependBaseUrl: false,
+    data: payload
+  })
+}
+
+export function fetchAllOperations(payload) {
+  return POST({
+    api: `${dso}/livered/dso/listDsoForState`,
     handleError: true,
     prependBaseUrl: false,
     data: payload
@@ -76,6 +88,42 @@ export function deleteCityToDso(payload) {
 export function fetchExciseList(payload) {
   return POST({
     api: `${dso}/livered/dso/listExcise`,
+    handleError: true,
+    prependBaseUrl: false,
+    data: payload
+  })
+}
+
+export function createExciseDetails(payload) {
+  return POST({
+    api: `${dso}/livered/dso/createExcise`,
+    handleError: true,
+    prependBaseUrl: false,
+    data: payload
+  })
+}
+
+export function changeExciseDeliveryStatus(payload) {
+  return POST({
+    api: `${dso}/livered/dso/editDsoLocationStatus`,
+    handleError: true,
+    prependBaseUrl: false,
+    data: payload
+  })
+}
+
+export function updateExciseDetails(payload) {
+  return POST({
+    api: `${dso}/livered/dso/updateExcise`,
+    handleError: true,
+    prependBaseUrl: false,
+    data: payload
+  })
+}
+
+export function fetchExciseDetails(payload) {
+  return POST({
+    api: `${dso}/livered/dso/exciseDetails`,
     handleError: true,
     prependBaseUrl: false,
     data: payload

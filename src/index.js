@@ -16,6 +16,10 @@ import OTTPManagement from 'Container/manage-ottp'
 import ViewCreditDetails from "Container/manage-credits/view-credits"
 import EditCreditDetails from "Container/manage-credits/edit-credits"
 import ExciseManagement from "Container/manage-excise"
+import CreateExcise from "Container/excise-details/create-excise-details"
+import ViewExciseDetails from "Container/excise-details/view-excise-details"
+import EditExciseDetails from "Container/excise-details/edit-excise-details"
+import ViewExciseOperations from "Container/manage-operations"
 import DSOManagement from "Container/manage-dso"
 import CreateDso from "Container/dso-details/create-dso-details"
 import ViewDsoDetails from "Container/dso-details/view-dso-details"
@@ -126,6 +130,15 @@ class App extends React.Component {
                     />
                     <Route
                       exact
+                      path="/home/excise/view-operations"
+                      render={
+                        props => (
+                          <ViewExciseOperations {...props} />
+                        )
+                      }
+                    />
+                    <Route
+                      exact
                       path="/home/ottp-details/:OttpId"
                       render={
                         props => (
@@ -139,6 +152,33 @@ class App extends React.Component {
                       render={
                         props => (
                           <ExciseManagement {...props} />
+                        )
+                      }
+                    />
+                    <Route
+                      exact
+                      path="/home/excise/view-details"
+                      render={
+                        props => (
+                          <ViewExciseDetails {...props} />
+                        )
+                      }
+                    />
+                    <Route
+                      exact
+                      path="/home/excise/edit-details"
+                      render={
+                        props => (
+                          <EditExciseDetails {...props} />
+                        )
+                      }
+                    />
+                    <Route
+                      exact
+                      path="/home/excise/create-details"
+                      render={
+                        props => (
+                          <CreateExcise {...props} />
                         )
                       }
                     />

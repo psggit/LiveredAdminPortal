@@ -115,6 +115,14 @@ const ManageExcise = (props) => {
     props.history.push(`/home/excise-management?${(getQueryUri(urlParams))}`)
   }
 
+  const addNewExcise = () => {
+    props.history.push(`/home/excise/create-details`)
+  }
+
+  const handleRowClick = (data) => {
+    props.history.push(`/home/excise/view-details?stateId=${data.state_id}&name=${data.name}`)
+  }
+
   /**
   * Clears the applied search and renders all the excise
   */
@@ -146,7 +154,7 @@ const ManageExcise = (props) => {
         />
         <Button custom
           icon="addWhiteIcon"
-          onClick={() => { }}
+          onClick={addNewExcise}
         >
           Add new
         </Button>
@@ -177,7 +185,7 @@ const ManageExcise = (props) => {
                 exciseData.length > 0 &&
                 exciseData.map((item, i) => {
                   return (
-                    <tr key={i} className="clickable">
+                    <tr key={i} onClick={() => { handleRowClick(item) }} className="clickable">
                       <td>{item.name}</td>
                       <td>{item.state}</td>
                       <td>{item.primary_contact_name}</td>

@@ -14,3 +14,9 @@ export const dsoNavbarItems = [
   { label: "Credits", value: "credits", path: "/home/dso/view-credits" },
   { label: "Users", value: "users", path: "" }
 ]
+
+export const exciseNavbarItems = [
+  { label: "Details", value: "details", path: "/home/excise/view-details" },
+  { label: "Operations", value: "operations", path: "/home/excise/view-operations" },
+  { label: "Users", value: "users", path: "/home/excise/view-users" }
+]

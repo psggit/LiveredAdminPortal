@@ -11,9 +11,8 @@ const FilteredParams = ({ data }) => {
       <p style={textStyle}>Filtered results</p>
       {
         data.map((item, i) => {
-          console.log("item", item, item.filterby)
           return (
-            <div key={i}>
+            <div key={i} style={{ display: 'flex', alignItems: 'center' }}>
               <span style={{ margin: '0px 10px', fontSize: '12px' }}>|</span>
               {/* {
                 item.filterby !== "Order Amount" && item.filterby !== "City" && item.filterby !== "From" && item.filterby !== "To" &&
@@ -38,6 +37,10 @@ const FilteredParams = ({ data }) => {
               {
                 item.filterby === "Delivery Operator" &&
                 <span style={textStyle}>{item.value}</span>
+              }
+              {
+                item.filterby === "Delivery Status" &&
+                <span style={textStyle}>{item.value ? "Delivery Status Enabled" : "Delivery Status Disabled"}</span>
               }
               {
                 item.filterby === "Permit Status" &&

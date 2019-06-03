@@ -1,7 +1,7 @@
 import React from "react"
 import { getQueryObjByName } from "Utils/url-utils"
 import "Sass/navbar.scss"
-import { dsoNavbarItems } from "./../../constants/nav-items"
+import { exciseNavbarItems } from "./../../constants/nav-items"
 
 const checkActiveClass = (value) => {
   const url = location.href
@@ -11,13 +11,13 @@ const checkActiveClass = (value) => {
   return ''
 }
 
-const DsoNavbar = (props) => {
+const ExciseNavbar = (props) => {
 
   const handleClick = (route) => {
     if (props.navbarItems) {
       location.href = route
     } else {
-      location.href = `${route}?id=${getQueryObjByName("id")}&name=${getQueryObjByName("name")}`
+      location.href = `${route}?stateId=${getQueryObjByName("stateId")}&name=${getQueryObjByName("name")}`
     }
   }
 
@@ -25,9 +25,8 @@ const DsoNavbar = (props) => {
     <div className="main-header">
       {
         !props.navbarItems
-          ? dsoNavbarItems.map((item, i) => (
+          ? exciseNavbarItems.map((item, i) => (
             <a key={i} onClick={() => handleClick(item.path)} className={`${checkActiveClass(item.value)}`}>{item.label}</a>
-            // <NavLink to={}>{item.label}</NavLink>
           ))
           : props.navbarItems.map((item, i) => (
             <a key={i} onClick={() => handleClick(item.path)} className={`${checkActiveClass(item.value)}`}>{item.label}</a>
@@ -37,4 +36,4 @@ const DsoNavbar = (props) => {
   )
 }
 
-export default DsoNavbar
+export default ExciseNavbar

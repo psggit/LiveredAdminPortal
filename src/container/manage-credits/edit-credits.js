@@ -11,7 +11,7 @@ import DataTable from "Components/table/custom-table"
 import DsoNavbar from "../dso-details/dso-navbar"
 import TitleBar from "Components/titlebar"
 import { POST, GET } from 'Utils/fetch'
-import Notify from "Components/notification"
+import Dialog from "Components/dialog"
 
 const creditTableHeaders = [
   { title: "Transaction ID", icon: "" },
@@ -36,12 +36,14 @@ const EditCredits = (props) => {
   const [creditsDataCount, setCreditsDataCount] = useState(0)
   const [limit, setLimit] = useState(pageLimit)
   const [dsoId, setDsoId] = useState(getQueryObjByName("id"))
+  const [mountModal, setMountModal] = useState(false)
   const [dsoName, setDsoName] = useState(getQueryObjByName("name")) || ""
 
   /**
    * Payload for fetching credit list
    */
   const creditsReqParams = {
+    dso_id: getQueryObjByName("id"),
     limit,
     offset: limit * parseInt(activePage - 1)
   }
@@ -80,6 +82,7 @@ const EditCredits = (props) => {
       })
       .catch((err) => {
         setAddingCredits(false)
+        setMountModal(true)
         //Notify(err.message, "warning")
         console.log("Error in adding credits", err)
       })
@@ -142,6 +145,10 @@ const EditCredits = (props) => {
         setUploadingImage(false)
         uploadedImageUrl = json.url
       })
+  }
+
+  const unMountModal = () => {
+    setMountModal(false)
   }
 
   return (
@@ -236,6 +243,18 @@ const EditCredits = (props) => {
           </div>
         </div>
       </div>
+      {
+        mountModal &&
+        <Dialog
+          title="Error in adding credits"
+          onClick={unMountModal}
+          actions={[
+            <Button onClick={() => unMountModal()} primary>
+              Done
+            </Button>
+          ]}
+        />
+      }
     </React.Fragment >
   )
 }
