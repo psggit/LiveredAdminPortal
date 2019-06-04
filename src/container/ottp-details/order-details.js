@@ -7,6 +7,7 @@ import * as Api from "./../../api"
 const orderDetails = ({ ottpId, orderStatus, orders }) => {
 
   const [showModal, setShowModal] = useState(false)
+  const [changingOrderStatus, setChangingOrderStatus] = useState(false)
   const [selectedOrderStatusIdx, setOrderStatus] = useState(-1)
 
   const orderStatusOptions = [
@@ -29,6 +30,10 @@ const orderDetails = ({ ottpId, orderStatus, orders }) => {
     } else {
       status = "ongoing"
     }
+  }
+
+  const changeOrderStatus = () => {
+    setChangingOrderStatus(true)
     Api.changeOrderStatus({
       ottp_info: {
         ottp_id: ottpId,
@@ -37,9 +42,11 @@ const orderDetails = ({ ottpId, orderStatus, orders }) => {
     })
       .then((response) => {
         setShowModal(false)
+        setChangingOrderStatus(false)
         window.location = location.href
       })
       .catch((err) => {
+        setChangingOrderStatus(false)
         console.log("Error in changing order status", err)
       })
   }
@@ -100,11 +107,21 @@ const orderDetails = ({ ottpId, orderStatus, orders }) => {
           title="Change order status"
           subtitle="Choose current order status"
           onClick={unmountModal}
+          actions={[
+            <Button disabled={changingOrderStatus} onClick={() => unMountModal()} secondary>
+              No
+              </Button>,
+            <Button disabled={changingOrderStatus} onClick={() => changeOrderStatus()} primary>
+              Yes
+            </Button>
+          ]}
         >
           <div style={{ margin: '20px 0' }}>
             <Select
               options={orderStatusOptions}
               name="orderStatus"
+              large
+              placeholder="order status"
               onChange={e => handleChange(e)}
               value={selectedOrderStatusIdx}
             />

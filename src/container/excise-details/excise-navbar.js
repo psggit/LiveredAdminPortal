@@ -19,7 +19,7 @@ const ExciseNavbar = (props) => {
             </NavLink>
           ))
           : props.navbarItems.map((item, i) => (
-            <NavLink to={item.path}>{item.label}</NavLink>
+            <NavLink className={`nav-link ${checkActiveClass(item.value)}`} to={item.path}>{item.label}</NavLink>
           ))
       }
     </div >

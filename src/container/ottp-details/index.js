@@ -19,6 +19,7 @@ const OttpDetails = (props) => {
   const [ottpDetailsData, setOttpDetails] = useState({})
   const [loadingOttpDetails, setLoadingOttpDetails] = useState(true)
   const [showCancelOtpModal, setShowCancelOtpModal] = useState(false)
+  const [cancellingOttp, setCancellingOttp] = useState(false)
   //const [showSuccessCancelOtpModal, setSuccessCancelOtpModal] = useState(false)
 
   const OttpDetailsReqParams = {
@@ -45,7 +46,7 @@ const OttpDetails = (props) => {
   }
 
   const cancelOttp = () => {
-    setShowCancelOtpModal(false)
+    setCancellingOttp(true)
     Api.cancelOttp({
       ottp_info: {
         ottp_id: OttpId
@@ -53,9 +54,12 @@ const OttpDetails = (props) => {
     })
       .then((response) => {
         console.log("response", response)
+        setShowCancelOtpModal(false)
+        setCancellingOttp(false)
         window.location = location.href
       })
       .catch((err) => {
+        setCancellingOttp(false)
         console.log("Error in cancelling ottp", err)
       })
   }
@@ -154,10 +158,10 @@ const OttpDetails = (props) => {
             title="Are you sure you want to cancel the OTTP?"
             onClick={() => unmountModal()}
             actions={[
-              <Button onClick={() => unmountModal()} secondary>
+              <Button disabled={cancellingOttp} onClick={() => unmountModal()} secondary>
                 No
               </Button>,
-              <Button onClick={cancelOttp} primary>
+              <Button disabled={cancellingOttp} onClick={cancelOttp} primary>
                 Yes
               </Button>
             ]}

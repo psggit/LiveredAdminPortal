@@ -9,7 +9,7 @@ import Moment from "moment"
 import { getQueryObjByName, getQueryUri } from "Utils/url-utils"
 import DataTable from "Components/table/custom-table"
 import DsoNavbar from "../dso-details/dso-navbar"
-import TitleBar from "Components/titlebar"
+import TitleBarAndSave from "Components/titlebarAndSave"
 import { POST, GET } from 'Utils/fetch'
 import Dialog from "Components/dialog"
 
@@ -200,7 +200,7 @@ const EditCredits = (props) => {
               </div>
             }
             <form onSubmit={handleSubmit}>
-              <TitleBar
+              <TitleBarAndSave
                 title="Edit Credits"
                 enableEdit={enableEdit}
                 handleCancel={toggleEnableEdit}

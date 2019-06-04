@@ -25,6 +25,7 @@ class CreateDso extends React.Component {
 
   createDsoDetails() {
     const data = this.dsoDetailsForm.getData()
+    this.setState({ creatingDsoDetails: true })
     Api.createDsoDetails({
       dso_name: data.dsoName,
       is_active: data.deliveryStatus,
@@ -39,9 +40,11 @@ class CreateDso extends React.Component {
       head_office_contact_phone: data.phone
     })
       .then((response) => {
+        this.setState({ creatingDsoDetails: false })
         this.props.history.push(`/home/dso/create-locations?id=${response.dso_id}&name=${response.dso_name}`)
       })
       .catch((err) => {
+        this.setState({ creatingDsoDetails: false })
         console.log("Error in creating dso", err)
       })
   }
@@ -59,7 +62,7 @@ class CreateDso extends React.Component {
           padding: '0px 60px'
         }}
         >
-          <div id="dsoDetails" style={{ width: '100%', position: 'relative'  }}>
+          <div id="dsoDetails" style={{ width: '100%', position: 'relative' }}>
             <DsoNavbar navbarItems={this.navbarOptions} />
             <div className="content">
               <DsoDetailsForm

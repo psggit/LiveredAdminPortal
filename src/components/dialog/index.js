@@ -3,23 +3,22 @@ import Button from "./../button"
 import "./dialog.scss"
 import ButtonGroup from "./../button-group"
 import Icon from "./../icon"
-import { AST_PropAccess } from "terser";
 
 const Dialog = ({ icon, title, subtitle, children, onClick, actions }) => {
-  useEffect(() => {
-    document.addEventListener('click', handlePress)
-    console.log("Created");
-    return () => {
-      console.log("Cleaned up");
-      document.removeEventListener('click', handlePress)
-    };
-  }, []);
+  // useEffect(() => {
+  //   document.addEventListener('click', handlePress)
+  //   console.log("Created");
+  //   return () => {
+  //     console.log("Cleaned up");
+  //     document.removeEventListener('click', handlePress)
+  //   };
+  // }, []);
 
-  const handlePress = (e) => {
-    if (e.target.className === 'overlay-container') {
-      onClick()
-    }
-  }
+  // const handlePress = (e) => {
+  //   if (e.target.className === 'overlay-container') {
+  //     onClick()
+  //   }
+  // }
 
   return (
     <div className="overlay-container">

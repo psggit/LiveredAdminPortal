@@ -29,6 +29,9 @@ class CreateExcise extends React.Component {
 
   createExciseDetails() {
     const data = this.exciseDetailsForm.getData()
+    this.setState({
+      creatingExciseDetails: true
+    })
     Api.createExciseDetails({
       name: data.exciseName,
       state_id: data.selectedStateIdx,
@@ -39,10 +42,13 @@ class CreateExcise extends React.Component {
       primary_contact_phone: data.phone
     })
       .then((response) => {
+        this.setState({
+          creatingExciseDetails: false
+        })
         this.props.history.push(`/home/excise/view-details?stateId=${response.state_id}&name=${data.exciseName}`)
       })
       .catch((err) => {
-        this.setState({ mountDialog: true })
+        this.setState({ mountDialog: true, creatingExciseDetails: false })
         console.log("Error in creating excise", err)
       })
   }

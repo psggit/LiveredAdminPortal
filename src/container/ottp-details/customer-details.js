@@ -67,7 +67,7 @@ const consumerDetails = ({ orderStatus, ottpId, name, dob, address, isVerified }
           title="Are you sure to resend OTP?"
           onClick={() => unmountModal("ResendOtp")}
           actions={[
-            <Button onClick={() => unmountModal("ResendOtp")} secondary>
+            <Button disabled={resendingOtp} onClick={() => unmountModal("ResendOtp")} secondary>
               No
             </Button>,
             <Button onClick={resendOtp} disabled={resendingOtp} primary>

@@ -3,7 +3,7 @@ import "Sass/wrapper.scss"
 import Label from "Components/label"
 import Icon from "Components/icon"
 import TextInput from "Components/textInput"
-import TitleBar from "Components/titlebar"
+import TitleBarAndSave from "Components/titlebarAndSave"
 import Select from "Components/select"
 import { fetchStateAndCitiesList } from "./../../api"
 import { getQueryObjByName } from "Utils/url-utils"
@@ -165,7 +165,7 @@ class DsoDetailsForm extends React.Component {
       <React.Fragment>
         <div className="content-section" style={{ marginTop: '50px' }}>
           <form onSubmit={this.handleSubmit}>
-            <TitleBar
+            <TitleBarAndSave
               title={this.props.action !== "view"
                 ? this.props.action === "create" ? "Add New Details" : "Edit Basic Details"
                 : "Basic Details"}

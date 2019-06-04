@@ -3,7 +3,7 @@ import "Sass/wrapper.scss"
 import Label from "Components/label"
 import Icon from "Components/icon"
 import TextInput from "Components/textInput"
-import TitleBar from "Components/titlebar"
+import TitleBarAndSave from "Components/titlebarAndSave"
 import Select from "Components/select"
 import { fetchStateAndCitiesList } from "./../../api"
 import { getQueryObjByName } from "Utils/url-utils"
@@ -37,18 +37,19 @@ class ExciseDetailsForm extends React.Component {
   }
 
   componentDidMount() {
+    // on edit/view fetch state and city list after fetching excise details
     if (this.props.action !== "create") {
       this.fetchExciseDetails({
         state_id: parseInt(getQueryObjByName("stateId"))
       })
+    } else { //on create fetch state and city list
+      this.fetchCityAndStates()
     }
-    this.fetchCityAndStates()
   }
 
   fetchExciseDetails(payload) {
     Api.fetchExciseDetails(payload)
       .then((response) => {
-        console.log("response", response.excise)
         const data = response.excise
         this.setState({
           selectedCityIdx: data.head_office_city_id,
@@ -59,6 +60,7 @@ class ExciseDetailsForm extends React.Component {
           email: data.primary_contact_email,
           phone: data.primary_contact_phone
         })
+        this.fetchCityAndStates()
       })
       .catch((err) => {
         console.log("Error in fetching excise details", err)
@@ -84,12 +86,10 @@ class ExciseDetailsForm extends React.Component {
       }
     })
     if (this.state.selectedCityIdx === -1) {
-      console.log("hell")
-      this.setState({ selectedCityIdx: cityList[0].value })
+      this.setState({ cityList, selectedCityIdx: cityList[0].value })
+    } else {
+      this.setState({ cityList })
     }
-    this.setState({ cityList })
-    console.log("state", this.state)
-
   }
 
   formatResponse(response) {
@@ -110,15 +110,15 @@ class ExciseDetailsForm extends React.Component {
     } else {
       this.updateCityList(this.state.selectedStateIdx)
     }
-
   }
 
   handleStateChange(e) {
     this.setState({
-      selectedStateIdx: parseInt(e.target.value)
+      selectedStateIdx: parseInt(e.target.value),
+      selectedCityIdx: -1
+    }, () => {
+      this.updateCityList(this.state.selectedStateIdx)
     })
-
-    this.updateCityList(parseInt(e.target.value))
   }
 
   handleCityChange(e) {
@@ -162,7 +162,7 @@ class ExciseDetailsForm extends React.Component {
       <React.Fragment>
         <div className="content-section" style={{ marginTop: '50px' }}>
           <form onSubmit={this.handleSubmit}>
-            <TitleBar
+            <TitleBarAndSave
               title={this.props.action !== "view"
                 ? this.props.action === "create" ? "Add Details" : "Edit Details"
                 : "Details"}

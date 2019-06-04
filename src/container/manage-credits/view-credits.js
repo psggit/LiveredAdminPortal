@@ -7,7 +7,7 @@ import Moment from "moment"
 import { getQueryObjByName, getQueryUri } from "Utils/url-utils"
 import DataTable from "Components/table/custom-table"
 import DsoNavbar from "../dso-details/dso-navbar"
-import TitleBar from "Components/titlebar"
+import TitleBarAndSave from "Components/titlebarAndSave"
 
 const creditTableHeaders = [
   { title: "Transaction ID", icon: "" },
@@ -94,7 +94,7 @@ const ViewCredits = (props) => {
         <div id="credits" style={{ width: '100%', position: 'relative' }}>
           <DsoNavbar />
           <div className="content">
-            <TitleBar
+            <TitleBarAndSave
               title="Credits"
               enableEdit={false}
               handleClick={handleEdit}

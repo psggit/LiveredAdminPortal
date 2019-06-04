@@ -13,6 +13,7 @@
     color: #9b9b9b;
     cursor: pointer;
     font-size: 14px;
+    text-decoration: none;
     // width: 100px;
     &:hover {
       color: #000;
@@ -24,9 +25,6 @@
       font-weight: 600;
       text-decoration: none;
       border-bottom: 2px solid #000;
-    }
-    .active {
-    background: red;
     }
   }
 }

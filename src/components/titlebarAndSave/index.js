@@ -1,6 +1,6 @@
 import React from "react"
 import Button from "Components/button"
-import "./titlebar.scss"
+import "./titlebar-and-save.scss"
 
 const Titlebar = ({ title, enableEdit, handleClick, handleCancel, disableBtn, handleSubmit }) => {
   return (
@@ -29,7 +29,15 @@ const Titlebar = ({ title, enableEdit, handleClick, handleCancel, disableBtn, ha
               Save
             </Button>
           </span>
-          <span><Button secondary onClick={handleCancel}>Cancel</Button></span>
+          <span>
+            <Button
+              secondary
+              disabled={disableBtn ? disableBtn : false}
+              onClick={handleCancel}
+            >
+              Cancel
+            </Button>
+          </span>
         </div>
       }
     </div>

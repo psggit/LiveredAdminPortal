@@ -1,5 +1,5 @@
 import React from "react"
-import TitleBar from "Components/titlebar"
+import TitleBarAndSave from "Components/titlebarAndSave"
 import Label from "Components/label"
 import DataTable from "Components/table/custom-table"
 import Icon from "Components/icon"
@@ -216,7 +216,7 @@ class DsoLocationForm extends React.Component {
           </DataTable>
 
           <form onSubmit={this.handleSubmit}>
-            <TitleBar
+            <TitleBarAndSave
               title={this.props.action !== "view"
                 ? this.props.action === "create" ? "Add Location Details" : "Edit Location Details"
                 : "Location Details"}
