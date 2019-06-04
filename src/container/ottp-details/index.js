@@ -11,6 +11,7 @@ import DeliveryAgentDetails from "./delivery-agent-details"
 import OrderDetails from "./order-details"
 import ConsumerDetails from "./customer-details"
 import Dialog from "Components/dialog"
+import Select from "Components/select"
 //import { getQueryObjByName } from "Utils/url-utils"
 
 const OttpDetails = (props) => {
@@ -20,6 +21,7 @@ const OttpDetails = (props) => {
   const [loadingOttpDetails, setLoadingOttpDetails] = useState(true)
   const [showCancelOtpModal, setShowCancelOtpModal] = useState(false)
   const [cancellingOttp, setCancellingOttp] = useState(false)
+  const [cancelOttpReasonIdx, setCancelOttpReason] = useState(-1)
   //const [showSuccessCancelOtpModal, setSuccessCancelOtpModal] = useState(false)
 
   const OttpDetailsReqParams = {
@@ -27,6 +29,12 @@ const OttpDetails = (props) => {
       ottp_id: props.match.params.OttpId
     }
   }
+
+  const cancelOttpOptions = [
+    { text: "Invalid user", value: 1 },
+    { text: "Technical issues", value: 2 },
+    { text: "Other", value: 3 }
+  ]
 
   useEffect(() => {
     setLoadingOttpDetails(true)
@@ -45,15 +53,21 @@ const OttpDetails = (props) => {
       })
   }
 
+  const handleChange = (e) => {
+    setCancelOttpReason(e.target.value)
+  }
+
   const cancelOttp = () => {
     setCancellingOttp(true)
     Api.cancelOttp({
       ottp_info: {
-        ottp_id: OttpId
-      }
+        ottp_id: OttpId,
+        status: "cancelled"
+      },
+      changed_by: "admin",
+      reason: cancelOttpOptions.find((item) => item.value === parseInt(cancelOttpReasonIdx)).text
     })
       .then((response) => {
-        console.log("response", response)
         setShowCancelOtpModal(false)
         setCancellingOttp(false)
         window.location = location.href
@@ -165,7 +179,18 @@ const OttpDetails = (props) => {
                 Yes
               </Button>
             ]}
-          />
+          >
+            <div style={{ margin: '20px 0' }}>
+              <Select
+                options={cancelOttpOptions}
+                name="cancelOttpReasonIdx"
+                large
+                placeholder="reason"
+                onChange={e => handleChange(e)}
+                value={cancelOttpReasonIdx}
+              />
+            </div>
+          </Dialog>
         }
         {/* {
         showSuccessCancelOtpModal &&

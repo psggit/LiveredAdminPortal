@@ -1,6 +1,5 @@
 import React from 'react'
 import PageHeader from 'Components/pageheader'
-import RuleHeader from './rule-header'
 import Label from 'Components/label'
 import Select from "Components/select"
 import Button from "Components/button"
@@ -25,7 +24,7 @@ class RuleManagement extends React.Component {
       timeRestrictions: [],
       legalPurchaseAge: "",
       zoneRestrictions: [],
-      permitRules: {},
+      permitRules: [],
       rulesData: {},
       stateList: [],
       selectedStateIdx: -1,
@@ -53,7 +52,7 @@ class RuleManagement extends React.Component {
           stateList,
           selectedStateIdx: stateList[0].value,
           selectedStateName: stateList[0].text
-        })
+        }, () => { this.fetchRules() })
       })
       .catch((err) => {
         console.log("Error in fetching states and cities")
@@ -68,13 +67,16 @@ class RuleManagement extends React.Component {
   }
 
   fetchRules() {
+    this.setState({ loadingRules: true })
     Api.fetchRules({
       state_id: this.state.selectedStateIdx
     })
       .then((response) => {
+        this.setState({ loadingRules: false })
         this.formatResponse(response)
       })
       .catch((err) => {
+        this.setState({ loadingRules: false })
         console.log("Error in fetching rule list", err)
       })
   }
@@ -110,7 +112,8 @@ class RuleManagement extends React.Component {
       zoneRestrictions,
       permitRules,
       selectedStateIdx,
-      selectedStateName
+      selectedStateName,
+      loadingRules
     } = this.state
     const noRules = possessionLimits.length === 0
       && timeRestrictions.length === 0
@@ -126,6 +129,7 @@ class RuleManagement extends React.Component {
             <Select
               options={this.state.stateList}
               name="State"
+              placeholder="excise department"
               onChange={e => this.handleChange(e)}
               value={this.state.selectedStateIdx}
             />
@@ -134,152 +138,8 @@ class RuleManagement extends React.Component {
             </div>
           </div>
         </div>
-        <div className="wrapper">
-          <p className="title">Rules {selectedStateIdx !== -1 ? `| ${selectedStateName}` : ""}</p>
-          <RuleHeader
-            title="CUSTOMER RESTRICTIONS"
-            tooltipText="User/customer needs to fulfil the following criteria to place an order"
-          >
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-              <div>
-                <div className="legal-age">
-                  <Label
-                    icon="info"
-                    tooltipText="Minimum legal age limit to place an order"
-                  >
-                    Legal Purchage Age
-                </Label>
-                  <input type="number" value={legalPurchaseAge} />
-                </div>
-
-                <div className="possession" style={{ marginTop: '20px' }}>
-                  <Label
-                    icon="info"
-                    tooltipText="The quantity of liquor that an individual can possess at any given time"
-                  >
-                    Possession Limits
-                </Label>
-                  {
-                    possessionLimits.map((item, i) => {
-                      return <div key={i} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                        <p>{item.brand_type}</p>
-                        <input className="small" type="text" value={item.volume_limit} />
-                      </div>
-                    })
-                  }
-                </div>
-              </div>
-            </div>
-          </RuleHeader>
-
-          <RuleHeader
-            title="PERMIT RULES"
-            tooltipText="Fulfiling certain criteria while generating a permit"
-          >
-            <div style={{ display: 'inline-block', marginRight: '20px' }} className="permit-time-validity">
-              <Label
-                icon="info"
-                tooltipText="The validity of a single OTTP generated per order"
-              >
-                Permit Time Validity
-            </Label>
-              <input
-                type="text"
-                value={`${permitRules.permit_time} mins`}
-              />
-            </div>
-            <div style={{ display: 'inline-block' }} className="cost">
-              <Label
-                icon="info"
-                tooltipText="The amount charged per OTTP per order"
-              >
-                Cost/Permit
-            </Label>
-              <input
-                type="text"
-                className="small"
-                value={`₹ ${permitRules.permit_cost}`}
-              />
-            </div>
-            <div className="late-fee" style={{ marginTop: '20px' }}>
-              <Label
-                icon="info"
-                tooltipText="In case of extension, late fee is charged per OTTP per order"
-              >
-                Late Fee
-            </Label>
-              <input
-                type="text"
-                className="small"
-                value={`₹ ${permitRules.late_fee}`}
-              />
-            </div>
-          </RuleHeader>
-
-          <RuleHeader
-            title="TIME RESTRICTIONS"
-            tooltipText="The time range within which the delivery is active every day"
-          >
-            <div>
-              <Label>Daily Restrictions</Label>
-            </div>
-            {
-              timeRestrictions.map((item, i) => {
-                return <div style={{ display: 'flex', alignItems: 'center' }} key={i}>
-                  <p style={{ width: '110px' }}>{item.weekday_name}</p>
-                  <input
-                    style={{ margin: '0 20px 10px 0' }}
-                    className="small" type="text"
-                    value={moment(item.start_time).format('h:mm a')}
-                  />
-                  <p>to</p>
-                  <input
-                    style={{ margin: '0 0 10px 20px' }}
-                    className="small"
-                    type="text"
-                    value={moment(item.end_time).format('h:mm a')}
-                  />
-                </div>
-              })
-            }
-          </RuleHeader>
-          <RuleHeader
-            title="SPECIAL RESTRICTIONS"
-            tooltipText="To restrict delivery with 48 hour intimation on certain days due to emergencies, as listed by the state"
-          >
-            <table>
-              <thead>
-                <tr>
-                  <th><Label>Zone</Label></th>
-                  <th><Label>On</Label></th>
-                  <th><Label>From</Label></th>
-                  <th><Label>To</Label></th>
-                  <th><Label>Repeat</Label></th>
-                  <th><Label>Reason</Label></th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                {
-                  zoneRestrictions.map((item, i) => {
-                    return (
-                      <tr onClick={() => this.updateZoneRestrictions(`${item.city_id !== undefined ? `city_${item.id}` : `state_${item.id}`}`)} key={i}>
-                        <td>{item.city ? item.city : item.state}</td>
-                        <td>{moment(item.date).format('DD/MM/YYYY')}</td>
-                        <td>{moment(item.from_time).format('h:mm a')}</td>
-                        <td>{moment(item.to_time).format('h:mm a')}</td>
-                        <td>{item.is_repeat ? 'Yearly' : 'No'}</td>
-                        <td>{item.reason}</td>
-                      </tr>
-                    )
-                  })
-                }
-              </tbody>
-            </table>
-          </RuleHeader>
-        </div>
         {
-          noRules &&
+          noRules && !loadingRules && selectedStateIdx !== -1 &&
           <div className="wrapper no-rules">
             <span>No rules set for {selectedStateName}</span>
             <Button custom
@@ -290,7 +150,135 @@ class RuleManagement extends React.Component {
             </Button>
           </div>
         }
-      </div>
+        {
+          !noRules &&
+          <div className="wrapper">
+            <p className="title">Rules {selectedStateIdx !== -1 ? `| ${selectedStateName}` : ""}</p>
+
+            <div className="rule--body possession" style={{ marginTop: '20px' }}>
+              <Label
+                icon="info"
+                tooltipText="The quantity of liquor that an individual can possess at any given time"
+              >
+                Possession Limits (Litres)
+              </Label>
+              {
+                possessionLimits.map((item, i) => {
+                  return <div key={i} style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}>
+                    <span>{item.brand_type}</span>
+                    <input className="small" type="text" value={item.volume_limit} />
+                  </div>
+                })
+              }
+            </div>
+
+            <div className="rule--body legal-age">
+              <Label
+                icon="info"
+                tooltipText="Minimum legal age limit to place an order"
+              >
+                Legal Purchage Age
+                </Label>
+              <input type="number" value={legalPurchaseAge} />
+            </div>
+
+            <div className="rule--body">
+              <div className="late-fee" style={{ marginTop: '20px' }}>
+                <Label
+                  icon="info"
+                  tooltipText="In case of extension, late fee is charged per OTTP per order"
+                >
+                  Cancellation Fee
+                </Label>
+                <input
+                  type="text"
+                  className="small"
+                  value={`₹ ${permitRules.late_fee}`}
+                />
+              </div>
+              <div className="late-fee" style={{ marginTop: '20px' }}>
+                <Label
+                  icon="info"
+                  tooltipText="In case of extension, late fee is charged per OTTP per order"
+                >
+                  Late Fee
+                </Label>
+                <input
+                  type="text"
+                  className="small"
+                  value={`₹ ${permitRules.late_fee}`}
+                />
+              </div>
+            </div>
+
+            <div className="rule--body">
+              <Label
+                icon="info"
+                tooltipText=""
+              >
+                TIME RESTRICTIONS
+                </Label>
+              {
+                timeRestrictions.map((item, i) => {
+                  return <div style={{ display: 'flex', alignItems: 'center' }} key={i}>
+                    <p style={{ width: '110px' }}>{item.weekday_name}</p>
+                    <input
+                      style={{ margin: '0 20px 10px 0' }}
+                      className="small" type="text"
+                      value={moment(item.start_time).format('h:mm a')}
+                    />
+                    <p>to</p>
+                    <input
+                      style={{ margin: '0 0 10px 20px' }}
+                      className="small"
+                      type="text"
+                      value={moment(item.end_time).format('h:mm a')}
+                    />
+                  </div>
+                })
+              }
+            </div>
+
+            <div className="rule--body">
+              <Label
+                icon="info"
+                tooltipText=""
+              >
+                SPECIAL RESTRICTIONS
+              </Label>
+              <table>
+                <thead>
+                  <tr>
+                    <th><Label>City/Town</Label></th>
+                    <th><Label>On</Label></th>
+                    <th><Label>From</Label></th>
+                    <th><Label>To</Label></th>
+                    <th><Label>Repeat</Label></th>
+                    <th><Label>Reason</Label></th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {
+                    zoneRestrictions.map((item, i) => {
+                      return (
+                        <tr onClick={() => this.updateZoneRestrictions(`${item.city_id !== undefined ? `city_${item.id}` : `state_${item.id}`}`)} key={i}>
+                          <td>{item.city ? item.city : item.state}</td>
+                          <td>{moment(item.date).format('DD/MM/YYYY')}</td>
+                          <td>{moment(item.from_time).format('h:mm a')}</td>
+                          <td>{moment(item.to_time).format('h:mm a')}</td>
+                          <td>{item.is_repeat ? 'Yearly' : 'No'}</td>
+                          <td>{item.reason}</td>
+                        </tr>
+                      )
+                    })
+                  }
+                </tbody>
+              </table>
+            </div>
+          </div>
+        }
+      </div >
     )
   }
 }

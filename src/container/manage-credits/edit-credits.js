@@ -12,14 +12,14 @@ import DsoNavbar from "../dso-details/dso-navbar"
 import TitleBarAndSave from "Components/titlebarAndSave"
 import { POST, GET } from 'Utils/fetch'
 import Dialog from "Components/dialog"
-
+import { dso as DSO } from "./../../api"
 const creditTableHeaders = [
   { title: "Transaction ID", icon: "" },
   { title: "Date", icon: "" },
   { title: "Time", icon: "", tooltipText: "" },
   { title: "Total Amount", icon: "", tooltipText: "" }
 ]
-const dso = "https://ba23a0fe.ngrok.io"
+
 let uploadedImageUrl = ""
 
 const EditCredits = (props) => {
@@ -113,7 +113,7 @@ const EditCredits = (props) => {
   }
 
   const handleTextFieldChange = (e) => {
-    document.getElementById([e.target.name]).className = "pristine"
+    //document.getElementById([e.target.name]).className = "pristine"
     if (!e.target.validity.patternMismatch) {
       setAmount(e.target.value)
     }
@@ -135,7 +135,7 @@ const EditCredits = (props) => {
     formData.append('file', file)
     setUploadingImage(true)
     POST({
-      api: `${dso}/livered/dso/uploadFile`,
+      api: `${DSO}/livered/dso/uploadFile`,
       type: 'FormData',
       data: formData,
       prependBaseUrl: false,

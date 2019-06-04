@@ -23,22 +23,23 @@ const orderDetails = ({ ottpId, orderStatus, orders }) => {
   }
   const handleChange = (e) => {
     setOrderStatus(e.target.value)
-    console.log("targte", e.target.value)
+  }
+
+  const changeOrderStatus = () => {
     let status;
-    if (parseInt(e.target.value) === 1) {
+    if (parseInt(selectedOrderStatusIdx) === 1) {
       status = "closed"
     } else {
       status = "ongoing"
     }
-  }
-
-  const changeOrderStatus = () => {
     setChangingOrderStatus(true)
     Api.changeOrderStatus({
       ottp_info: {
         ottp_id: ottpId,
         status
-      }
+      },
+      changed_by: "admin",
+      reason: orderStatusOptions.find((item) => item.value === parseInt(selectedOrderStatusIdx)).text
     })
       .then((response) => {
         setShowModal(false)
