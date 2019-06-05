@@ -11,6 +11,12 @@
     justify-content: space-between;
   }
 
+  .rule--header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
   .rule--body {
     padding: 30px;
     border: 1px solid #dfdfdf;
@@ -19,25 +25,66 @@
     transition: 0.8s all cubic-bezier(0.175, 0.885, 0.32, 1.275);
     opacity: 1;
     margin-bottom: 20px;
+
+    .title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 20px 0;
+
+      .button-group {
+        display: flex;
+        align-items: center;
+        .btn {
+          margin-right: 20px;
+        }
+      }
+    }
+
+    .delivery-restriction {
+      //padding: 30px 0;
+      display: flex;
+      flex-direction: row;
+      .section {
+       
+        margin-right: 30px;
+
+        .calendar-icon {
+          left: 120px;
+        }
+
+        .input-field {
+          margin-bottom: 20px;
+          display: flex;
+          align-items: center;
+
+          span {
+            margin-right: 10px;
+          }
+        }
+      }
+    }
+
+    .nav-link.cancel {
+      color: #5f5f6e;
+    }
+
+    .nav-link.save {
+      color: #00b4a0;
+    }
   }
   
   .label {
     margin-bottom:7px;
   }
+
   p {
     color: #152935;
     font-size: 14px;
+    // margin-top: 10px;
   }
 
-  input:read-only {
-    background-color: #fff;
-  }
-
-  input.small {
-    width: 90px;
-  }
-
-  .possession {
+  .possession-limit,  .time-restrictions {
     //max-width: 225px;
     input {
       margin-bottom: 10px;
@@ -46,22 +93,15 @@
     span {
        width: 150px;
     }
-  }
 
-  .zone-layout {
-    display: flex;
-    .sec-1 {
-      width: 30%;
+    input[type="time"] {
+      margin: 10px 20px;
     }
 
-    .sec-2 {
+    .brand-type, .timings {
       display: flex;
-      justify-content: space-between;
-      width: 40%;
-    }
-
-    .sec-3 {
-      width: 30%;
+      align-items: baseline;
+      justify-content: flex-start;
     }
   }
 
@@ -78,6 +118,7 @@
   td {
     padding: 12px 0;
     font-size: 14px;
+    width: 120px;
   }
 
   table tbody tr:hover {
@@ -89,22 +130,12 @@
   }
 
   td:last-child {
-    //text-align: right;
+    svg{
+      cursor: pointer;
+    }
+  }
+
+  td:nth-child(6) {
     width: 30%;
-    svg:first-child {
-      cursor: pointer;
-      margin-right: 40px;
-      width: 18px;
-      height: 18px;
-      g g{
-        fill: #3d70b2;
-      }
-    }
-    
-    svg:last-child {
-      cursor: pointer;
-      width: 19px;
-      height: 19px;
-    }
   }
 }

@@ -29,6 +29,7 @@ import ViewLocationDetails from "Container/manage-locations/view-location"
 import EditLocationDetails from "Container/manage-locations/edit-location"
 import OttpDetails from "Container/ottp-details"
 import ViewRules from "Container/rule-engine/view-rules"
+import EditRules from "Container/rule-engine/edit-rules"
 import Reports from "Container/manage-reports"
 import { createSession } from './login/session'
 
@@ -218,15 +219,15 @@ class App extends React.Component {
                         )
                       }
                     />
-                    {/* <Route
+                    <Route
                       exact
-                      path="/home/edit-rules"
+                      path="/home/rules/edit"
                       render={
                         props => (
                           <EditRules {...props} />
                         )
                       }
-                    /> */}
+                    />
                     <Route
                       exact
                       path="/home/dso/view-details"

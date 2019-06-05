@@ -382,6 +382,35 @@ export default {
 			</g>
 		</svg>
 	),
+	'rectangle': (
+		<svg width="18" height="18">
+			<path fill="rgb(255,255,255)" stroke="none" d="M0 0L18 0L18 18L0 18L0 0Z" />
+			<defs>
+				<clipPath id="clip_0">
+					<rect width="18" height="18" clipRule="evenodd" />
+				</clipPath>
+			</defs>
+			<g clipPath="url(#clip_0)">
+				<path fill="none" stroke="rgb(90,104,114)" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" d="M0 0L18 0L18 18L0 18L0 0Z" />
+			</g>
+		</svg>
+	),
+	'filledRectangle': (
+		<svg width="18px" height="18px" viewBox="0 0 18 18" version="1.1">
+			<title>checkbox selected</title>
+			<desc>Created with Sketch.</desc>
+			<g id="Symbols" stroke="none" strokeWidth="1" fill="none" fill-rule="evenodd">
+				<g id="checkbox-selected" stroke="#8C9BA5">
+					<g id="Group-15">
+						<g id="Checkboc---unselected" fill="#FFFFFF" strokeWidth="2">
+							<rect id="Rectangle-2" x="1" y="1" width="16" height="16" rx="2"></rect>
+						</g>
+						<polygon id="Page-1" strokeWidth="0.5" fill="#8C9BA5" points="6.66601401 11.4984604 3.92881107 8.74139099 3 9.67694333 6.66601401 13.3695651 14.542857 5.43555234 13.6140459 4.5"></polygon>
+					</g>
+				</g>
+			</g>
+		</svg>
+	),
 	addWhiteIcon: (
 		<svg width="16" height="16">
 			<defs>
@@ -410,16 +439,16 @@ export default {
 				</clipPath>
 			</defs>
 			<g clipPath="url(#clip_1)">
-				<path fill="none" stroke="rgb(140,155,165)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" d="M9 18C13.9706 18 18 13.9706 18 9C18 4.02944 13.9706 0 9 0C4.02944 0 0 4.02944 0 9C0 13.9706 4.02944 18 9 18Z" />
+				<path fill="none" stroke="rgb(140,155,165)" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" d="M9 18C13.9706 18 18 13.9706 18 9C18 4.02944 13.9706 0 9 0C4.02944 0 0 4.02944 0 9C0 13.9706 4.02944 18 9 18Z" />
 			</g>
 		</svg>
 	),
 	filledCircle: (
 		<svg width="18px" height="18px" viewBox="0 0 18 18" version="1.1">
-			<g id="OTTP-Management" stroke="none" stroke-width="1" fill="none" fillRule="evenodd">
+			<g id="OTTP-Management" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
 				<g id="Modal-Change-Order-Status-Copy" transform="translate(-48.000000, -187.000000)">
 					<g id="Radio-Button-Selected" transform="translate(48.000000, 187.000000)">
-						<circle id="Oval-1-Copy" stroke="#00B4A0" stroke-width="2" fill="#FFFFFF" cx="9" cy="9" r="8"></circle>
+						<circle id="Oval-1-Copy" stroke="#00B4A0" strokeWidth="2" fill="#FFFFFF" cx="9" cy="9" r="8"></circle>
 						<circle id="Oval-3" fill="#00B4A0" cx="9" cy="9" r="4"></circle>
 					</g>
 				</g>
@@ -515,7 +544,7 @@ export default {
 				</clipPath>
 			</defs>
 			<g clipPath="url(#clip_2)">
-				<path fill="none" stroke="rgb(255,80,80)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" transform="translate(5 9.45001)" d="M0 0L6 0L6 2.1L0 2.1L0 0Z" />
+				<path fill="none" stroke="rgb(255,80,80)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" transform="translate(5 9.45001)" d="M0 0L6 0L6 2.1L0 2.1L0 0Z" />
 			</g>
 
 		</svg>

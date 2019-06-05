@@ -103,6 +103,114 @@ export function createExciseDetails(payload) {
   })
 }
 
+export function createTimeRestriction(payload) {
+  return POST({
+    api: `${rule}/livered/rules/insertStateTimings`,
+    handleError: true,
+    prependBaseUrl: false,
+    data: payload
+  })
+}
+
+export function updateTimeRestriction(payload) {
+  return POST({
+    api: `${rule}/livered/rules/updateStateTimings`,
+    handleError: true,
+    prependBaseUrl: false,
+    data: payload
+  })
+}
+
+export function createLegalPurchaseAge(payload) {
+  return POST({
+    api: `${rule}/livered/rules/insertPossessionLimit`,
+    handleError: true,
+    prependBaseUrl: false,
+    data: payload
+  })
+}
+
+export function updateLegalPurchaseAge(payload) {
+  return POST({
+    api: `${rule}/livered/rules/updateLegalAge`,
+    handleError: true,
+    prependBaseUrl: false,
+    data: payload
+  })
+}
+
+export function createDsoFee(payload) {
+  return POST({
+    api: `${credit}/livered/credits/insertFee`,
+    handleError: true,
+    prependBaseUrl: false,
+    data: payload
+  })
+}
+
+export function updateDsoFee(payload) {
+  return POST({
+    api: `${credit}/livered/credits/editFee`,
+    handleError: true,
+    prependBaseUrl: false,
+    data: payload
+  })
+}
+
+export function createPossessionLimit(payload) {
+  return POST({
+    api: `${rule}/livered/rules/insertPossessionLimit`,
+    handleError: true,
+    prependBaseUrl: false,
+    data: payload
+  })
+}
+
+export function updatePossessionLimit(payload) {
+  return POST({
+    api: `${rule}/livered/rules/updatePossessionLimit`,
+    handleError: true,
+    prependBaseUrl: false,
+    data: payload
+  })
+}
+
+export function createCitySpecialDay(payload) {
+  return POST({
+    api: `${rule}/livered/rules/insertCitySpecialDays`,
+    handleError: true,
+    prependBaseUrl: false,
+    data: payload
+  })
+}
+
+export function createStateSpecialDay(payload) {
+  return POST({
+    api: `${rule}/livered/rules/insertStateSpecialDays`,
+    handleError: true,
+    prependBaseUrl: false,
+    data: payload
+  })
+}
+
+export function deleteStateSpecialDay(payload) {
+  return POST({
+    api: `${rule}/livered/rules/deleteStateSpecialDays`,
+    handleError: true,
+    prependBaseUrl: false,
+    data: payload
+  })
+}
+
+export function deleteCitySpecialDay(payload) {
+  return POST({
+    api: `${rule}/livered/rules/deleteCitySpecialDays`,
+    handleError: true,
+    prependBaseUrl: false,
+    data: payload
+  })
+}
+
 export function changeExciseDeliveryStatus(payload) {
   return POST({
     api: `${dso}/livered/dso/editDsoLocationStatus`,
