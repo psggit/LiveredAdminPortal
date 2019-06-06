@@ -5,6 +5,7 @@ import Button from 'Components/button'
 import './rule-engine.scss'
 import Icon from "Components/icon"
 import Select from "Components/select"
+import { getQueryObjByName } from "Utils/url-utils"
 import * as Api from "../../api"
 import Moment from "moment"
 import SpecialDayRestrictionForm from "./special-day-restriction-form"
@@ -17,7 +18,11 @@ class SpecialRestriction extends React.Component {
       showSave: true,
       creatingSpecialRestriction: false,
       deletingSpecialRestriction: false,
-      zoneRestrictions: props.data.city_special_days ? props.data.state_special_days ? props.data.city_special_days.concat(props.data.state_special_days) : props.data.city_special_days : []
+      zoneRestrictions: props.data.city_special_days
+        ? props.data.state_special_days
+          ? props.data.city_special_days.concat(props.data.state_special_days)
+          : props.data.city_special_days
+        : []
     }
 
     this.saveSpecialRestriction = this.saveSpecialRestriction.bind(this)
@@ -34,22 +39,34 @@ class SpecialRestriction extends React.Component {
     this.setState({ showSave: !this.state.showSave })
   }
 
+  resetFieldValues() {
+
+  }
+
   createCitySpecialDay() {
     const data = this.specialrestrictionForm.getData()
+    console.log("data", data)
     this.setState({ creatingSpecialRestriction: true })
-    Api.createCitySpecialDay({
+    const payload = {
       state_id: parseInt(this.props.stateId),
       city_id: parseInt(data.state.selectedCityIdx),
+      city: data.state.selectedCityName,
       date: data.specialDate.value,
       start_time: data.startTime.value + ":00+05:30",
       end_time: data.endTime.value + ":00+05:30",
       is_repeat: data.state.isRepeat,
       reason: data.reason.state.value
-    })
+    }
+
+    Api.createCitySpecialDay(payload)
       .then((response) => {
-        this.toggleSave()
-        this.setState({ creatingSpecialRestriction: false })
-        location.reload()
+        payload.id = response.id
+        payload.start_time = "0000-00-00T" + data.startTime.value + ":00+05:30"
+        payload.end_time = "0000-00-00T" + data.endTime.value + ":00+05:30"
+        this.setState({
+          creatingSpecialRestriction: false,
+          zoneRestrictions: [...this.state.zoneRestrictions, payload]
+        })
       })
       .catch((err) => {
         this.setState({ creatingSpecialRestriction: false })
@@ -62,6 +79,7 @@ class SpecialRestriction extends React.Component {
     this.setState({ creatingSpecialRestriction: true })
     Api.createStateSpecialDay({
       state_id: parseInt(this.props.stateId),
+      state: getQueryObjByName("stateName"),
       date: data.specialDate.value,
       from_time: data.startTime.value + ":00+05:30",
       to_time: data.endTime.value + ":00+05:30",
@@ -69,9 +87,14 @@ class SpecialRestriction extends React.Component {
       reason: data.reason.state.value
     })
       .then((response) => {
-        this.toggleSave()
-        this.setState({ creatingSpecialRestriction: false })
-        location.reload()
+        // this.toggleSave()
+        payload.id = response.id
+        payload.from_time = "0000-00-00T" + data.startTime.value + ":00+05:30"
+        payload.to_time = "0000-00-00T" + data.endTime.value + ":00+05:30"
+        this.setState({
+          creatingSpecialRestriction: false,
+          zoneRestrictions: [...this.state.zoneRestrictions, payload]
+        })
       })
       .catch((err) => {
         this.setState({ creatingSpecialRestriction: false })
@@ -152,7 +175,7 @@ class SpecialRestriction extends React.Component {
           <div className="title">
             <Label
               icon="info"
-              tooltipText=""
+              tooltipText="Restricting delivery with a minimum of 48 hours of intimation on certain days due to dry days, state emergencies or other requirements"
             >
               SPECIAL RESTRICTIONS
             </Label>
@@ -174,7 +197,7 @@ class SpecialRestriction extends React.Component {
               </div>
             }
             {
-              this.props.action !== "view" && !showSave &&
+              this.props.action == "edit" && !showSave &&
               <NavLink
                 onClick={this.toggleSave}
                 to={location.pathname}
@@ -204,7 +227,7 @@ class SpecialRestriction extends React.Component {
                       {
                         zoneRestrictions.map((item, i) => {
                           return (
-                            <tr onClick={() => this.deleteSpecialDay(`${item.city_id !== undefined ? `city_${item.id}` : `state_${item.id}`}`)}>
+                            <tr key={i} onClick={() => this.deleteSpecialDay(`${item.city_id !== undefined ? `city_${item.id}` : `state_${item.id}`}`)}>
                               <td>{item.city ? item.city : item.state}</td>
                               <td>{Moment(item.date).format('DD/MM/YYYY')}</td>
                               <td>{item.from_time ? (item.from_time).substring(11, 16) : (item.start_time).substring(11, 16)}</td>
@@ -230,7 +253,10 @@ class SpecialRestriction extends React.Component {
           </div>
           {
             this.props.action !== "view" &&
-            <SpecialDayRestrictionForm ref={(node) => { this.specialrestrictionForm = node }} />
+            <SpecialDayRestrictionForm
+              ref={(node) => { this.specialrestrictionForm = node }}
+              creatingSpecialRestriction={creatingSpecialRestriction}
+            />
           }
         </div>
       </form>

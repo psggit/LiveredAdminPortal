@@ -98,7 +98,7 @@ class LegalPurchaseAge extends React.Component {
               </div>
             }
             {
-              this.props.action !== "view" && !showSave &&
+              this.props.action === "edit" && !showSave &&
               <NavLink
                 onClick={this.toggleSave}
                 to={location.pathname}

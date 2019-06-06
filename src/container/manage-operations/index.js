@@ -15,7 +15,7 @@ const exciseOperationTableHeaders = [
   { title: "City", icon: "", tooltipText: "" },
   { title: "State", icon: "" },
   { title: "Delivery Operator", icon: "", tooltipText: "" },
-  { title: "Delivery Status", icon: "info", tooltipText: "The retailer/retail outlet which received the order" },
+  { title: "Delivery Status", icon: "info", tooltipText: "Current status of delivery operations for a specific city associated to a specific delivery operator" },
 ]
 const toggleExciseDeliveryReqParams = {}
 

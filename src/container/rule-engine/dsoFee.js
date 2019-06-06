@@ -79,12 +79,12 @@ class DsoFee extends React.Component {
             <div className="title">
               <Label
                 icon="info"
-                tooltipText="In case of extension, late fee is charged per OTTP per order"
+                tooltipText="In case an OTTP (One Time Transport Permit) is cancelled, a cancellation fee will be charged"
               >
                 Cancellation Fee
               </Label>
               {
-                this.props.action !== "view" && showSave &&
+                this.props.action === "edit" && showSave &&
                 <div className="button-group">
                   <Button
                     disabled={updatingDsoFee || creatingDsoFee}
@@ -126,7 +126,7 @@ class DsoFee extends React.Component {
           <div className="permit-fee" style={{ marginTop: '20px' }}>
             <Label
               icon="info"
-              tooltipText="In case of extension, late fee is charged per OTTP per order"
+              tooltipText="Amount charged per OTTP per order"
             >
               Cost/Permit
             </Label>

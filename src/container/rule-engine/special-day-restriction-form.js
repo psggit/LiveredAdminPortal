@@ -14,7 +14,8 @@ class SpecialDayRestrictionForm extends React.Component {
       cityList: [],
       selectedCityIdx: -1,
       selectedCityName: "",
-      isRepeat: false
+      isRepeat: false,
+      key: 0
     }
     this.fetchStateAndCityList = this.fetchStateAndCityList.bind(this)
     this.handleCheckboxChange = this.handleCheckboxChange.bind(this)
@@ -23,13 +24,21 @@ class SpecialDayRestrictionForm extends React.Component {
   }
 
   componentDidMount() {
+    console.log("Mounting..")
     this.fetchStateAndCityList()
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.creatingSpecialRestriction !== prevProps.creatingSpecialRestriction &&
+      this.props.creatingSpecialRestriction === false) {
+      this.setState({ key: this.state.key + 1 })
+    }
   }
 
   handleSelectChange(e) {
     this.setState({
       selectedCityIdx: e.target.value,
-      selectedCityName: this.state.cityList.find((item) => item.value === parseInt(e.target.value)).text
+      selectedCityName: this.state.cityList.find((item) => parseInt(item.value) === parseInt(e.target.value)).text
     })
   }
 
@@ -54,7 +63,8 @@ class SpecialDayRestrictionForm extends React.Component {
             text: "All",
             value: cityList.length - 1
           }],
-          selectedCityIdx: cityList[0].value
+          selectedCityIdx: cityList[0].value,
+          selectedCityName: cityList[0].text
         })
       })
       .catch((err) => {
@@ -74,13 +84,13 @@ class SpecialDayRestrictionForm extends React.Component {
         <div className="title">
           <Label
             icon="info"
-            tooltipText="In case of extension, late fee is charged per OTTP per order"
+            tooltipText="Delivery operations will be restricted based on the rules entered and can be chosen to repeat every year, if not it that specific rule will disappear at the end of the year"
           >
             Restricting delivery
           </Label>
         </div>
 
-        <div className="delivery-restriction">
+        <div className="delivery-restriction" key={this.state.key}>
 
           <div className="section">
             <Select

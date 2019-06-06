@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import Button from "Components/button"
 import Dialog from "Components/dialog"
 import Select from "Components/select"
+import Icon from "Components/icon"
 import * as Api from "./../../api"
 
 const orderDetails = ({ ottpId, orderStatus, orders }) => {
@@ -57,7 +58,15 @@ const orderDetails = ({ ottpId, orderStatus, orders }) => {
         <h4>Order Details</h4>
         <div className="row">
           <div className="item">
-            <p className="label">Order Status</p>
+            <div className="icon">
+              <span className="label"> Order Status</span>
+              <span className="info" style={{ position: "relative" }}>
+                <Icon name="info" />
+                <span className="tooltip-text">
+                  Status of the order updated by the delivery operator. Can be manually updated here if required
+              </span>
+              </span>
+            </div>
             <p className="value">{orderStatus}</p>
           </div>
           {

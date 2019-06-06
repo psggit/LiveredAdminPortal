@@ -191,10 +191,7 @@ class DsoDetailsForm extends React.Component {
                 />
               </div>
               <div className="item">
-                <Label
-                  icon="info"
-                  tooltipText="Minimum legal age limit to place an order"
-                >
+                <Label>
                   Entity Type
                 </Label>
                 <TextInput
@@ -212,7 +209,7 @@ class DsoDetailsForm extends React.Component {
               <div className="item">
                 <Label
                   icon="info"
-                  tooltipText="Minimum legal age limit to place an order"
+                  tooltipText="Type of License for a delivery operator"
                 >
                   License Type
                 </Label>
@@ -231,7 +228,7 @@ class DsoDetailsForm extends React.Component {
               <div className="item">
                 <Label
                   icon="info"
-                  tooltipText="Minimum legal age limit to place an order"
+                  tooltipText="Current status of delivery operator’s license to deliver liquor"
                 >
                   License Status
                 </Label>
@@ -277,7 +274,7 @@ class DsoDetailsForm extends React.Component {
               <div className="item">
                 <Label
                   icon="info"
-                  tooltipText="Minimum legal age limit to place an order"
+                  tooltipText="Expiry date of delivery operator’s license to delivery liquor"
                 >
                   License Expiry
                 </Label>
@@ -293,7 +290,7 @@ class DsoDetailsForm extends React.Component {
               <div className="item">
                 <Label
                   icon="info"
-                  tooltipText="Minimum legal age limit to place an order"
+                  tooltipText="Current status of delivery operations for a delivery operator. Exceptions prevail for specific cities based on special restrictions"
                 >
                   Delivery Status
                 </Label>

@@ -3,8 +3,6 @@ import { NavLink } from "react-router-dom"
 import Label from 'Components/label'
 import Button from 'Components/button'
 import './rule-engine.scss'
-import TextInput from "Components/textInput"
-import Moment from "moment"
 import * as Api from "../../api"
 
 const weekdays = [
@@ -124,12 +122,12 @@ class TimeRestriction extends React.Component {
           <div className="title">
             <Label
               icon="info"
-              tooltipText=""
+              tooltipText="Time range per day within which delivery of liquor is permitted"
             >
               TIME RESTRICTIONS
             </Label>
             {
-              this.props.action !== "view" && showSave &&
+              this.props.action === "edit" && showSave &&
               <div className="button-group">
                 <Button
                   disabled={updatingTimeRestriction || creatingTimeRestriction}
@@ -164,7 +162,11 @@ class TimeRestriction extends React.Component {
               name="mondayStartTimings"
               type="time"
               required
-              defaultValue={data.time_restrictions && data.time_restrictions.length > 0 ? data.time_restrictions.find((item) => item.weekday_id === 1).start_time.substring(11, 16) : ""}
+              defaultValue={
+                data.time_restrictions && data.time_restrictions.length > 0
+                  ? data.time_restrictions.find((item) => item.weekday_id === 1).start_time.substring(11, 16)
+                  : ""
+              }
               disabled={this.props.action === "view" || !this.state.showSave}
             />
             <p>to</p>
@@ -173,7 +175,11 @@ class TimeRestriction extends React.Component {
               name="mondayEndTimings"
               type="time"
               required
-              defaultValue={data.time_restrictions && data.time_restrictions.length > 0 ? data.time_restrictions.find((item) => item.weekday_id === 1).end_time.substring(11, 16) : ""}
+              defaultValue={
+                data.time_restrictions && data.time_restrictions.length > 0
+                  ? data.time_restrictions.find((item) => item.weekday_id === 1).end_time.substring(11, 16)
+                  : ""
+              }
               disabled={this.props.action === "view" || !this.state.showSave}
             />
           </div>
@@ -184,7 +190,11 @@ class TimeRestriction extends React.Component {
               name="tuesdayStartTimings"
               type="time"
               required
-              defaultValue={data.time_restrictions && data.time_restrictions.length > 0 ? data.time_restrictions.find((item) => item.weekday_id === 2).start_time.substring(11, 16) : ""}
+              defaultValue={
+                data.time_restrictions && data.time_restrictions.length > 0
+                  ? data.time_restrictions.find((item) => item.weekday_id === 2).start_time.substring(11, 16)
+                  : ""
+              }
               disabled={this.props.action === "view" || !this.state.showSave}
             />
             <p>to</p>
@@ -193,7 +203,11 @@ class TimeRestriction extends React.Component {
               name="tuesdayEndTimings"
               type="time"
               required
-              defaultValue={data.time_restrictions && data.time_restrictions.length > 0 ? data.time_restrictions.find((item) => item.weekday_id === 2).end_time.substring(11, 16) : ""}
+              defaultValue={
+                data.time_restrictions && data.time_restrictions.length > 0
+                  ? data.time_restrictions.find((item) => item.weekday_id === 2).end_time.substring(11, 16)
+                  : ""
+              }
               disabled={this.props.action === "view" || !this.state.showSave}
             />
           </div>
@@ -204,7 +218,11 @@ class TimeRestriction extends React.Component {
               name="wednesdayStartTimings"
               type="time"
               required
-              defaultValue={data.time_restrictions && data.time_restrictions.length > 0 ? data.time_restrictions.find((item) => item.weekday_id === 3).start_time.substring(11, 16) : ""}
+              defaultValue={
+                data.time_restrictions && data.time_restrictions.length > 0
+                  ? data.time_restrictions.find((item) => item.weekday_id === 3).start_time.substring(11, 16)
+                  : ""
+              }
               disabled={this.props.action === "view" || !this.state.showSave}
             />
             <p>to</p>
@@ -213,7 +231,11 @@ class TimeRestriction extends React.Component {
               name="wednesdayEndTimings"
               type="time"
               required
-              defaultValue={data.time_restrictions && data.time_restrictions.length > 0 ? data.time_restrictions.find((item) => item.weekday_id === 3).end_time.substring(11, 16) : ""}
+              defaultValue={
+                data.time_restrictions && data.time_restrictions.length > 0
+                  ? data.time_restrictions.find((item) => item.weekday_id === 3).end_time.substring(11, 16)
+                  : ""
+              }
               disabled={this.props.action === "view" || !this.state.showSave}
             />
           </div>
@@ -224,7 +246,11 @@ class TimeRestriction extends React.Component {
               name="thursdayStartTimings"
               type="time"
               required
-              defaultValue={data.time_restrictions && data.time_restrictions.length > 0 ? data.time_restrictions.find((item) => item.weekday_id === 4).start_time.substring(11, 16) : ""}
+              defaultValue={
+                data.time_restrictions && data.time_restrictions.length > 0
+                  ? data.time_restrictions.find((item) => item.weekday_id === 4).start_time.substring(11, 16)
+                  : ""
+              }
               disabled={this.props.action === "view" || !this.state.showSave}
             />
             <p>to</p>
@@ -233,7 +259,11 @@ class TimeRestriction extends React.Component {
               name="thursdayEndTimings"
               type="time"
               required
-              defaultValue={data.time_restrictions && data.time_restrictions.length > 0 ? data.time_restrictions.find((item) => item.weekday_id === 4).end_time.substring(11, 16) : ""}
+              defaultValue={
+                data.time_restrictions && data.time_restrictions.length > 0
+                  ? data.time_restrictions.find((item) => item.weekday_id === 4).end_time.substring(11, 16)
+                  : ""
+              }
               disabled={this.props.action === "view" || !this.state.showSave}
             />
           </div>
@@ -244,7 +274,11 @@ class TimeRestriction extends React.Component {
               name="fridayStartTimings"
               type="time"
               required
-              defaultValue={data.time_restrictions && data.time_restrictions.length > 0 ? data.time_restrictions.find((item) => item.weekday_id === 5).start_time.substring(11, 16) : ""}
+              defaultValue={
+                data.time_restrictions && data.time_restrictions.length > 0
+                  ? data.time_restrictions.find((item) => item.weekday_id === 5).start_time.substring(11, 16)
+                  : ""
+              }
               disabled={this.props.action === "view" || !this.state.showSave}
             />
             <p>to</p>
@@ -253,7 +287,11 @@ class TimeRestriction extends React.Component {
               name="fridayEndTimings"
               type="time"
               required
-              defaultValue={data.time_restrictions && data.time_restrictions.length > 0 ? data.time_restrictions.find((item) => item.weekday_id === 5).end_time.substring(11, 16) : ""}
+              defaultValue={
+                data.time_restrictions && data.time_restrictions.length > 0
+                  ? data.time_restrictions.find((item) => item.weekday_id === 5).end_time.substring(11, 16)
+                  : ""
+              }
               disabled={this.props.action === "view" || !this.state.showSave}
             />
           </div>
@@ -264,7 +302,11 @@ class TimeRestriction extends React.Component {
               name="saturdayStartTimings"
               type="time"
               required
-              defaultValue={data.time_restrictions && data.time_restrictions.length > 0 ? data.time_restrictions.find((item) => item.weekday_id === 6).start_time.substring(11, 16) : ""}
+              defaultValue={
+                data.time_restrictions && data.time_restrictions.length > 0
+                  ? data.time_restrictions.find((item) => item.weekday_id === 6).start_time.substring(11, 16)
+                  : ""
+              }
               disabled={this.props.action === "view" || !this.state.showSave}
             />
             <p>to</p>
@@ -273,7 +315,11 @@ class TimeRestriction extends React.Component {
               name="saturdayEndTimings"
               type="time"
               required
-              defaultValue={data.time_restrictions && data.time_restrictions.length > 0 ? data.time_restrictions.find((item) => item.weekday_id === 6).end_time.substring(11, 16) : ""}
+              defaultValue={
+                data.time_restrictions && data.time_restrictions.length > 0
+                  ? data.time_restrictions.find((item) => item.weekday_id === 6).end_time.substring(11, 16)
+                  : ""
+              }
               disabled={this.props.action === "view" || !this.state.showSave}
             />
           </div>
@@ -284,7 +330,11 @@ class TimeRestriction extends React.Component {
               name="sundayStartTimings"
               type="time"
               required
-              defaultValue={data.time_restrictions && data.time_restrictions.length > 0 ? data.time_restrictions.find((item) => item.weekday_id === 7).start_time.substring(11, 16) : ""}
+              defaultValue={
+                data.time_restrictions && data.time_restrictions.length > 0
+                  ? data.time_restrictions.find((item) => item.weekday_id === 7).start_time.substring(11, 16)
+                  : ""
+              }
               disabled={this.props.action === "view" || !this.state.showSave}
             />
             <p>to</p>
@@ -293,7 +343,11 @@ class TimeRestriction extends React.Component {
               name="sundayEndTimings"
               type="time"
               required
-              defaultValue={data.time_restrictions && data.time_restrictions.length > 0 ? data.time_restrictions.find((item) => item.weekday_id === 7).end_time.substring(11, 16) : ""}
+              defaultValue={
+                data.time_restrictions && data.time_restrictions.length > 0
+                  ? data.time_restrictions.find((item) => item.weekday_id === 7).end_time.substring(11, 16)
+                  : ""
+              }
               disabled={this.props.action === "view" || !this.state.showSave}
             />
           </div>

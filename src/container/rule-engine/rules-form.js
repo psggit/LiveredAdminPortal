@@ -21,7 +21,7 @@ class RuleManagement extends React.Component {
       stateList: [],
       selectedStateIdx: parseInt(getQueryObjByName("stateId")) || -1,
       selectedStateName: getQueryObjByName("stateName") || "",
-      loadingRules: false
+      loadingRules: true
     }
 
     this.fetchRules = this.fetchRules.bind(this)
@@ -75,11 +75,11 @@ class RuleManagement extends React.Component {
   fetchAndViewExciseRules() {
     const { selectedStateIdx, selectedStateName, rulesData: { } } = this.state
     this.fetchRules()
-    this.props.history.push(`${location.pathname}?stateId=${selectedStateIdx}&stateName=${selectedStateName}`)
+    this.props.history.push(`/home/rules?stateId=${selectedStateIdx}&stateName=${selectedStateName}`)
   }
 
   fetchRules() {
-    this.setState({ loadingRules: true })
+    // this.setState({ loadingRules: true })
     Api.fetchRules({
       state_id: this.state.selectedStateIdx
     })
@@ -115,7 +115,7 @@ class RuleManagement extends React.Component {
       && rulesData.possession_limit.length === 0
       && rulesData.permit_rules.length === 0
       && rulesData.time_restrictions.length === 0
-    console.log("rules", rulesData, noRules, loadingRules, selectedStateIdx, Object.keys(rulesData).length)
+    console.log("action", action, "no", noRules)
     return (
       <div id="rule-engine">
         <PageHeader pageName="Rules" />
@@ -141,7 +141,7 @@ class RuleManagement extends React.Component {
           </div>
         </div>
         {
-          noRules && !loadingRules && selectedStateIdx !== -1 && action !== "create" &&
+          noRules && !loadingRules && selectedStateIdx !== -1 && action === "view" &&
           <div className="wrapper no-rules">
             <span>No rules set for {selectedStateName}</span>
             <Button custom
@@ -153,8 +153,10 @@ class RuleManagement extends React.Component {
           </div>
         }
         {
-          !loadingRules && selectedStateIdx !== -1 &&
-          <div className="wrapper">
+          !loadingRules &&
+          selectedStateIdx !== -1 &&
+          ((action !== "view" && !noRules) || (action === "create") || (action === "view" && !noRules)) &&
+          < div className="wrapper">
             <div className="rule--header">
               <p className="title">{title}{selectedStateIdx !== -1 ? ` | ${selectedStateName}` : ""}</p>
               {
