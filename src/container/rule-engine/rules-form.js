@@ -27,6 +27,7 @@ class RuleManagement extends React.Component {
     this.fetchRules = this.fetchRules.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.handleDone = this.handleDone.bind(this)
+    this.handleEdit = this.handleEdit.bind(this)
     this.handleSetRules = this.handleSetRules.bind(this)
     this.fetchAndViewExciseRules = this.fetchAndViewExciseRules.bind(this)
     this.fetchStateAndCityList = this.fetchStateAndCityList.bind(this)
@@ -34,6 +35,12 @@ class RuleManagement extends React.Component {
 
   componentDidMount() {
     this.fetchStateAndCityList()
+  }
+
+  handleEdit() {
+    const { selectedStateIdx, selectedStateName } = this.state
+    // this.setState({ rulesData: {} })
+    this.props.handleEdit(selectedStateIdx, selectedStateName)
   }
 
   fetchStateAndCityList() {
@@ -152,7 +159,7 @@ class RuleManagement extends React.Component {
               <p className="title">{title}{selectedStateIdx !== -1 ? ` | ${selectedStateName}` : ""}</p>
               {
                 this.props.action === "view" &&
-                <Button custom icon="editIcon" onClick={() => this.props.handleEdit(selectedStateIdx, selectedStateName)}>Edit</Button>
+                <Button custom icon="editIcon" onClick={this.handleEdit}>Edit</Button>
               }
             </div>
 

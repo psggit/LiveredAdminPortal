@@ -399,7 +399,7 @@ export default {
 		<svg width="18px" height="18px" viewBox="0 0 18 18" version="1.1">
 			<title>checkbox selected</title>
 			<desc>Created with Sketch.</desc>
-			<g id="Symbols" stroke="none" strokeWidth="1" fill="none" fill-rule="evenodd">
+			<g id="Symbols" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
 				<g id="checkbox-selected" stroke="#8C9BA5">
 					<g id="Group-15">
 						<g id="Checkboc---unselected" fill="#FFFFFF" strokeWidth="2">

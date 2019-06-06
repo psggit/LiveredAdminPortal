@@ -30,34 +30,6 @@ class SpecialRestriction extends React.Component {
     this.deleteStateSpecialDay = this.deleteStateSpecialDay.bind(this)
   }
 
-  componentDidMount() {
-    this.fetchStateAndCityList()
-  }
-
-  fetchStateAndCityList() {
-    Api.fetchStateAndCitiesList()
-      .then((response) => {
-        const stateId = this.props.stateId ? parseInt(this.props.stateId) : parseInt(getQueryObjByName("stateId"))
-        let cityList = response.stateCity[stateId].cities
-        cityList = cityList.map((item) => {
-          return {
-            text: item.city_name,
-            value: item.city_id
-          }
-        })
-
-        this.setState({
-          cityList: [...cityList, {
-            text: "All",
-            value: cityList.length - 1
-          }]
-        })
-      })
-      .catch((err) => {
-        console.log("Error in fetching states and cities", err)
-      })
-  }
-
   toggleSave() {
     this.setState({ showSave: !this.state.showSave })
   }
@@ -131,8 +103,14 @@ class SpecialRestriction extends React.Component {
       id: parseInt(id)
     })
       .then((response) => {
-        this.toggleSave()
-        location.reload()
+        //this.toggleSave()
+        const availableZoneRestriction = this.state.zoneRestrictions.filter((item) => {
+          if (item.id !== id) {
+            return item
+          }
+        })
+        this.setState({ zoneRestrictions: availableZoneRestriction })
+        // location.reload()
       })
       .catch((error) => {
         console.log("Error in deleting state special day", error)
@@ -144,8 +122,14 @@ class SpecialRestriction extends React.Component {
       id: parseInt(id)
     })
       .then((response) => {
-        this.toggleSave()
-        location.reload()
+        //this.toggleSave()
+        const availableZoneRestriction = this.state.zoneRestrictions.filter((item) => {
+          if (item.id !== id) {
+            return item
+          }
+        })
+        this.setState({ zoneRestrictions: availableZoneRestriction })
+        // location.reload()
       })
       .catch((error) => {
         console.log("Error in deleting city special day", error)

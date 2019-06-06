@@ -53,7 +53,8 @@ class SpecialDayRestrictionForm extends React.Component {
           cityList: [...cityList, {
             text: "All",
             value: cityList.length - 1
-          }]
+          }],
+          selectedCityIdx: cityList[0].value
         })
       })
       .catch((err) => {
