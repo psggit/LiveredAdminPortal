@@ -71,9 +71,6 @@ const ManageOperations = (props) => {
       case 'Delivery Operator':
         setFilteredFieldState('Dso', item.idx)
         break;
-      // case 'State':
-      //   setFilteredFieldState('State', item.idx)
-      //   break;
       case 'Delivery Status':
         setFilteredFieldState('DeliveryStatus', item.idx)
         break;

@@ -67,6 +67,16 @@
       }
     }
   }
+
+  table tr th:last-child {
+    .tooltip-text {
+      left: -151px;
+    }
+
+    .tooltip-text::after {
+      left: 154px;
+    }
+  }
   
   table tr th:first-child,
   table tr td:first-child {
@@ -113,10 +123,11 @@
     display: none;
     box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.1);
     background-color: #fff;
+    position: absolute;
     top: 30px;
     left: -93px;
-    position: absolute;
-    width: 200px;
+    //left: -151px;
+    width: 190px;
     max-width: 200px;
     padding: 10px 15px;
     //z-index: 1;
@@ -137,6 +148,7 @@
     position: absolute;
     top: -10px;
     left: 95px;
+    //left: 154px;
     border-width: 5px;
     border-style: solid;
     border-color: transparent transparent #fff transparent;

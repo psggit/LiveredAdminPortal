@@ -79,7 +79,6 @@ class RuleManagement extends React.Component {
   }
 
   fetchRules() {
-    // this.setState({ loadingRules: true })
     Api.fetchRules({
       state_id: this.state.selectedStateIdx
     })
@@ -115,7 +114,7 @@ class RuleManagement extends React.Component {
       && rulesData.possession_limit.length === 0
       && rulesData.permit_rules.length === 0
       && rulesData.time_restrictions.length === 0
-    console.log("action", action, "no", noRules)
+
     return (
       <div id="rule-engine">
         <PageHeader pageName="Rules" />

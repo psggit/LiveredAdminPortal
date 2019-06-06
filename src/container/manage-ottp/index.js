@@ -78,7 +78,6 @@ const ManageOTTP = (props) => {
    * Sets the filtered dropdown value on page reload
    */
   const setSelectedDropDownValue = (item) => {
-    console.log("item", item)
     switch (item.filterby) {
       case 'City':
         setFilteredFieldState('City', item.idx)
