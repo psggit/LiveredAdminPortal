@@ -45,7 +45,7 @@ class SpecialDayRestrictionForm extends React.Component {
         cityList = cityList.map((item) => {
           return {
             text: item.city_name,
-            value: item.id
+            value: item.city_id
           }
         })
 
@@ -69,7 +69,7 @@ class SpecialDayRestrictionForm extends React.Component {
 
   render() {
     return (
-      <React.Fragment>
+      <div style={{ borderTop: '1px solid #dfe3e6' }}>
         <div className="title">
           <Label
             icon="info"
@@ -139,11 +139,11 @@ class SpecialDayRestrictionForm extends React.Component {
                     : <Icon name="rectangle" />
                 }
               </span>
-              <span onClick={this.handleCheckboxChange}>Repeat</span>
+              <span style={{ cursor: 'pointer' }} onClick={this.handleCheckboxChange}>Repeat</span>
             </div>
           </div>
         </div>
-      </React.Fragment>
+      </div>
     )
   }
 }

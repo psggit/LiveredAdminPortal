@@ -109,6 +109,7 @@ class PossessionLimit extends React.Component {
   render() {
     const { showSave, updatingPossessionLimit, creatingPossessionLimit } = this.state
     const { data } = this.props
+    console.log("data", data)
     return (
       <div className="rule--body possession-limit">
         <div className="title">
@@ -128,7 +129,7 @@ class PossessionLimit extends React.Component {
                 Save
               </Button>
               <NavLink
-                to=""
+                to={location.pathname}
                 className="nav-link cancel"
                 onClick={this.toggleSave}
               >
@@ -155,7 +156,7 @@ class PossessionLimit extends React.Component {
             name="IMFL"
             pattern="[0-9]*"
             isRequired={true}
-            defaultValue={data ? data.possession_limit.find((item) => item.brand_type === "IMFL").volume_limit : 0}
+            defaultValue={data.possession_limit && data.possession_limit.length > 0 ? data.possession_limit.find((item) => item.brand_type === "IMFL").volume_limit : 0}
             disabled={this.props.action === "view" || !this.state.showSave}
             errorMessage="IMFL is invalid"
             emptyMessage="IMFL is required"
@@ -168,7 +169,7 @@ class PossessionLimit extends React.Component {
             name="FMFL"
             pattern="[0-9]*"
             isRequired={true}
-            defaultValue={data ? data.possession_limit.find((item) => item.brand_type === "FMFL").volume_limit : 0}
+            defaultValue={data.possession_limit && data.possession_limit.length > 0 ? data.possession_limit.find((item) => item.brand_type === "FMFL").volume_limit : 0}
             disabled={this.props.action === "view" || !this.state.showSave}
             errorMessage="FMFL is invalid"
             emptyMessage="FMFL is required"
@@ -181,7 +182,7 @@ class PossessionLimit extends React.Component {
             name="beer"
             pattern="[0-9]*"
             isRequired={true}
-            defaultValue={data ? data.possession_limit.find((item) => item.brand_type === "Beer").volume_limit : 0}
+            defaultValue={data.possession_limit && data.possession_limit.length > 0 ? data.possession_limit.find((item) => item.brand_type === "Beer").volume_limit : 0}
             disabled={this.props.action === "view" || !this.state.showSave}
             errorMessage="Beer is invalid"
             emptyMessage="Beer is required"
@@ -194,7 +195,7 @@ class PossessionLimit extends React.Component {
             name="wine"
             pattern="[0-9]*"
             isRequired={true}
-            defaultValue={data ? data.possession_limit.find((item) => item.brand_type === "Wine").volume_limit : 0}
+            defaultValue={data.possession_limit && data.possession_limit.length > 0 ? data.possession_limit.find((item) => item.brand_type === "Wine").volume_limit : 0}
             disabled={this.props.action === "view" || !this.state.showSave}
             errorMessage="Wine is invalid"
             emptyMessage="Wine is required"

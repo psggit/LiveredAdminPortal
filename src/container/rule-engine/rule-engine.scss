@@ -15,6 +15,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-bottom: 20px;
   }
 
   .rule--body {
@@ -87,7 +88,7 @@
   .possession-limit,  .time-restrictions {
     //max-width: 225px;
     input {
-      margin-bottom: 10px;
+      margin: 10px 0 10px 0;
     }
 
     span {

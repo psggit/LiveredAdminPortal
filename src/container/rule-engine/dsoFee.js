@@ -94,7 +94,7 @@ class DsoFee extends React.Component {
                   </Button>
                   <NavLink
                     className="nav-link cancel"
-                    to=""
+                    to={location.pathname}
                     onClick={this.toggleSave}
                   >
                     Cancel
@@ -117,7 +117,7 @@ class DsoFee extends React.Component {
               name="cancellationFee"
               pattern="^₹[0-9 ]*"
               isRequired={true}
-              defaultValue={`₹ ${data.permit_rules.length > 0 ? data.permit_rules[0].cancellation_fee : 0}`}
+              defaultValue={`₹ ${data.permit_rules && data.permit_rules.length > 0 ? data.permit_rules[0].cancellation_fee : 0}`}
               disabled={this.props.action === "view" || !this.state.showSave}
               errorMessage="Cancellation fee is invalid"
               emptyMessage="Cancellation fee is required"
@@ -135,7 +135,7 @@ class DsoFee extends React.Component {
               name="permitFee"
               pattern="^₹[0-9 ]*"
               isRequired={true}
-              defaultValue={`₹ ${data.permit_rules.length > 0 ? data.permit_rules[0].permit_cost : 0}`}
+              defaultValue={`₹ ${data.permit_rules && data.permit_rules.length > 0 ? data.permit_rules[0].permit_cost : 0}`}
               disabled={this.props.action === "view" || !this.state.showSave}
               errorMessage="Permit fee is invalid"
               emptyMessage="Permit fee is required"

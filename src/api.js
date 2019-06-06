@@ -123,7 +123,7 @@ export function updateTimeRestriction(payload) {
 
 export function createLegalPurchaseAge(payload) {
   return POST({
-    api: `${rule}/livered/rules/insertPossessionLimit`,
+    api: `${rule}/livered/rules/insertLegalAge`,
     handleError: true,
     prependBaseUrl: false,
     data: payload

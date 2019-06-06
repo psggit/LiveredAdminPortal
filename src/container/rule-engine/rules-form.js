@@ -4,9 +4,7 @@ import Label from 'Components/label'
 import Select from "Components/select"
 import Button from "Components/button"
 import './rule-engine.scss'
-import moment from "moment"
 import * as Api from "../../api"
-import { NavLink } from "react-router-dom"
 import { getQueryObjByName } from "Utils/url-utils"
 import LegalPurchaseAge from "./legalPurchaseAge"
 import PossessionLimit from "./possessionLimit"
@@ -23,19 +21,22 @@ class RuleManagement extends React.Component {
       stateList: [],
       selectedStateIdx: parseInt(getQueryObjByName("stateId")) || -1,
       selectedStateName: getQueryObjByName("stateName") || "",
-      loadingRules: true
+      loadingRules: false
     }
 
     this.fetchRules = this.fetchRules.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.handleDone = this.handleDone.bind(this)
-    this.fetchExciseRules = this.fetchExciseRules.bind(this)
+    this.handleSetRules = this.handleSetRules.bind(this)
+    this.fetchAndViewExciseRules = this.fetchAndViewExciseRules.bind(this)
+    this.fetchStateAndCityList = this.fetchStateAndCityList.bind(this)
   }
 
-  /**
-   * Fetches rules of given state_id
-   */
   componentDidMount() {
+    this.fetchStateAndCityList()
+  }
+
+  fetchStateAndCityList() {
     Api.fetchStateAndCitiesList({})
       .then((response) => {
         const stateList = response.states.map((item) => {
@@ -44,17 +45,13 @@ class RuleManagement extends React.Component {
             value: item.id
           }
         })
-        this.setState({
-          stateList,
-        })
+        this.setState({ stateList })
         if (this.state.selectedStateIdx === -1) {
           this.setState({
             selectedStateIdx: stateList[0].value,
             selectedStateName: stateList[0].text
           }, () => { this.fetchRules() })
-        } else {
-          this.fetchRules()
-        }
+        } else { this.fetchRules() }
       })
       .catch((err) => {
         console.log("Error in fetching states and cities")
@@ -68,8 +65,8 @@ class RuleManagement extends React.Component {
     })
   }
 
-  fetchExciseRules() {
-    const { selectedStateIdx, selectedStateName } = this.state
+  fetchAndViewExciseRules() {
+    const { selectedStateIdx, selectedStateName, rulesData: { } } = this.state
     this.fetchRules()
     this.props.history.push(`${location.pathname}?stateId=${selectedStateIdx}&stateName=${selectedStateName}`)
   }
@@ -93,6 +90,11 @@ class RuleManagement extends React.Component {
     this.props.history.push(`/home/rules?stateId=${selectedStateIdx}&stateName=${selectedStateName}`)
   }
 
+  handleSetRules() {
+    const { selectedStateIdx, selectedStateName } = this.state
+    this.props.history.push(`/home/rules/create?stateId=${selectedStateIdx}&stateName=${selectedStateName}`)
+  }
+
   render() {
     const {
       rulesData,
@@ -101,11 +103,12 @@ class RuleManagement extends React.Component {
       selectedStateName
     } = this.state
 
-    const { title } = this.props
-    const noRules = Object.keys(rulesData).length > 0 && rulesData.possession_limit.length === 0
+    const { title, action } = this.props
+    const noRules = Object.keys(rulesData).length > 0
+      && rulesData.possession_limit.length === 0
       && rulesData.permit_rules.length === 0
-      && rulesData.zone_restrictions.length === 0
-
+      && rulesData.time_restrictions.length === 0
+    console.log("rules", rulesData, noRules, loadingRules, selectedStateIdx, Object.keys(rulesData).length)
     return (
       <div id="rule-engine">
         <PageHeader pageName="Rules" />
@@ -122,7 +125,7 @@ class RuleManagement extends React.Component {
             <div style={{ marginLeft: '10px' }}>
               <Button
                 primary
-                onClick={this.fetchExciseRules}
+                onClick={this.fetchAndViewExciseRules}
                 disabled={loadingRules && selectedStateIdx !== -1}
               >
                 View
@@ -131,19 +134,19 @@ class RuleManagement extends React.Component {
           </div>
         </div>
         {
-          noRules && !loadingRules && selectedStateIdx !== -1 &&
+          noRules && !loadingRules && selectedStateIdx !== -1 && action !== "create" &&
           <div className="wrapper no-rules">
             <span>No rules set for {selectedStateName}</span>
             <Button custom
               icon="addWhiteIcon"
-            //onClick={handleClick}
+              onClick={this.handleSetRules}
             >
               Set Rules
             </Button>
           </div>
         }
         {
-          !noRules && !loadingRules && selectedStateIdx !== -1 &&
+          !loadingRules && selectedStateIdx !== -1 &&
           <div className="wrapper">
             <div className="rule--header">
               <p className="title">{title}{selectedStateIdx !== -1 ? ` | ${selectedStateName}` : ""}</p>
