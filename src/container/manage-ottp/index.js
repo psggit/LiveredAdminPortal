@@ -262,7 +262,7 @@ const ManageOTTP = (props) => {
       <PageHeader pageName="Ottp Management" />
       <div style={{
         display: "flex",
-        marginTop: "30px",
+        margin: "30px 0 20px 0",
         justifyContent: "space-between",
         alignItems: "center",
         padding: '0px 60px'
@@ -324,6 +324,7 @@ const ManageOTTP = (props) => {
             <DataTable
               headings={ottpTableHeaders}
               loadingData={loadingOttp}
+              message="No ottps found"
             >
               {
                 ottpData.length > 0 &&

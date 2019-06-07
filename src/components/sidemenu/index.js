@@ -2,7 +2,7 @@ import React from "react"
 import './sidemenu.scss'
 import Icon from "./../icon"
 
-const Sidemenu = ({currentRoute, menuItems, history}) => {
+const Sidemenu = ({ currentRoute, menuItems, history }) => {
 
   const checkActiveClass = (value) => {
     if (currentRoute === value) {
@@ -32,7 +32,7 @@ const Sidemenu = ({currentRoute, menuItems, history}) => {
                       <Icon name={item.icon} />
                     </span>
                     <p className="tooltip-text">
-                      {item.value}
+                      {item.label}
                     </p>
                     <div className="highlight"></div>
                   </a>

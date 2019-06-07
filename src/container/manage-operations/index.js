@@ -242,7 +242,7 @@ const ManageOperations = (props) => {
       <PageHeader pageName="Excise Departments" text={getQueryObjByName("name")} />
       <div style={{
         display: "flex",
-        marginTop: "30px",
+        margin: "30px 0 20px 0",
         justifyContent: "space-between",
         alignItems: "center",
         padding: '0px 60px'
@@ -298,7 +298,7 @@ const ManageOperations = (props) => {
             <DataTable
               headings={exciseOperationTableHeaders}
               loadingData={loadingOperations}
-              message="Note: No DSO’s associated with Excise Department of Telanagana found, please go to DSO section to update or add new DSOs"
+              message="No DSO’s associated with Excise Department of Telanagana found, please go to DSO section to update or add new DSOs"
             >
               {
                 operationsData.length > 0 &&

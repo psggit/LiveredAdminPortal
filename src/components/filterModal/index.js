@@ -20,7 +20,6 @@ class Filter extends React.Component {
     let filterObj = []
     const dso = this.dsoListState.getData().dso
     const city = this.cityState.getData().city
-    const deliveryStatus = this.deliveryStatusState.getData().deliveryStatus
 
     if (this.props.filterName !== "exciseOperations") {
       const stateComponentState = this.stateComponent.getData().stateObj
@@ -36,9 +35,11 @@ class Filter extends React.Component {
       }
 
       filterObj.push(stateComponentState, dso, city, permitStatus)
+    } else {
+      const deliveryStatus = this.deliveryStatusState.getData().deliveryStatus
+      filterObj.push(dso, city, deliveryStatus)
     }
 
-    filterObj.push(dso, city, deliveryStatus)
     filterObj = filterObj.filter((item) => item.value && item.value !== "All")
     console.log("filter obj", filterObj)
     this.props.applyFilter(filterObj)
