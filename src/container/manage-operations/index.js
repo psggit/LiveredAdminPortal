@@ -8,6 +8,7 @@ import DataTable from "Components/table/custom-table"
 import Moment from "moment"
 import Dialog from "Components/dialog"
 import Button from "Components/button"
+import ExciseNavbar from "./../excise-details/excise-navbar"
 import FilteredParams from "Components/filteredParams"
 import Filter from "Components/filterModal"
 
@@ -241,114 +242,118 @@ const ManageOperations = (props) => {
     <React.Fragment >
       <PageHeader pageName="Excise Departments" text={getQueryObjByName("name")} />
       <div style={{
-        display: "flex",
-        margin: "30px 0 20px 0",
-        justifyContent: "space-between",
-        alignItems: "center",
-        padding: '0px 60px'
-      }}
-        key={key}
-      >
-        <div style={{ color: "#2d3f49", fontSize: '24px' }}>Operations</div>
-        <div style={{ marginLeft: '46px', position: 'relative' }}>
-          {
-            <span style={{ marginRight: '10px' }}>
-              <Button secondary onClick={resetFilter}>
-                <span>Reset</span>
-              </Button>
-            </span>
-          }
-          <Button primary onClick={mountFilterModal}>
-            <Icon name="filter" />
-            <span style={{ position: 'relative', top: '-2px', marginLeft: '5px' }}>Filter</span>
-          </Button>
-          <Filter
-            filterName="exciseOperations"
-            showFilter={mountFilter}
-            applyFilter={applyFilter}
-            selectedCityIdx={selectedCityIdx}
-            selectedDsoIdx={selectedDsoIdx}
-            selectedDeliveryStatusIdx={selectedDeliveryStatusIdx}
-          //selectedStateIdx={selectedStateIdx}
-          >
-          </Filter>
-        </div>
-      </div>
-      {
-        isFilterApplied &&
-        <FilteredParams data={filter} />
-      }
-      <div style={{
         background: '#fff',
-        margin: '20px 60px',
-        padding: '60px'
-      }}>
-        {(
-          <div>
-            <Pagination
-              activePage={activePage}
-              pageSize={limit}
-              totalItemsCount={operationsDataCount}
-              onChangePage={handlePageChange}
-            />
-          </div>
-        )}
-        {
-          <div style={{ overflow: 'auto' }}>
-            <DataTable
-              headings={exciseOperationTableHeaders}
-              loadingData={loadingOperations}
-              message="No DSO’s associated with Excise Department of Telanagana found, please go to DSO section to update or add new DSOs"
-            >
+        margin: '60px',
+      }}
+        key={key}>
+        <ExciseNavbar />
+        <div style={{
+          background: '#fff',
+          padding: '30px'
+        }}>
+          <div style={{
+            display: "flex",
+            marginBottom: "30px",
+            justifyContent: "space-between",
+            alignItems: "center"
+          }}
+          >
+            <div style={{ color: "#2d3f49", fontSize: '24px' }}>Operations</div>
+            <div style={{ marginLeft: '46px', position: 'relative' }}>
               {
-                operationsData.length > 0 &&
-                operationsData.map((item, i) => {
-                  return (
-                    <tr key={i} className="clickable">
-                      <td>{item.city}</td>
-                      <td>{item.state}</td>
-                      <td>{item.dso_name}</td>
-                      <td>
-                        <div style={{ display: 'flex', alignItems: 'center' }}>
-                          {
-                            item.service_status
-                              ? <span style={{ marginRight: '10px' }} onClick={(e) => mountActionModal(e, item)}>
-                                <Icon name="toggleGreen" />
-                              </span>
-                              : <span style={{ marginRight: '10px' }} onClick={(e) => mountActionModal(e, item)}>
-                                <Icon name="toggleRed" />
-                              </span>
-                          }
-                          <span
-                            onClick={(e) => mountActionModal(e, item)}
-                            style={{ cursor: 'pointer' }}
-                          >
-                            {item.service_status ? "Enabled" : "Disabled"}
-                          </span>
-                        </div>
-                      </td>
-                    </tr>
-                  )
-                })
+                <span style={{ marginRight: '10px' }}>
+                  <Button secondary onClick={resetFilter}>
+                    <span>Reset</span>
+                  </Button>
+                </span>
               }
-            </DataTable>
-          </div>
-        }
-        {
-          mountModal &&
-          <Dialog
-            title="Are you sure you want to perform this action?"
-            onClick={unmountActionModal}
-            actions={[
-              <Button disabled={togglingDeliveryStatus} onClick={() => unmountActionModal()} secondary>
-                No
-              </Button>,
-              <Button disabled={togglingDeliveryStatus} onClick={() => toggleDeliveryStatus()} primary>
-                Yes
+              <Button primary onClick={mountFilterModal}>
+                <Icon name="filter" />
+                <span style={{ position: 'relative', top: '-2px', marginLeft: '5px' }}>Filter</span>
               </Button>
-            ]}
-          />
-        }
+              <Filter
+                filterName="exciseOperations"
+                showFilter={mountFilter}
+                applyFilter={applyFilter}
+                selectedCityIdx={selectedCityIdx}
+                selectedDsoIdx={selectedDsoIdx}
+                selectedDeliveryStatusIdx={selectedDeliveryStatusIdx}
+              //selectedStateIdx={selectedStateIdx}
+              >
+              </Filter>
+            </div>
+          </div>
+          {
+            isFilterApplied &&
+            <FilteredParams data={filter} />
+          }
+          {(
+            <div>
+              <Pagination
+                activePage={activePage}
+                pageSize={limit}
+                totalItemsCount={operationsDataCount}
+                onChangePage={handlePageChange}
+              />
+            </div>
+          )}
+          {
+            <div style={{ overflow: 'auto' }}>
+              <DataTable
+                headings={exciseOperationTableHeaders}
+                loadingData={loadingOperations}
+                message="No DSO’s associated with Excise Department of Telanagana found, please go to DSO section to update or add new DSOs"
+              >
+                {
+                  operationsData.length > 0 &&
+                  operationsData.map((item, i) => {
+                    return (
+                      <tr key={i}>
+                        <td>{item.city}</td>
+                        <td>{item.state}</td>
+                        <td>{item.dso_name}</td>
+                        <td>
+                          <div style={{ display: 'flex', alignItems: 'center' }}>
+                            {
+                              item.service_status
+                                ? <span style={{ marginRight: '10px' }} onClick={(e) => mountActionModal(e, item)}>
+                                  <Icon name="toggleGreen" />
+                                </span>
+                                : <span style={{ marginRight: '10px' }} onClick={(e) => mountActionModal(e, item)}>
+                                  <Icon name="toggleRed" />
+                                </span>
+                            }
+                            <span
+                              onClick={(e) => mountActionModal(e, item)}
+                              style={{ cursor: 'pointer' }}
+                            >
+                              {item.service_status ? "Enabled" : "Disabled"}
+                            </span>
+                          </div>
+                        </td>
+                      </tr>
+                    )
+                  })
+                }
+              </DataTable>
+            </div>
+          }
+          {
+            mountModal &&
+            <Dialog
+              title="Are you sure you want to perform this action?"
+              onClick={unmountActionModal}
+              actions={[
+                <Button disabled={togglingDeliveryStatus} onClick={() => unmountActionModal()} secondary>
+                  No
+              </Button>,
+                <Button disabled={togglingDeliveryStatus} onClick={() => toggleDeliveryStatus()} primary>
+                  Yes
+              </Button>
+              ]}
+            />
+          }
+        </div>
       </div>
     </React.Fragment >
   )

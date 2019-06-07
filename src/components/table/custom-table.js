@@ -57,6 +57,7 @@ const CustomTable = ({ headings, rows, className, children, loadingData, message
           }
         </tbody>
       </table>
+      <div id="fixed--position-el"></div>
     </div>
   )
 }

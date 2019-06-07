@@ -25,22 +25,24 @@ const DsoNavbar = (props) => {
 
   return (
     <div className="main-header">
-      {
-        !props.navbarItems
-          ? dsoNavbarItems.map((item, i) => (
-            // <a key={i} onClick={() => handleClick(item.path)} className={`${checkActiveClass(item.value)}`}>{item.label}</a>
-            <NavLink
-              className={`nav-link ${checkActiveClass(item.value)}`}
-              to={`${item.path}?id=${getQueryObjByName("id")}&name=${getQueryObjByName("name")}`}
-            >
-              {item.label}
-            </NavLink>
-          ))
-          : props.navbarItems.map((item, i) => (
-            // <a key={i} onClick={() => handleClick(item.path)} className={`${checkActiveClass(item.value)}`}>{item.label}</a>
-            <NavLink className={`nav-link ${checkActiveClass(item.value)}`} to={item.path}>{item.label}</NavLink>
-          ))
-      }
+      <div>
+        {
+          !props.navbarItems
+            ? dsoNavbarItems.map((item, i) => (
+              // <a key={i} onClick={() => handleClick(item.path)} className={`${checkActiveClass(item.value)}`}>{item.label}</a>
+              <NavLink
+                className={`nav-link ${checkActiveClass(item.value)}`}
+                to={`${item.path}?id=${getQueryObjByName("id")}&name=${getQueryObjByName("name")}`}
+              >
+                {item.label}
+              </NavLink>
+            ))
+            : props.navbarItems.map((item, i) => (
+              // <a key={i} onClick={() => handleClick(item.path)} className={`${checkActiveClass(item.value)}`}>{item.label}</a>
+              <NavLink className={`nav-link ${checkActiveClass(item.value)}`} to={item.path}>{item.label}</NavLink>
+            ))
+        }
+      </div>
     </div >
   )
 }

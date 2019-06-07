@@ -1,0 +1,17 @@
+#User {
+  .navbar {
+    margin-top: 30px;
+    padding: 0 60px;
+  }
+  .container {
+    background: #fff;
+    padding: 50px;
+    margin: 0 60px;
+
+    .search-container {
+      margin-bottom: 50px;
+      display: flex;
+      align-items: center;
+    }
+  }
+}

@@ -27,11 +27,14 @@ import EditDsoDetails from "Container/dso-details/edit-dso-details"
 import CreateLocationDetails from "Container/manage-locations/create-location"
 import ViewLocationDetails from "Container/manage-locations/view-location"
 import EditLocationDetails from "Container/manage-locations/edit-location"
+import ViewDsoUsers from "Container/manage-dso-users"
 import OttpDetails from "Container/ottp-details"
 import ViewRules from "Container/rule-engine/view-rules"
 import EditRules from "Container/rule-engine/edit-rules"
 import CreateRules from "Container/rule-engine/create-rules"
 import Reports from "Container/manage-reports"
+import ExciseUsers from "Container/manage-users"
+import ViewExciseUsers from "Container/manage-excise-users"
 import { createSession } from './login/session'
 
 const history = createHistory()
@@ -159,6 +162,15 @@ class App extends React.Component {
                     />
                     <Route
                       exact
+                      path="/home/excise/view-users"
+                      render={
+                        props => (
+                          <ViewExciseUsers {...props} />
+                        )
+                      }
+                    />
+                    <Route
+                      exact
                       path="/home/excise/view-details"
                       render={
                         props => (
@@ -190,6 +202,15 @@ class App extends React.Component {
                       render={
                         props => (
                           <DSOManagement {...props} />
+                        )
+                      }
+                    />
+                    <Route
+                      exact
+                      path="/home/dso/view-users"
+                      render={
+                        props => (
+                          <ViewDsoUsers {...props} />
                         )
                       }
                     />
@@ -298,6 +319,15 @@ class App extends React.Component {
                       render={
                         props => (
                           <Reports {...props} />
+                        )
+                      }
+                    />
+                    <Route
+                      exact
+                      path="/home/support-users"
+                      render={
+                        props => (
+                          <ExciseUsers {...props} />
                         )
                       }
                     />

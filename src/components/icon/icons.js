@@ -560,5 +560,20 @@ export default {
 				<path fill="rgb(255,80,80)" stroke="none" d="M0 10C0 4.4812 4.4812 0 10 0C15.5188 0 20 4.4812 20 10C20 15.5188 15.5188 20 10 20C4.4812 20 0 15.5188 0 10ZM17.9172 10.0016C17.9172 9.38748 17.4141 8.8828 16.8008 8.8828L3.1992 8.8828C2.58592 8.8828 2.0828 9.3875 2.0828 10.0016C2.0828 10.6148 2.58592 11.1172 3.1992 11.1172L16.8008 11.1172C17.4141 11.1172 17.9172 10.6148 17.9172 10.0016Z" fillRule="evenodd" />
 			</g>
 		</svg>
+	),
+	optionIcon: (
+		<svg width="4px" height="20px" viewBox="0 0 4 20" version="1.1">
+			<g id="Symbols" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
+				<g id="Component/Data-Table/Defaut/Users" transform="translate(-1146.000000, -204.000000)" fill="#8C9BA5">
+					<g id="Options" transform="translate(1146.000000, 204.000000)">
+						<g id="Settings" transform="translate(2.000000, 10.000000) rotate(-270.000000) translate(-2.000000, -10.000000) translate(-8.000000, 8.000000)">
+							<path d="M2,4 C3.1045695,4 4,3.1045695 4,2 C4,0.8954305 3.1045695,0 2,0 C0.8954305,0 0,0.8954305 0,2 C0,3.1045695 0.8954305,4 2,4 Z" id="Oval"></path>
+							<circle id="Oval" cx="10" cy="2" r="2"></circle>
+							<circle id="Oval" cx="18" cy="2" r="2"></circle>
+						</g>
+					</g>
+				</g>
+			</g>
+		</svg>
 	)
 }

@@ -11,6 +11,10 @@
     border-top: 1px solid #D6DAE3;
     border-bottom: 1px solid #D6DAE3;
   }
+
+  table tr th,td {
+    position: relative;
+  }
   
   table tr th {
     background: #dfe3e6;
@@ -40,6 +44,10 @@
     padding: 12px;
     font-size: 12px;
     text-align: left;
+
+    svg  {
+      cursor: pointer;
+    }
 
     a {
       color: #00b4a0;
@@ -152,6 +160,32 @@
     border-width: 5px;
     border-style: solid;
     border-color: transparent transparent #fff transparent;
+  }
+
+  .table--action-menu {
+    background: #fff;
+    box-shadow: 0 2px 4px 0 #9b9b9b;
+    border-radius: 5px;
+    z-index: 2;
+    a {
+      cursor: pointer;
+      display: block;
+      padding: 5px 20px;
+      color: #333;
+    }
+    a:hover {
+      background: #f1f8ff;
+    }
+    .menu-item {
+      padding: 10px 20px;
+      cursor: pointer;
+    }
+    .menu-item:last-child {
+      color: #d0021b;
+    }
+    .menu-item:not(:last-child) {
+      border: 1px solid #dde2e6;
+    }
   }
   
 }

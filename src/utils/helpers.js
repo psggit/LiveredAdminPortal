@@ -42,3 +42,14 @@ export function checkActiveClass(value) {
   }
   return ''
 }
+
+export function getPositionBasedOnContainer(el) {
+  const { top, bottom, left, right } = el.getBoundingClientRect()
+  const containerScrollPos = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0
+  return {
+    top: top + containerScrollPos,
+    bottom: bottom + containerScrollPos,
+    left: left,
+    right: right
+  }
+}

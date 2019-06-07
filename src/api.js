@@ -130,6 +130,15 @@ export function createLegalPurchaseAge(payload) {
   })
 }
 
+export function deactivateSupportUser(payload) {
+  return POST({
+    api: `${dso}/livered/dso/updateSupportUserStatus`,
+    handleError: true,
+    prependBaseUrl: false,
+    data: payload
+  })
+}
+
 export function updateLegalPurchaseAge(payload) {
   return POST({
     api: `${rule}/livered/rules/updateLegalAge`,
@@ -223,6 +232,33 @@ export function changeExciseDeliveryStatus(payload) {
 export function updateExciseDetails(payload) {
   return POST({
     api: `${dso}/livered/dso/updateExcise`,
+    handleError: true,
+    prependBaseUrl: false,
+    data: payload
+  })
+}
+
+export function fetchSupportList(payload) {
+  return POST({
+    api: `${dso}/livered/dso/listSupportUsers`,
+    handleError: true,
+    prependBaseUrl: false,
+    data: payload
+  })
+}
+
+export function fetchExciseUsers(payload) {
+  return POST({
+    api: `${dso}/livered/dso/listExciseUsers`,
+    handleError: true,
+    prependBaseUrl: false,
+    data: payload
+  })
+}
+
+export function fetchDsoUsers(payload) {
+  return POST({
+    api: `${dso}/livered/dso/listDsoUsers`,
     handleError: true,
     prependBaseUrl: false,
     data: payload
