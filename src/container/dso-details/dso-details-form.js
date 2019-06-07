@@ -278,14 +278,28 @@ class DsoDetailsForm extends React.Component {
                 >
                   License Expiry
                 </Label>
-                <input
+                {/* <input
                   type="date"
                   name="licenseExpiry"
                   defaultValue={this.state.licenseExpiry}
                   disabled={!this.props.enableEdit}
                   required
                   onChange={this.handleTextFieldChange}
-                />
+                /> */}
+                <div style={{ position: 'relative' }} className="input-field">
+                  <span className="calendar-icon">
+                    <Icon name="calendar" />
+                  </span>
+                  <input
+                    type="date"
+                    max="9999-12-31"
+                    name="licenseExpiry"
+                    defaultValue={this.state.licenseExpiry}
+                    disabled={!this.props.enableEdit}
+                    required
+                    onChange={this.handleTextFieldChange}
+                  />
+                </div>
               </div>
               <div className="item">
                 <Label

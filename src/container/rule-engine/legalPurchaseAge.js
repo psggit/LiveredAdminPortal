@@ -10,10 +10,12 @@ class LegalPurchaseAge extends React.Component {
 
   constructor(props) {
     super(props)
+    // this.legalPurchaseAge = React.createRef();
     this.state = {
       showSave: true,
       creatingLegalPurchaseAge: false,
-      updatingLegalPurchaseAge: false
+      updatingLegalPurchaseAge: false,
+      createdLegalAge: false
     }
     this.saveLegalPurchaseAge = this.saveLegalPurchaseAge.bind(this)
     this.toggleSave = this.toggleSave.bind(this)
@@ -32,7 +34,7 @@ class LegalPurchaseAge extends React.Component {
     })
       .then((response) => {
         this.toggleSave()
-        this.setState({ creatingLegalPurchaseAge: false })
+        this.setState({ createdLegalAge: true, creatingLegalPurchaseAge: false })
       })
       .catch((err) => {
         this.setState({ creatingLegalPurchaseAge: false })
@@ -66,8 +68,9 @@ class LegalPurchaseAge extends React.Component {
   }
 
   render() {
-    const { showSave, updatingLegalPurchaseAge, creatingLegalPurchaseAge } = this.state
-    const { data } = this.props
+    const { showSave, updatingLegalPurchaseAge, creatingLegalPurchaseAge, createdLegalAge } = this.state
+    const { data, action } = this.props
+
     return (
       <form onSubmit={this.saveLegalPurchaseAge}>
         <div className="rule--body legal-age">
@@ -79,14 +82,13 @@ class LegalPurchaseAge extends React.Component {
               Legal Purchage Age
           </Label>
             {
-              this.props.action !== "view" && showSave &&
+              ((action === "edit" && showSave) || (action === "create" && (data.consumer_min_age === 0 && !createdLegalAge))) &&
               <div className="button-group">
                 <Button
                   disabled={updatingLegalPurchaseAge || creatingLegalPurchaseAge}
-                // onClick={this.saveLegalPurchaseAge}
                 >
                   Save
-                </Button>
+                  </Button>
                 <NavLink
                   to={location.pathname}
                   onClick={this.toggleSave}
@@ -110,17 +112,18 @@ class LegalPurchaseAge extends React.Component {
           </div>
           <TextInput
             ref={input => (this.legalPurchaseAge = input)}
+            // ref={this.legalPurchaseAge}
             name="legalPurchaseAge"
             pattern="([1]{1}[8-9]{1})|([2-9]{1}[0-9]{1})"
             isRequired={true}
             placeholder="legal purchase age"
-            defaultValue={data ? data.consumer_min_age : ""}
+            defaultValue={data && data.consumer_min_age ? data.consumer_min_age : ""}
             disabled={this.props.action === "view" || !this.state.showSave}
             errorMessage="Legal purchase age is invalid"
             emptyMessage="Legal purchase age is required"
           />
         </div>
-      </form>
+      </form >
     )
   }
 }

@@ -13,7 +13,8 @@ class PossessionLimit extends React.Component {
     this.state = {
       showSave: true,
       creatingPossessionLimit: false,
-      updatingPossessionLimit: false
+      updatingPossessionLimit: false,
+      createdPossessionLimit: false
     }
     this.savePossessionLimit = this.savePossessionLimit.bind(this)
     this.toggleSave = this.toggleSave.bind(this)
@@ -53,7 +54,7 @@ class PossessionLimit extends React.Component {
     })
       .then((response) => {
         this.toggleSave()
-        this.setState({ creatingPossessionLimit: false })
+        this.setState({ creatingPossessionLimit: false, createdPossessionLimit: true })
       })
       .catch((err) => {
         this.setState({ creatingPossessionLimit: false })
@@ -86,8 +87,8 @@ class PossessionLimit extends React.Component {
   }
 
   render() {
-    const { showSave, updatingPossessionLimit, creatingPossessionLimit } = this.state
-    const { data } = this.props
+    const { showSave, updatingPossessionLimit, creatingPossessionLimit, createdPossessionLimit } = this.state
+    const { data, action } = this.props
     return (
       <div className="rule--body possession-limit">
         <div className="title">
@@ -98,7 +99,7 @@ class PossessionLimit extends React.Component {
             Possession Limit
           </Label>
           {
-            this.props.action !== "view" && showSave &&
+            ((action === "edit" && showSave) || (action === "create" && (data.possession_limit.length === 0 && !createdPossessionLimit))) &&
             <div className="button-group">
               <Button
                 disabled={updatingPossessionLimit || creatingPossessionLimit}
@@ -137,7 +138,7 @@ class PossessionLimit extends React.Component {
             defaultValue={
               data.possession_limit && data.possession_limit.length > 0
                 ? data.possession_limit.find((item) => item.brand_type === "IMFL").volume_limit
-                : 0
+                : ""
             }
             disabled={this.props.action === "view" || !this.state.showSave}
             errorMessage="IMFL is invalid"
@@ -154,7 +155,7 @@ class PossessionLimit extends React.Component {
             defaultValue={
               data.possession_limit && data.possession_limit.length > 0
                 ? data.possession_limit.find((item) => item.brand_type === "FMFL").volume_limit
-                : 0
+                : ""
             }
             disabled={this.props.action === "view" || !this.state.showSave}
             errorMessage="FMFL is invalid"
@@ -171,7 +172,7 @@ class PossessionLimit extends React.Component {
             defaultValue={
               data.possession_limit && data.possession_limit.length > 0
                 ? data.possession_limit.find((item) => item.brand_type === "Beer").volume_limit
-                : 0
+                : ""
             }
             disabled={this.props.action === "view" || !this.state.showSave}
             errorMessage="Beer is invalid"
@@ -188,7 +189,7 @@ class PossessionLimit extends React.Component {
             defaultValue={
               data.possession_limit && data.possession_limit.length > 0
                 ? data.possession_limit.find((item) => item.brand_type === "Wine").volume_limit
-                : 0
+                : ""
             }
             disabled={this.props.action === "view" || !this.state.showSave}
             errorMessage="Wine is invalid"

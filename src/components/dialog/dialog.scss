@@ -4,7 +4,7 @@
   height: 100%;
   position: fixed;
   width: 100%;
-  //z-index: 5003;
+  z-index: 3;
   background: rgba(0, 0, 0, 0.7);
   .dialog--container {
     * {
@@ -51,7 +51,7 @@
       p {
         font-weight: 400;
         margin: 0;
-        font-size: 26px;
+        font-size: 26px !important;
         line-height: 1.27;
         color: #152935;
       }

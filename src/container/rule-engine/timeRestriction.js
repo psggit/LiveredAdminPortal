@@ -22,7 +22,8 @@ class TimeRestriction extends React.Component {
     this.state = {
       showSave: true,
       creatingTimeRestriction: false,
-      updatingTimeRestriction: false
+      updatingTimeRestriction: false,
+      createdTimeRestrictions: false
     }
     this.saveStateTimings = this.saveStateTimings.bind(this)
     this.toggleSave = this.toggleSave.bind(this)
@@ -79,8 +80,8 @@ class TimeRestriction extends React.Component {
       timings: this.getStateTimings()
     })
       .then((response) => {
+        this.setState({ creatingTimeRestriction: false, createdTimeRestrictions: true })
         this.toggleSave()
-        this.setState({ creatingTimeRestriction: false })
       })
       .catch((err) => {
         this.setState({ creatingTimeRestriction: false })
@@ -114,8 +115,8 @@ class TimeRestriction extends React.Component {
   }
 
   render() {
-    const { showSave, updatingTimeRestriction, creatingTimeRestriction } = this.state
-    const { data } = this.props
+    const { showSave, updatingTimeRestriction, creatingTimeRestriction, createdTimeRestrictions } = this.state
+    const { data, action } = this.props
     return (
       <form onSubmit={this.saveStateTimings}>
         <div className="rule--body time-restrictions">
@@ -127,14 +128,14 @@ class TimeRestriction extends React.Component {
               TIME RESTRICTIONS
             </Label>
             {
-              this.props.action === "edit" && showSave &&
+              ((action === "edit" && showSave) || (action === "create" && (data.time_restrictions.length === 0 && !createdTimeRestrictions))) &&
               <div className="button-group">
                 <Button
                   disabled={updatingTimeRestriction || creatingTimeRestriction}
                 // onClick={this.savePossessionLimit}
                 >
                   Save
-              </Button>
+                </Button>
                 <NavLink
                   to={location.pathname}
                   className="nav-link cancel"
@@ -145,7 +146,7 @@ class TimeRestriction extends React.Component {
               </div>
             }
             {
-              this.props.action !== "view" && !showSave &&
+              this.props.action === "edit" && !showSave &&
               <NavLink
                 onClick={this.toggleSave}
                 to={location.pathname}

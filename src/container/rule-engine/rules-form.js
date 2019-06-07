@@ -111,7 +111,7 @@ class RuleManagement extends React.Component {
 
     const { title, action } = this.props
     const noRules = Object.keys(rulesData).length > 0
-      && rulesData.consumer_min_age > 0
+      && rulesData.consumer_min_age === 0
       && rulesData.possession_limit.length === 0
       && rulesData.permit_rules.length === 0
       && rulesData.time_restrictions.length === 0
@@ -194,7 +194,6 @@ class RuleManagement extends React.Component {
               stateId={selectedStateIdx}
               data={this.state.rulesData}
             />
-
             {
               this.props.action !== "view" &&
               <React.Fragment>

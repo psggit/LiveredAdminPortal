@@ -13,7 +13,8 @@ class DsoFee extends React.Component {
     this.state = {
       showSave: true,
       creatingDsoFee: false,
-      updatingDsoFee: false
+      updatingDsoFee: false,
+      createdPermitRules: false
     }
 
     this.saveDsoFee = this.saveDsoFee.bind(this)
@@ -30,12 +31,12 @@ class DsoFee extends React.Component {
     this.setState({ creatingDsoFee: true })
     Api.createDsoFee({
       state_id: this.props.stateId,
-      permit_fee: parseInt(this.permitFee.state.value.split("₹")[1]),
-      cancellation_fee: parseInt(this.cancellationFee.state.value.split("₹")[1])
+      permit_fee: parseInt(this.permitFee.state.value),
+      cancellation_fee: parseInt(this.cancellationFee.state.value)
     })
       .then((response) => {
         this.toggleSave()
-        this.setState({ creatingDsoFee: false })
+        this.setState({ creatingDsoFee: false, createdPermitRules: true })
       })
       .catch((err) => {
         this.setState({ creatingDsoFee: false })
@@ -47,8 +48,8 @@ class DsoFee extends React.Component {
     this.setState({ updatingDsoFee: true })
     Api.updateDsoFee({
       state_id: this.props.stateId,
-      permit_fee: parseInt(this.permitFee.state.value.split("₹")[1]),
-      cancellation_fee: parseInt(this.cancellationFee.state.value.split("₹")[1])
+      permit_fee: parseInt(this.permitFee.state.value),
+      cancellation_fee: parseInt(this.cancellationFee.state.value)
     })
       .then((response) => {
         this.setState({ updatingDsoFee: false })
@@ -70,12 +71,12 @@ class DsoFee extends React.Component {
   }
 
   render() {
-    const { showSave, updatingDsoFee, creatingDsoFee } = this.state
-    const { data } = this.props
+    const { showSave, updatingDsoFee, creatingDsoFee, createdPermitRules } = this.state
+    const { data, action } = this.props
     return (
       <form onSubmit={this.saveDsoFee}>
         <div className="rule--body">
-          <div className="cancellation-fee" style={{ marginTop: '20px' }}>
+          <div className="cancellation-fee" style={{ margin: '20px 0 40px 0' }}>
             <div className="title">
               <Label
                 icon="info"
@@ -84,7 +85,7 @@ class DsoFee extends React.Component {
                 Cancellation Fee
               </Label>
               {
-                this.props.action === "edit" && showSave &&
+                ((action === "edit" && showSave) || (action === "create" && (data.permit_rules.length === 0 && !createdPermitRules))) &&
                 <div className="button-group">
                   <Button
                     disabled={updatingDsoFee || creatingDsoFee}
@@ -102,7 +103,7 @@ class DsoFee extends React.Component {
                 </div>
               }
               {
-                this.props.action !== "view" && !showSave &&
+                this.props.action === "edit" && !showSave &&
                 <NavLink
                   className="nav-link save"
                   onClick={this.toggleSave}
@@ -115,27 +116,29 @@ class DsoFee extends React.Component {
             <TextInput
               ref={input => (this.cancellationFee = input)}
               name="cancellationFee"
-              pattern="^₹[0-9 ]*"
+              pattern="[0-9]*"
               isRequired={true}
-              defaultValue={`₹ ${data.permit_rules && data.permit_rules.length > 0 ? data.permit_rules[0].cancellation_fee : 0}`}
+              defaultValue={`${data.permit_rules && data.permit_rules.length > 0 ? data.permit_rules[0].cancellation_fee : 0}`}
               disabled={this.props.action === "view" || !this.state.showSave}
               errorMessage="Cancellation fee is invalid"
               emptyMessage="Cancellation fee is required"
             />
           </div>
-          <div className="permit-fee" style={{ marginTop: '20px' }}>
-            <Label
-              icon="info"
-              tooltipText="Amount charged per OTTP per order"
-            >
-              Cost/Permit
+          <div className="permit-fee" style={{ marginTop: '10px' }}>
+            <div className="title">
+              <Label
+                icon="info"
+                tooltipText="Amount charged per OTTP per order"
+              >
+                Cost/Permit
             </Label>
+            </div>
             <TextInput
               ref={input => (this.permitFee = input)}
               name="permitFee"
-              pattern="^₹[0-9 ]*"
+              pattern="^[0-9]*"
               isRequired={true}
-              defaultValue={`₹ ${data.permit_rules && data.permit_rules.length > 0 ? data.permit_rules[0].permit_cost : 0}`}
+              defaultValue={`${data.permit_rules && data.permit_rules.length > 0 ? data.permit_rules[0].permit_cost : 0}`}
               disabled={this.props.action === "view" || !this.state.showSave}
               errorMessage="Permit fee is invalid"
               emptyMessage="Permit fee is required"

@@ -4,7 +4,7 @@ import Label from 'Components/label'
 import Button from 'Components/button'
 import './rule-engine.scss'
 import Icon from "Components/icon"
-import Select from "Components/select"
+import Dialog from "Components/dialog"
 import { getQueryObjByName } from "Utils/url-utils"
 import * as Api from "../../api"
 import Moment from "moment"
@@ -16,8 +16,10 @@ class SpecialRestriction extends React.Component {
     super(props)
     this.state = {
       showSave: true,
+      showConfirmationModal: false,
       creatingSpecialRestriction: false,
       deletingSpecialRestriction: false,
+      restrictionId: "",
       zoneRestrictions: props.data.city_special_days
         ? props.data.state_special_days
           ? props.data.city_special_days.concat(props.data.state_special_days)
@@ -27,6 +29,8 @@ class SpecialRestriction extends React.Component {
 
     this.saveSpecialRestriction = this.saveSpecialRestriction.bind(this)
     this.toggleSave = this.toggleSave.bind(this)
+    this.mountConfirmationModal = this.mountConfirmationModal.bind(this)
+    this.unmountConfirmationModal = this.unmountConfirmationModal.bind(this)
     this.createStateSpecialDay = this.createStateSpecialDay.bind(this)
     this.createCitySpecialDay = this.createCitySpecialDay.bind(this)
     this.deleteSpecialDay = this.deleteSpecialDay.bind(this)
@@ -39,13 +43,8 @@ class SpecialRestriction extends React.Component {
     this.setState({ showSave: !this.state.showSave })
   }
 
-  resetFieldValues() {
-
-  }
-
   createCitySpecialDay() {
     const data = this.specialrestrictionForm.getData()
-    console.log("data", data)
     this.setState({ creatingSpecialRestriction: true })
     const payload = {
       state_id: parseInt(this.props.stateId),
@@ -112,9 +111,10 @@ class SpecialRestriction extends React.Component {
     }
   }
 
-  deleteSpecialDay(id) {
-    const ID = parseInt(id.split("_")[1])
-    if (id.indexOf("city") === -1) {
+  deleteSpecialDay() {
+    const { restrictionId } = this.state
+    const ID = parseInt(restrictionId.split("_")[1])
+    if (restrictionId.indexOf("city") === -1) {
       this.deleteStateSpecialDay(ID)
     } else {
       this.deleteCitySpecialDay(ID)
@@ -122,6 +122,7 @@ class SpecialRestriction extends React.Component {
   }
 
   deleteStateSpecialDay(id) {
+    this.setState({ deletingSpecialRestriction: true })
     Api.deleteStateSpecialDay({
       id: parseInt(id)
     })
@@ -132,15 +133,21 @@ class SpecialRestriction extends React.Component {
             return item
           }
         })
-        this.setState({ zoneRestrictions: availableZoneRestriction })
+        this.setState({
+          zoneRestrictions: availableZoneRestriction,
+          deletingSpecialRestriction: false,
+          showConfirmationModal: false
+        })
         // location.reload()
       })
       .catch((error) => {
+        this.setState({ deletingSpecialRestriction: false })
         console.log("Error in deleting state special day", error)
       })
   }
 
   deleteCitySpecialDay(id) {
+    this.setState({ deletingSpecialRestriction: true })
     Api.deleteCitySpecialDay({
       id: parseInt(id)
     })
@@ -151,10 +158,15 @@ class SpecialRestriction extends React.Component {
             return item
           }
         })
-        this.setState({ zoneRestrictions: availableZoneRestriction })
+        this.setState({
+          zoneRestrictions: availableZoneRestriction,
+          deletingSpecialRestriction: false,
+          showConfirmationModal: false
+        })
         // location.reload()
       })
       .catch((error) => {
+        this.setState({ deletingSpecialRestriction: false })
         console.log("Error in deleting city special day", error)
       })
   }
@@ -165,8 +177,21 @@ class SpecialRestriction extends React.Component {
     })
   }
 
+  mountConfirmationModal(restrictionId) {
+    this.setState({
+      showConfirmationModal: true,
+      restrictionId
+    })
+  }
+
+  unmountConfirmationModal() {
+    this.setState({
+      showConfirmationModal: false
+    })
+  }
+
   render() {
-    const { showSave, creatingSpecialRestriction, zoneRestrictions } = this.state
+    const { showSave, creatingSpecialRestriction, deletingSpecialRestriction, zoneRestrictions } = this.state
     const { data } = this.props
     console.log("zone", zoneRestrictions)
     return (
@@ -227,14 +252,14 @@ class SpecialRestriction extends React.Component {
                       {
                         zoneRestrictions.map((item, i) => {
                           return (
-                            <tr key={i} onClick={() => this.deleteSpecialDay(`${item.city_id !== undefined ? `city_${item.id}` : `state_${item.id}`}`)}>
+                            <tr key={i}>
                               <td>{item.city ? item.city : item.state}</td>
                               <td>{Moment(item.date).format('DD/MM/YYYY')}</td>
                               <td>{item.from_time ? (item.from_time).substring(11, 16) : (item.start_time).substring(11, 16)}</td>
                               <td>{item.to_time ? (item.to_time).substring(11, 16) : (item.end_time).substring(11, 16)}</td>
                               <td>{item.is_repeat ? 'Yearly' : 'No'}</td>
                               <td>{item.reason}</td>
-                              <td>{showSave && this.props.action !== "view" ? <Icon name="redDeleteIcon" /> : ""}</td>
+                              <td>{showSave && this.props.action !== "view" ? <span onClick={() => this.mountConfirmationModal(`${item.city_id !== undefined ? `city_${item.id}` : `state_${item.id}`}`)}><Icon name="redDeleteIcon" /></span> : ""}</td>
                             </tr>
                           )
                         })
@@ -250,6 +275,21 @@ class SpecialRestriction extends React.Component {
                   </tbody>
               }
             </table>
+            {
+              this.state.showConfirmationModal &&
+              <Dialog
+                title="Are you sure you want to perform this action?"
+                onClick={this.unmountConfirmationModal}
+                actions={[
+                  <Button disabled={deletingSpecialRestriction} onClick={() => this.unmountConfirmationModal()} secondary>
+                    No
+                  </Button>,
+                  <Button disabled={deletingSpecialRestriction} onClick={() => this.deleteSpecialDay()} primary>
+                    Yes
+                  </Button>
+                ]}
+              />
+            }
           </div>
           {
             this.props.action !== "view" &&
