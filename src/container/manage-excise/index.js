@@ -12,7 +12,8 @@ const exciseTableHeaders = [
   { title: "State/City", icon: "" },
   { title: "Contact Name", icon: "", tooltipText: "" },
   { title: "Email ID", icon: "", tooltipText: "" },
-  { title: "Contact Number", icon: "", tooltipText: "" }
+  { title: "Contact Number", icon: "", tooltipText: "" },
+  { title: "Delivery Status", icon: "info", tooltipText: "Current status of delivery operations for the state. Exceptions prevail for specific cities based on special restrictions" },
 ]
 
 const ManageExcise = (props) => {
@@ -191,6 +192,7 @@ const ManageExcise = (props) => {
                       <td>{item.primary_contact_name}</td>
                       <td>{item.primary_contact_email}</td>
                       <td>{item.primary_contact_phone}</td>
+                      <td>{item.delivery_status ? "Enabled" : "Disabled"}</td>
                     </tr>
                   )
                 })

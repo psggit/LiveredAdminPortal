@@ -35,6 +35,7 @@ class CreateExcise extends React.Component {
     Api.createExciseDetails({
       name: data.exciseName,
       state_id: data.selectedStateIdx,
+      delivery_status: data.deliveryStatus,
       head_office_city_id: data.selectedCityIdx,
       head_office_address: data.headOfficeAddress,
       primary_contact_name: data.name,

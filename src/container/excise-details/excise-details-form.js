@@ -19,6 +19,7 @@ class ExciseDetailsForm extends React.Component {
       cityList: [],
       stateList: [],
       stateMap: {},
+      deliveryStatus: true,
       headOfficeAddress: "",
       name: "",
       email: "",
@@ -28,6 +29,7 @@ class ExciseDetailsForm extends React.Component {
     this.handleSave = this.handleSave.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.getData = this.getData.bind(this)
+    this.toggleDeliveryStatus = this.toggleDeliveryStatus.bind(this)
     this.handleCityChange = this.handleCityChange.bind(this)
     this.handleStateChange = this.handleStateChange.bind(this)
     this.fetchCityAndStates = this.fetchCityAndStates.bind(this)
@@ -142,6 +144,12 @@ class ExciseDetailsForm extends React.Component {
     this.handleSave()
   }
 
+  toggleDeliveryStatus() {
+    this.setState({
+      deliveryStatus: !this.state.deliveryStatus
+    })
+  }
+
   handleSave() {
     if (location.pathname.indexOf("create-details") !== -1) {
       this.setState({
@@ -199,7 +207,33 @@ class ExciseDetailsForm extends React.Component {
                   emptyMessage="Excise name is required"
                 />
               </div>
+              <div className="item">
+                <Label
+                  icon="info"
+                  tooltipText="Current status of delivery operations for the state. Exceptions prevail for specific cities based on special restrictions"
+                >
+                  Delivery Status
+                </Label>
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  {
+                    this.state.deliveryStatus
+                      ? <span style={{ marginRight: '10px' }} onClick={this.props.enableEdit ? () => this.toggleDeliveryStatus() : () => { }}>
+                        <Icon name="toggleGreen" />
+                      </span>
+                      : <span style={{ marginRight: '10px' }} onClick={this.props.enableEdit ? () => this.toggleDeliveryStatus() : () => { }}>
+                        <Icon name="toggleRed" />
+                      </span>
+                  }
+                  <span
+                    onClick={this.props.enableEdit ? () => this.toggleDeliveryStatus() : () => { }}
+                    style={{ cursor: this.props.enableEdit ? 'pointer' : 'default' }}
+                  >
+                    {this.state.deliveryStatus ? "Enabled" : "Disabled"}
+                  </span>
+                </div>
+              </div>
             </div>
+
             <div style={{ display: 'flex' }}>
               <div style={{ width: '50%' }}>
                 <p className="header">Headquarters</p>
