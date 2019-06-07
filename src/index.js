@@ -33,7 +33,9 @@ import ViewRules from "Container/rule-engine/view-rules"
 import EditRules from "Container/rule-engine/edit-rules"
 import CreateRules from "Container/rule-engine/create-rules"
 import Reports from "Container/manage-reports"
-import ExciseUsers from "Container/manage-users"
+import SupportUsers from "Container/manage-users/support-users"
+import ExciseUsers from "Container/manage-users/excise-users"
+import DsoUsers from "Container/manage-users/dso-users"
 import ViewExciseUsers from "Container/manage-excise-users"
 import { createSession } from './login/session'
 
@@ -327,7 +329,25 @@ class App extends React.Component {
                       path="/home/support-users"
                       render={
                         props => (
+                          <SupportUsers {...props} />
+                        )
+                      }
+                    />
+                    <Route
+                      exact
+                      path="/home/excise-users"
+                      render={
+                        props => (
                           <ExciseUsers {...props} />
+                        )
+                      }
+                    />
+                    <Route
+                      exact
+                      path="/home/dso-users"
+                      render={
+                        props => (
+                          <DsoUsers {...props} />
                         )
                       }
                     />

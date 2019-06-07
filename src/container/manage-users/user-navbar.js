@@ -14,7 +14,7 @@ const UserNavbar = () => {
           userNavbarItems.map((item, i) => (
             <NavLink
               className={`nav-link ${checkActiveClass(item.value)}`}
-              to={`${item.path}?id=${getQueryObjByName("id")}&name=${getQueryObjByName("name")}`}
+              to={`${item.path}`}
             >
               {item.label}
             </NavLink>

@@ -245,7 +245,8 @@ const ManageOperations = (props) => {
         background: '#fff',
         margin: '60px',
       }}
-        key={key}>
+        key={key}
+      >
         <ExciseNavbar />
         <div style={{
           background: '#fff',

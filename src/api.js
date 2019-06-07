@@ -130,6 +130,24 @@ export function createLegalPurchaseAge(payload) {
   })
 }
 
+export function deactivateExciseUser(payload) {
+  return POST({
+    api: `${dso}/livered/dso/updateExciseUserStatus`,
+    handleError: true,
+    prependBaseUrl: false,
+    data: payload
+  })
+}
+
+export function deactivateDsoUser(payload) {
+  return POST({
+    api: `${dso}/livered/dso/updateDsoUserStatus`,
+    handleError: true,
+    prependBaseUrl: false,
+    data: payload
+  })
+}
+
 export function deactivateSupportUser(payload) {
   return POST({
     api: `${dso}/livered/dso/updateSupportUserStatus`,

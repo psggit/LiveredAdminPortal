@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import * as Api from "./../../api"
+import * as Api from "../../api"
 import Pagination from "Components/pagination"
 import PageHeader from "Components/pageheader"
 import { getQueryObjByName, getQueryUri } from "Utils/url-utils"
@@ -95,7 +95,7 @@ const ManageSupportUser = (props) => {
   /**
    * Navigates to next page
    * @param {object} pagerObj - Passed from pagination component
-   * @param {Integer} pagerObj.activePage - Used to calculate the offset to fetch next set of excise
+   * @param {Integer} pagerObj.activePage - Used to calculate the offset to fetch next set of support
    * @param {Integer} pagerObj.pageSize - Used as limit to fetch next set of support users
    */
   const handlePageChange = (pagerObj) => {
