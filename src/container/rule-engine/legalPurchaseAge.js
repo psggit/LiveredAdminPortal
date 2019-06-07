@@ -111,10 +111,10 @@ class LegalPurchaseAge extends React.Component {
           <TextInput
             ref={input => (this.legalPurchaseAge = input)}
             name="legalPurchaseAge"
-            pattern="[0-9]*"
+            pattern="([1]{1}[8-9]{1})|([2-9]{1}[0-9]{1})"
             isRequired={true}
             placeholder="legal purchase age"
-            defaultValue={data ? data.consumer_min_age : 0}
+            defaultValue={data ? data.consumer_min_age : ""}
             disabled={this.props.action === "view" || !this.state.showSave}
             errorMessage="Legal purchase age is invalid"
             emptyMessage="Legal purchase age is required"

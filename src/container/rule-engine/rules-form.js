@@ -111,6 +111,7 @@ class RuleManagement extends React.Component {
 
     const { title, action } = this.props
     const noRules = Object.keys(rulesData).length > 0
+      && rulesData.consumer_min_age > 0
       && rulesData.possession_limit.length === 0
       && rulesData.permit_rules.length === 0
       && rulesData.time_restrictions.length === 0
@@ -154,7 +155,7 @@ class RuleManagement extends React.Component {
         {
           !loadingRules &&
           selectedStateIdx !== -1 &&
-          ((action !== "view" && !noRules) || (action === "create") || (action === "view" && !noRules)) &&
+          ((action !== "view" && !noRules) || (action === "create" && noRules) || (action === "view" && !noRules)) &&
           < div className="wrapper">
             <div className="rule--header">
               <p className="title">{title}{selectedStateIdx !== -1 ? ` | ${selectedStateName}` : ""}</p>
