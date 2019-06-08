@@ -192,6 +192,10 @@ const ManageSupportUser = (props) => {
     }
   }
 
+  const addNewUser = () => {
+    props.history.push("/home/support-user/create")
+  }
+
   const unmountConfirmationModal = (action) => {
     if (action === "editUser") {
       setEditUserConfirmationModal(false)
@@ -206,7 +210,7 @@ const ManageSupportUser = (props) => {
         <PageHeader pageName="Users & Roles" />
 
         <div className="navbar">
-          <UserNavbar />
+          <UserNavbar addNewUser={addNewUser} />
         </div>
 
         <div className="container">

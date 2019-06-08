@@ -4,7 +4,7 @@ export const menuItems = [
   { label: 'Rules', value: 'rules', icon: 'rulesIcon' },
   { label: 'Delivery Operators', value: 'dso-management', icon: 'dsoIcon' },
   { label: 'OTTP Management', value: 'ottp-management', icon: 'ottpIcon' },
-  { label: 'User Management', value: 'support-users', icon: 'customerIcon' },
+  { label: 'User Management', value: 'excise-users', icon: 'customerIcon' },
   { label: 'Reports', value: 'reports', icon: 'reportsIcon' },
 ]
 

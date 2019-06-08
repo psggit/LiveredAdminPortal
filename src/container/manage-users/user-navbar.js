@@ -6,7 +6,8 @@ import { userNavbarItems } from "../../constants/nav-items"
 import { checkActiveClass } from "Utils/helpers"
 import Button from "Components/button"
 
-const UserNavbar = () => {
+const UserNavbar = (props) => {
+  console.log("new props", props)
   return (
     <div className="main-header">
       <div>
@@ -24,7 +25,7 @@ const UserNavbar = () => {
       <div>
         <Button custom
           icon="addWhiteIcon"
-          onClick={() => { }}
+          onClick={props.addNewUser}
         >
           Add new
         </Button>

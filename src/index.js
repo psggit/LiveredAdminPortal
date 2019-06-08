@@ -37,6 +37,7 @@ import SupportUsers from "Container/manage-users/support-users"
 import ExciseUsers from "Container/manage-users/excise-users"
 import DsoUsers from "Container/manage-users/dso-users"
 import ViewExciseUsers from "Container/manage-excise-users"
+import CreateNewUser from "Container/manage-users/add-new-user"
 import { createSession } from './login/session'
 
 const history = createHistory()
@@ -348,6 +349,33 @@ class App extends React.Component {
                       render={
                         props => (
                           <DsoUsers {...props} />
+                        )
+                      }
+                    />
+                    <Route
+                      exact
+                      path="/home/excise-user/create"
+                      render={
+                        props => (
+                          <CreateNewUser {...props} />
+                        )
+                      }
+                    />
+                    <Route
+                      exact
+                      path="/home/dso-user/create"
+                      render={
+                        props => (
+                          <CreateNewUser {...props} />
+                        )
+                      }
+                    />
+                    <Route
+                      exact
+                      path="/home/support-user/create"
+                      render={
+                        props => (
+                          <CreateNewUser {...props} />
                         )
                       }
                     />

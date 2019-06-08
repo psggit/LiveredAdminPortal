@@ -58,6 +58,15 @@ export function cancelOttp(payload) {
   })
 }
 
+export function fetchUserRoles(payload) {
+  return GET({
+    api: `${dso}/livered/dso/listRoles`,
+    handleError: true,
+    prependBaseUrl: false,
+    data: payload
+  })
+}
+
 export function fetchDSOList(payload) {
   return POST({
     api: `${dso}/livered/dso/listDso`,
@@ -79,6 +88,33 @@ export function addCityToDso(payload) {
 export function deleteCityToDso(payload) {
   return POST({
     api: `${dso}/livered/dso/deleteCityFromDso`,
+    handleError: true,
+    prependBaseUrl: false,
+    data: payload
+  })
+}
+
+export function createSupportUser(payload) {
+  return POST({
+    api: `${dso}/livered/dso/createSupportUser`,
+    handleError: true,
+    prependBaseUrl: false,
+    data: payload
+  })
+}
+
+export function createExciseUser(payload) {
+  return POST({
+    api: `${dso}/livered/dso/createExciseUser`,
+    handleError: true,
+    prependBaseUrl: false,
+    data: payload
+  })
+}
+
+export function createDsoUser(payload) {
+  return POST({
+    api: `${dso}/livered/dso/createDsoUser`,
     handleError: true,
     prependBaseUrl: false,
     data: payload

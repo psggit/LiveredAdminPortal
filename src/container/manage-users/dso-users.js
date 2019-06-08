@@ -193,6 +193,10 @@ const ManageDsoUser = (props) => {
     }
   }
 
+  const addNewUser = () => {
+    props.history.push("/home/dso-user/create")
+  }
+
   const unmountConfirmationModal = (action) => {
     if (action === "editUser") {
       setEditUserConfirmationModal(false)
@@ -207,7 +211,7 @@ const ManageDsoUser = (props) => {
         <PageHeader pageName="Users & Roles" />
 
         <div className="navbar">
-          <UserNavbar />
+          <UserNavbar addNewUser={addNewUser} />
         </div>
 
         <div className="container">
