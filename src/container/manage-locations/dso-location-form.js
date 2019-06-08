@@ -29,11 +29,14 @@ class DsoLocationForm extends React.Component {
       deliveryStatus: true,
       name: "",
       email: "",
-      phone: ""
+      phone: "",
+      subTitle: "Add State to DSO",
+      showAddStateToDsoForm: false
     }
 
     this.handleTextFieldChange = this.handleTextFieldChange.bind(this)
     this.getData = this.getData.bind(this)
+    this.setShowAddLocation = this.setShowAddLocation.bind(this)
     this.formatResponse = this.formatResponse.bind(this)
     this.handleStateChange = this.handleStateChange.bind(this)
     this.handleCityChange = this.handleCityChange.bind(this)
@@ -157,6 +160,7 @@ class DsoLocationForm extends React.Component {
 
   handleRowClick(item) {
     this.setState({
+      subTitle: "Edit Location",
       selectedStateIdx: parseInt(item.state_id),
       selectedRegionalCityIdx: item.reg_office_city_id,
       deliveryStatus: item.service_status,
@@ -176,7 +180,14 @@ class DsoLocationForm extends React.Component {
     })
   }
 
+  setShowAddLocation() {
+    this.setState({
+      showAddStateToDsoForm: true
+    })
+  }
+
   render() {
+    const { showAddStateToDsoForm, subTitle } = this.state
     return (
       <React.Fragment>
         <div style={{ marginTop: '50px' }}>
@@ -228,179 +239,157 @@ class DsoLocationForm extends React.Component {
             {
               this.props.enableEdit &&
               <React.Fragment>
-                <div className="item" style={{ borderBottom: '1px solid #e2e5e8' }}>
-                  <div className="item">
+                <div className="item" style={{ borderBottom: showAddStateToDsoForm ? '1px solid #e2e5e8' : undefined }}>
+                  <div className="item" style={{ cursor: 'pointer' }} onClick={this.setShowAddLocation}>
                     <div className="icon">
                       <span><Icon name="addIcon" /></span>
-                      <Label>Add State to DSO</Label>
+                      <Label>{subTitle}</Label>
                     </div>
-                    <Select
-                      options={this.state.stateList}
-                      name="State"
-                      placeholder="state"
-                      onChange={e => this.handleStateChange(e)}
-                      value={this.state.selectedStateIdx}
-                      disabled={this.state.deliverableCityList.length > 0}
-                    />
                   </div>
-                  <div className="item">
-                    <Label
-                      icon="info"
-                      tooltipText="Minimum legal age limit to place an order"
-                    >
-                      Delivery Status
-                    </Label>
-                    <div style={{ display: 'flex', alignItems: 'center' }}>
-                      {
-                        this.state.deliveryStatus
-                          ? <span style={{ marginRight: '10px' }} onClick={this.props.enableEdit ? () => this.toggleDeliveryStatus() : () => { }}>
-                            <Icon name="toggleGreen" />
+                  {
+                    showAddStateToDsoForm &&
+                    <React.Fragment>
+                      <Select
+                        options={this.state.stateList}
+                        name="State"
+                        placeholder="state"
+                        onChange={e => this.handleStateChange(e)}
+                        value={this.state.selectedStateIdx}
+                        disabled={this.state.deliverableCityList.length > 0}
+                      />
+                      <div className="item">
+                        <Label
+                          icon="info"
+                          tooltipText="Minimum legal age limit to place an order"
+                        >
+                          Delivery Status
+                        </Label>
+                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                          {
+                            this.state.deliveryStatus
+                              ? <span style={{ marginRight: '10px' }} onClick={this.props.enableEdit ? () => this.toggleDeliveryStatus() : () => { }}>
+                                <Icon name="toggleGreen" />
+                              </span>
+                              : <span style={{ marginRight: '10px' }} onClick={this.props.enableEdit ? () => this.toggleDeliveryStatus() : () => { }}>
+                                <Icon name="toggleRed" />
+                              </span>
+                          }
+                          <span
+                            onClick={this.props.enableEdit ? () => this.toggleDeliveryStatus() : () => { }}
+                            style={{ cursor: this.props.enableEdit ? 'pointer' : 'default' }}
+                          >
+                            {this.state.deliveryStatus ? "Enabled" : "Disabled"}
                           </span>
-                          : <span style={{ marginRight: '10px' }} onClick={this.props.enableEdit ? () => this.toggleDeliveryStatus() : () => { }}>
-                            <Icon name="toggleRed" />
-                          </span>
-                      }
-                      <span
-                        onClick={this.props.enableEdit ? () => this.toggleDeliveryStatus() : () => { }}
-                        style={{ cursor: this.props.enableEdit ? 'pointer' : 'default' }}
+                        </div>
+                      </div>
+                      <div style={{ display: 'flex' }}>
+                        <div style={{ width: '50%' }}>
+                          <p className="header">Regional Office</p>
+                          <div className="item">
+                            <Label>City</Label>
+                            <Select
+                              options={this.state.cityList}
+                              name="regionalOfficeCity"
+                              placeholder="city"
+                              onChange={e => this.handleRegionalOfficeCityChange(e)}
+                              value={this.state.selectedRegionalCityIdx}
+                              disabled={!this.props.enableEdit}
+                            />
+                          </div>
+                          <div className="item">
+                            <Label>Address</Label>
+                            <textarea
+                              name="regionalOfficeAddress"
+                              style={{ width: '300px' }}
+                              rows={4}
+                              value={this.state.regionalOfficeAddress}
+                              onChange={this.handleTextFieldChange}
+                              disabled={!this.props.enableEdit}
+                            />
+                          </div>
+                        </div>
+                        <div style={{ width: '50%' }}>
+                          <p className="header">Primary Contact</p>
+                          <div className="item">
+                            <Label>Name</Label>
+                            <TextInput
+                              ref={input => (this.name = input)}
+                              name="name"
+                              pattern="^[^-\s][a-zA-Z0-9_\s-]+$"
+                              isRequired={true}
+                              placeholder="name"
+                              defaultValue={this.state.name}
+                              disabled={!this.props.enableEdit}
+                              errorMessage="Name is invalid"
+                              emptyMessage="Name is required"
+                            />
+                          </div>
+                          <div className="item">
+                            <Label>Email Address</Label>
+                            <TextInput
+                              ref={input => (this.email = input)}
+                              name="email"
+                              pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+                              isRequired={true}
+                              placeholder="email"
+                              defaultValue={this.state.email}
+                              disabled={!this.props.enableEdit}
+                              errorMessage="Email is invalid"
+                              emptyMessage="Email is required"
+                            />
+                          </div>
+                          <div className="item">
+                            <Label>Phone</Label>
+                            <TextInput
+                              ref={input => (this.phone = input)}
+                              name="phone"
+                              pattern="[0-9]*"
+                              isRequired={true}
+                              placeholder="phone"
+                              defaultValue={this.state.phone}
+                              disabled={!this.props.enableEdit}
+                              errorMessage="Phone is invalid"
+                              emptyMessage="Phone is required"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </React.Fragment>
+                  }
+                </div>
+                {
+                  showAddStateToDsoForm &&
+                  <React.Fragment>
+                    <div className="item">
+                      <div className="icon">
+                        <span><Icon name="addIcon" /></span>
+                        <Label>Add cities</Label>
+                      </div>
+                      <MultiSelect
+                        options={this.state.cityList}
+                        name="City"
+                        multiple
+                        placeholder="Please choose city"
+                        selectedValues={this.state.deliverableCityList}
+                        onChange={e => this.handleCityChange(e)}
+                        //value={this.state.selectedCityIdx}
+                        addOption={this.props.addCityToDso}
+                        removeOption={this.props.removeCityToDso}
+                      />
+                    </div>
+                    <div style={{ marginTop: '20px' }}>
+                      <Button
+                        secondary
+                        onClick={() => this.handleSave()}
+                        disabled={this.props.updatingDsoLocationDetails || this.props.creatingDsoLocationDetails}
                       >
-                        {this.state.deliveryStatus ? "Enabled" : "Disabled"}
-                      </span>
+                        {
+                          location.href.indexOf("edit") !== -1 ? 'Update' : 'Add State'
+                        }
+                      </Button>
                     </div>
-                  </div>
-                  <div style={{ display: 'flex' }}>
-                    <div style={{ width: '50%' }}>
-                      <p className="header">Regional Office</p>
-                      <div className="item">
-                        <Label>City</Label>
-                        {/* <input
-                            type="text"
-                            name="regionalOfficeCity"
-                            style={{ width: '300px' }}
-                            value={this.state.regionalOfficeCity}
-                            onChange={this.handleTextFieldChange}
-                            disabled={!this.props.enableEdit}
-                          /> */}
-                        <Select
-                          options={this.state.cityList}
-                          name="regionalOfficeCity"
-                          placeholder="city"
-                          onChange={e => this.handleRegionalOfficeCityChange(e)}
-                          value={this.state.selectedRegionalCityIdx}
-                          disabled={!this.props.enableEdit}
-                        />
-                      </div>
-                      <div className="item">
-                        <Label>Address</Label>
-                        <textarea
-                          name="regionalOfficeAddress"
-                          style={{ width: '300px' }}
-                          rows={4}
-                          value={this.state.regionalOfficeAddress}
-                          onChange={this.handleTextFieldChange}
-                          disabled={!this.props.enableEdit}
-                        />
-                      </div>
-                    </div>
-                    <div style={{ width: '50%' }}>
-                      <p className="header">Primary Contact</p>
-                      <div className="item">
-                        <Label>Name</Label>
-                        {/* <input
-                          type="text"
-                          name="name"
-                          style={{ width: '300px' }}
-                          value={this.state.name}
-                          onChange={this.handleTextFieldChange}
-                          disabled={!this.props.enableEdit}
-                        /> */}
-                        <TextInput
-                          ref={input => (this.name = input)}
-                          name="name"
-                          pattern="^[^-\s][a-zA-Z0-9_\s-]+$"
-                          isRequired={true}
-                          placeholder="name"
-                          defaultValue={this.state.name}
-                          disabled={!this.props.enableEdit}
-                          errorMessage="Name is invalid"
-                          emptyMessage="Name is required"
-                        />
-                      </div>
-                      <div className="item">
-                        <Label>Email Address</Label>
-                        {/* <input
-                          type="text"
-                          name="email"
-                          style={{ width: '300px' }}
-                          value={this.state.email}
-                          onChange={this.handleTextFieldChange}
-                          disabled={!this.props.enableEdit}
-                        /> */}
-                        <TextInput
-                          ref={input => (this.email = input)}
-                          name="email"
-                          pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
-                          isRequired={true}
-                          placeholder="email"
-                          defaultValue={this.state.email}
-                          disabled={!this.props.enableEdit}
-                          errorMessage="Email is invalid"
-                          emptyMessage="Email is required"
-                        />
-                      </div>
-                      <div className="item">
-                        <Label>Phone</Label>
-                        {/* <input
-                          type="text"
-                          name="phone"
-                          style={{ width: '300px' }}
-                          value={this.state.phone}
-                          onChange={this.handleTextFieldChange}
-                          disabled={!this.props.enableEdit}
-                        /> */}
-                        <TextInput
-                          ref={input => (this.phone = input)}
-                          name="phone"
-                          pattern="[0-9]*"
-                          isRequired={true}
-                          placeholder="phone"
-                          defaultValue={this.state.phone}
-                          disabled={!this.props.enableEdit}
-                          errorMessage="Phone is invalid"
-                          emptyMessage="Phone is required"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="item">
-                  <div className="icon">
-                    <span><Icon name="addIcon" /></span>
-                    <Label>Add cities</Label>
-                  </div>
-                  <MultiSelect
-                    options={this.state.cityList}
-                    name="City"
-                    multiple
-                    placeholder="Please choose city"
-                    selectedValues={this.state.deliverableCityList}
-                    onChange={e => this.handleCityChange(e)}
-                    //value={this.state.selectedCityIdx}
-                    addOption={this.props.addCityToDso}
-                    removeOption={this.props.removeCityToDso}
-                  />
-                </div>
-                <div style={{ marginTop: '20px' }}>
-                  <Button
-                    secondary
-                    onClick={() => this.handleSave()}
-                    disabled={this.props.updatingDsoLocationDetails || this.props.creatingDsoLocationDetails}
-                  >
-                    {
-                      location.href.indexOf("edit") !== -1 ? 'Update' : 'Add State'
-                    }
-                  </Button>
-                </div>
+                  </React.Fragment>
+                }
               </React.Fragment>
             }
           </form>
