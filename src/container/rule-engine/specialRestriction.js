@@ -123,8 +123,11 @@ class SpecialRestriction extends React.Component {
 
   deleteStateSpecialDay(id) {
     this.setState({ deletingSpecialRestriction: true })
+    console.log("zone", this.state.zoneRestrictions)
+
     Api.deleteStateSpecialDay({
-      id: parseInt(id)
+      id: parseInt(id),
+      state_id: this.state.zoneRestrictions.find((item) => item.id === parseInt(id)).state_id
     })
       .then((response) => {
         //this.toggleSave()
@@ -147,9 +150,12 @@ class SpecialRestriction extends React.Component {
   }
 
   deleteCitySpecialDay(id) {
+    console.log("zone", this.state.zoneRestrictions)
     this.setState({ deletingSpecialRestriction: true })
     Api.deleteCitySpecialDay({
-      id: parseInt(id)
+      id: parseInt(id),
+      city_id: this.state.zoneRestrictions.find((item) => item.id === parseInt(id)).city_id,
+      state_id: this.state.zoneRestrictions.find((item) => item.id === parseInt(id)).state_id,
     })
       .then((response) => {
         //this.toggleSave()
