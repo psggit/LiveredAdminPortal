@@ -424,22 +424,9 @@ export default {
 		</svg>
 	),
 	circle: (
-		<svg width="18" height="18">
-			<defs>
-				<clipPath id="clip_0">
-					<rect x="-138" y="-321" width="1440" height="1004" clipRule="evenodd" />
-				</clipPath>
-			</defs>
-			<g clipPath="url(#clip_0)">
-				<path fill="rgb(255,255,255)" stroke="none" d="M9 18C13.9706 18 18 13.9706 18 9C18 4.02944 13.9706 0 9 0C4.02944 0 0 4.02944 0 9C0 13.9706 4.02944 18 9 18Z" />
-			</g>
-			<defs>
-				<clipPath id="clip_1">
-					<path d="M18 9C18 13.9706 13.9706 18 9 18C4.02944 18 0 13.9706 0 9C0 4.02944 4.02944 0 9 0C13.9706 0 18 4.02944 18 9Z" clipRule="evenodd" />
-				</clipPath>
-			</defs>
-			<g clipPath="url(#clip_1)">
-				<path fill="none" stroke="rgb(140,155,165)" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" d="M9 18C13.9706 18 18 13.9706 18 9C18 4.02944 13.9706 0 9 0C4.02944 0 0 4.02944 0 9C0 13.9706 4.02944 18 9 18Z" />
+		<svg width="18px" height="18px" viewBox="0 0 20 20" version="1.1" >
+			<g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
+				<circle id="Oval" stroke="#8C9BA5" strokeWidth="2" cx="10" cy="10" r="9"></circle>
 			</g>
 		</svg>
 	),

@@ -17,7 +17,7 @@ const Select = (props) => {
         name={props.name}
         onChange={handleChange}
         disabled={props.disabled}
-        style={{ width: props.width ? props.width : "225px" }}
+        style={{ width: props.width ? props.width : "260px" }}
         value={props.value !== -1 ? props.value : ""}
       >
         {

@@ -27,17 +27,17 @@ class CreateDso extends React.Component {
     const data = this.dsoDetailsForm.getData()
     this.setState({ creatingDsoDetails: true })
     Api.createDsoDetails({
-      dso_name: data.dsoName,
-      is_active: data.deliveryStatus,
-      entity_type: data.entityType,
-      license_type: data.licenseType,
-      license_status: data.licenseStatus,
-      license_expiry: new Date(data.licenseExpiry).toISOString(),
-      head_office_city_id: data.selectedCityIdx,
-      head_office_address: data.headOfficeAddress,
-      head_office_contact_name: data.name,
-      head_office_contact_email: data.email,
-      head_office_contact_phone: data.phone
+      dso_name: data.dsoName.state.value,
+      is_active: data.state.deliveryStatus,
+      entity_type: data.entityType.state.value,
+      license_type: data.licenseType.state.value,
+      license_status: data.state.licenseStatus,
+      license_expiry: new Date(data.state.licenseExpiry).toISOString(),
+      head_office_city_id: data.state.selectedCityIdx,
+      head_office_address: data.state.headOfficeAddress,
+      head_office_contact_name: data.name.state.value,
+      head_office_contact_email: data.email.state.value,
+      head_office_contact_phone: data.phone.state.value
     })
       .then((response) => {
         this.setState({ creatingDsoDetails: false })

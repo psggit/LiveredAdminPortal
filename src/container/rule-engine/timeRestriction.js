@@ -23,16 +23,21 @@ class TimeRestriction extends React.Component {
       showSave: true,
       creatingTimeRestriction: false,
       updatingTimeRestriction: false,
-      createdTimeRestrictions: false
+      createdTimeRestrictions: props.data.time_restrictions && props.data.time_restrictions.length > 0 ? true : false
     }
     this.saveStateTimings = this.saveStateTimings.bind(this)
     this.toggleSave = this.toggleSave.bind(this)
     this.createTimeRestriction = this.createTimeRestriction.bind(this)
     this.updateTimeRestriction = this.updateTimeRestriction.bind(this)
+    this.getData = this.getData.bind(this)
   }
 
   toggleSave() {
     this.setState({ showSave: !this.state.showSave })
+  }
+
+  getData() {
+    return this.state
   }
 
   getStateTimings() {

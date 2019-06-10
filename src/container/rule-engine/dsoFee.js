@@ -14,13 +14,14 @@ class DsoFee extends React.Component {
       showSave: true,
       creatingDsoFee: false,
       updatingDsoFee: false,
-      createdPermitRules: false
+      createdPermitRules: props.data.permit_rules && props.data.permit_rules.length > 0 ? true : false
     }
 
     this.saveDsoFee = this.saveDsoFee.bind(this)
     this.toggleSave = this.toggleSave.bind(this)
     this.createDsoFee = this.createDsoFee.bind(this)
     this.updateDsoFee == this.updateDsoFee.bind(this)
+    this.getData = this.getData.bind(this)
   }
 
   toggleSave() {
@@ -70,6 +71,10 @@ class DsoFee extends React.Component {
     }
   }
 
+  getData() {
+    return this.state
+  }
+
   render() {
     const { showSave, updatingDsoFee, creatingDsoFee, createdPermitRules } = this.state
     const { data, action } = this.props
@@ -82,7 +87,7 @@ class DsoFee extends React.Component {
                 icon="info"
                 tooltipText="In case an OTTP (One Time Transport Permit) is cancelled, a cancellation fee will be charged"
               >
-                Cancellation Fee
+                Cancellation Fee (₹)
               </Label>
               {
                 ((action === "edit" && showSave) || (action === "create" && (data.permit_rules.length === 0 && !createdPermitRules))) &&
@@ -130,7 +135,7 @@ class DsoFee extends React.Component {
                 icon="info"
                 tooltipText="Amount charged per OTTP per order"
               >
-                Cost/Permit
+                Cost/Permit (₹)
             </Label>
             </div>
             <TextInput

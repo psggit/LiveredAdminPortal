@@ -110,7 +110,7 @@ class DsoLocationForm extends React.Component {
   }
 
   getData() {
-    return this.state
+    return this
   }
 
   handleRegionalOfficeCityChange(e) {
@@ -139,18 +139,18 @@ class DsoLocationForm extends React.Component {
   }
 
   handleSave() {
-    if (this.props.enableEdit) {
-      this.setState({
-        regionalOfficeCity: this.state.selectedRegionalCityIdx,
-        name: this.name.state.value,
-        email: this.email.state.value,
-        phone: this.phone.state.value
-      }, () => {
-        this.props.handleClick()
-      })
-    } else {
-      this.props.handleClick()
-    }
+    // if (this.props.enableEdit) {
+    //   this.setState({
+    //     regionalOfficeCity: this.state.selectedRegionalCityIdx,
+    //     name: this.name.state.value,
+    //     email: this.email.state.value,
+    //     phone: this.phone.state.value
+    //   }, () => {
+    //     this.props.handleClick()
+    //   })
+    // } else {
+    this.props.handleClick()
+    //}
   }
 
   handleSubmit(e) {
@@ -161,6 +161,7 @@ class DsoLocationForm extends React.Component {
   handleRowClick(item) {
     this.setState({
       subTitle: "Edit Location",
+      showAddStateToDsoForm: true,
       selectedStateIdx: parseInt(item.state_id),
       selectedRegionalCityIdx: item.reg_office_city_id,
       deliveryStatus: item.service_status,
@@ -242,7 +243,10 @@ class DsoLocationForm extends React.Component {
                 <div className="item" style={{ borderBottom: showAddStateToDsoForm ? '1px solid #e2e5e8' : undefined }}>
                   <div className="item" style={{ cursor: 'pointer' }} onClick={this.setShowAddLocation}>
                     <div className="icon">
-                      <span><Icon name="addIcon" /></span>
+                      {
+                        this.state.deliverableCityList.length === 0 &&
+                        <span><Icon name="addIcon" /></span>
+                      }
                       <Label>{subTitle}</Label>
                     </div>
                   </div>
@@ -300,7 +304,7 @@ class DsoLocationForm extends React.Component {
                             <Label>Address</Label>
                             <textarea
                               name="regionalOfficeAddress"
-                              style={{ width: '300px' }}
+                              style={{ width: '260px' }}
                               rows={4}
                               value={this.state.regionalOfficeAddress}
                               onChange={this.handleTextFieldChange}
@@ -363,7 +367,7 @@ class DsoLocationForm extends React.Component {
                     <div className="item">
                       <div className="icon">
                         <span><Icon name="addIcon" /></span>
-                        <Label>Add cities</Label>
+                        <Label>Add/Edit cities</Label>
                       </div>
                       <MultiSelect
                         options={this.state.cityList}

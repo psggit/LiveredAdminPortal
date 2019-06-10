@@ -134,7 +134,7 @@ class DsoDetailsForm extends React.Component {
   }
 
   getData() {
-    return this.state
+    return this
   }
 
   handleSubmit(e) {
@@ -143,20 +143,20 @@ class DsoDetailsForm extends React.Component {
   }
 
   handleSave() {
-    if (location.pathname.indexOf("create-details") !== -1) {
-      this.setState({
-        dsoName: this.dsoName.state.value,
-        entityType: this.entityType.state.value,
-        licenseType: this.licenseType.state.value,
-        name: this.name.state.value,
-        email: this.email.state.value,
-        phone: this.phone.state.value
-      }, () => {
-        this.props.handleClick()
-      })
-    } else {
-      this.props.handleClick()
-    }
+    // if (location.pathname.indexOf("create-details") !== -1) {
+    //   this.setState({
+    //     dsoName: this.dsoName.state.value,
+    //     entityType: this.entityType.state.value,
+    //     licenseType: this.licenseType.state.value,
+    //     name: this.name.state.value,
+    //     email: this.email.state.value,
+    //     phone: this.phone.state.value
+    //   }, () => {
+    //     this.props.handleClick()
+    //   })
+    // } else {
+    this.props.handleClick()
+    //}
   }
 
   render() {
@@ -345,7 +345,7 @@ class DsoDetailsForm extends React.Component {
                   <Label>Address</Label>
                   <textarea
                     name="headOfficeAddress"
-                    style={{ width: '300px' }}
+                    style={{ width: '260px' }}
                     rows={4}
                     value={this.state.headOfficeAddress}
                     onChange={this.handleTextFieldChange}

@@ -15,15 +15,21 @@ class LegalPurchaseAge extends React.Component {
       showSave: true,
       creatingLegalPurchaseAge: false,
       updatingLegalPurchaseAge: false,
-      createdLegalAge: false
+      createdLegalAge: props.data && props.data.consumer_min_age ? true : false
     }
     this.saveLegalPurchaseAge = this.saveLegalPurchaseAge.bind(this)
     this.toggleSave = this.toggleSave.bind(this)
     this.createLegalPurchaseAge = this.createLegalPurchaseAge.bind(this)
     this.updateLegalPurchaseAge = this.updateLegalPurchaseAge.bind(this)
+    this.getData = this.getData.bind(this)
   }
+
   toggleSave() {
     this.setState({ showSave: !this.state.showSave })
+  }
+
+  getData() {
+    return this.state
   }
 
   createLegalPurchaseAge() {

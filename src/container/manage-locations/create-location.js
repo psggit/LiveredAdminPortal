@@ -36,12 +36,12 @@ class CreateLocation extends React.Component {
     Api.creatingDsoLocationDetails({
       dso_id: getQueryObjByName("id"),
       service_status: true,
-      state_id: data.selectedStateIdx,
-      reg_office_city_id: data.selectedRegionalCityIdx,
-      reg_office_address: data.regionalOfficeAddress,
-      reg_office_contact_name: data.name,
-      reg_office_contact_email: data.email,
-      reg_office_contact_phone: data.phone
+      state_id: data.state.selectedStateIdx,
+      reg_office_city_id: data.state.selectedRegionalCityIdx,
+      reg_office_address: data.state.regionalOfficeAddress,
+      reg_office_contact_name: data.name.state.value,
+      reg_office_contact_email: data.email.state.value,
+      reg_office_contact_phone: data.phone.state.value
     })
       .then((response) => {
         this.setState({ creatingDsoLocationDetails: false })
@@ -62,7 +62,7 @@ class CreateLocation extends React.Component {
     Api.addCityToDso({
       dso_id: getQueryObjByName("id"),
       city_id: id,
-      state_id: data.selectedStateIdx,
+      state_id: data.state.selectedStateIdx,
       service_status_on: new Date().toISOString(),
       service_status: true
     })

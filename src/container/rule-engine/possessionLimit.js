@@ -8,23 +8,28 @@ import * as Api from "../../api"
 
 class PossessionLimit extends React.Component {
 
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
       showSave: true,
       creatingPossessionLimit: false,
       updatingPossessionLimit: false,
-      createdPossessionLimit: false
+      createdPossessionLimit: props.data.possession_limit && props.data.possession_limit.length > 0 ? true : false
     }
     this.savePossessionLimit = this.savePossessionLimit.bind(this)
     this.toggleSave = this.toggleSave.bind(this)
     this.createPossessionLimit = this.createPossessionLimit.bind(this)
     this.updatePossessionLimit = this.updatePossessionLimit.bind(this)
     this.getUpdatedPossessionLimit = this.getUpdatedPossessionLimit.bind(this)
+    this.getData = this.getData.bind(this)
   }
 
   toggleSave() {
     this.setState({ showSave: !this.state.showSave })
+  }
+
+  getData() {
+    return this.state
   }
 
   getUpdatedPossessionLimit() {
@@ -96,7 +101,7 @@ class PossessionLimit extends React.Component {
             icon="info"
             tooltipText="Quantity of liquor that an individual can possess at any given time"
           >
-            Possession Limit
+            Possession Limit (Litres)
           </Label>
           {
             ((action === "edit" && showSave) || (action === "create" && (data.possession_limit.length === 0 && !createdPossessionLimit))) &&

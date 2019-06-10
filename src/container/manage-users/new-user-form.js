@@ -121,16 +121,12 @@ class AddNewUser extends React.Component {
   }
 
   getData() {
-    return this.state
+    return this
   }
 
   handleAddNewUser(e) {
     e.preventDefault()
-    this.setState({
-      name: this.name.state.value,
-      email: this.email.state.value,
-      designation: this.designation.state.value
-    }, () => this.props.handleAddNewUser())
+    this.props.handleAddNewUser()
   }
 
   render() {

@@ -10,6 +10,7 @@ import LegalPurchaseAge from "./legalPurchaseAge"
 import PossessionLimit from "./possessionLimit"
 import DsoFee from "./dsoFee"
 import TimeRestrictions from './timeRestriction'
+import Dialog from "Components/dialog"
 import SpecialRestrictions from "./specialRestriction"
 
 class RuleManagement extends React.Component {
@@ -21,7 +22,8 @@ class RuleManagement extends React.Component {
       stateList: [],
       selectedStateIdx: parseInt(getQueryObjByName("stateId")) || -1,
       selectedStateName: getQueryObjByName("stateName") || "",
-      loadingRules: true
+      loadingRules: true,
+      showErrorModal: false
     }
 
     this.fetchRules = this.fetchRules.bind(this)
@@ -31,6 +33,7 @@ class RuleManagement extends React.Component {
     this.handleSetRules = this.handleSetRules.bind(this)
     this.fetchAndViewExciseRules = this.fetchAndViewExciseRules.bind(this)
     this.fetchStateAndCityList = this.fetchStateAndCityList.bind(this)
+    this.toggleModalState = this.toggleModalState.bind(this)
   }
 
   componentDidMount() {
@@ -93,7 +96,26 @@ class RuleManagement extends React.Component {
 
   handleDone() {
     const { selectedStateIdx, selectedStateName } = this.state
-    this.props.history.push(`/home/rules?stateId=${selectedStateIdx}&stateName=${selectedStateName}`)
+    this.timeRestrictionForm = this.timeRestrictionForm.getData()
+    this.dsoFeeForm = this.dsoFeeForm.getData()
+    this.legalPurchaseAgeForm = this.legalPurchaseAgeForm.getData()
+    this.possessionLimitForm = this.possessionLimitForm.getData()
+    // console.log("poses", this.possessionLimitForm.createdPossessionLimit)
+    // console.log("dso", this.dsoFeeForm.createdPermitRules)
+    // console.log("age", this.legalPurchaseAgeForm.createdLegalAge)
+    // console.log("time", this.timeRestrictionForm.createdTimeRestrictions)
+    if (this.timeRestrictionForm.createdTimeRestrictions &&
+      this.dsoFeeForm.createdPermitRules &&
+      this.legalPurchaseAgeForm.createdLegalAge &&
+      this.possessionLimitForm.createdPossessionLimit) {
+      this.props.history.push(`/home/rules?stateId=${selectedStateIdx}&stateName=${selectedStateName}`)
+    } else {
+      this.toggleModalState()
+    }
+  }
+
+  toggleModalState() {
+    this.setState({ showErrorModal: !this.state.showErrorModal })
   }
 
   handleSetRules() {
@@ -106,7 +128,8 @@ class RuleManagement extends React.Component {
       rulesData,
       loadingRules,
       selectedStateIdx,
-      selectedStateName
+      selectedStateName,
+      showErrorModal
     } = this.state
 
     const { title, action } = this.props
@@ -166,30 +189,35 @@ class RuleManagement extends React.Component {
             </div>
 
             <PossessionLimit
+              ref={(node) => this.possessionLimitForm = (node)}
               action={this.props.action}
               stateId={selectedStateIdx}
               data={this.state.rulesData}
             />
 
             <LegalPurchaseAge
+              ref={(node) => this.legalPurchaseAgeForm = (node)}
               action={this.props.action}
               stateId={selectedStateIdx}
               data={this.state.rulesData}
             />
 
             <DsoFee
+              ref={(node) => this.dsoFeeForm = (node)}
               action={this.props.action}
               stateId={selectedStateIdx}
               data={this.state.rulesData}
             />
 
             <TimeRestrictions
+              ref={(node) => this.timeRestrictionForm = (node)}
               action={this.props.action}
               stateId={selectedStateIdx}
               data={this.state.rulesData}
             />
 
             <SpecialRestrictions
+              ref={(node) => this.specialRestrictionForm = (node)}
               action={this.props.action}
               stateId={selectedStateIdx}
               data={this.state.rulesData}
@@ -204,6 +232,20 @@ class RuleManagement extends React.Component {
               </React.Fragment>
             }
           </div>
+        }
+        {
+          showErrorModal &&
+          (
+            <Dialog
+              title="Please fill all the sections"
+              onClick={this.toggleModalState}
+              actions={[
+                <Button onClick={() => this.toggleModalState()} primary>
+                  Ok
+                </Button>
+              ]}
+            />
+          )
         }
       </div >
     )

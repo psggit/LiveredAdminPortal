@@ -22,12 +22,12 @@ class AddNewUser extends React.Component {
     const data = this.newUserForm.getData()
     this.setState({ creatingUser: true })
     Api.createDsoUser({
-      name: data.name,
-      email: data.email,
-      designation: data.designation,
-      dso_id: data.selectedDsoIdx,
+      name: data.name.state.value,
+      email: data.email.state.value,
+      designation: data.designation.state.value,
+      dso_id: data.state.selectedDsoIdx,
       roles: [{
-        role_id: data.selectedRoleIdx
+        role_id: data.state.selectedRoleIdx
       }]
     })
       .then((response) => {
@@ -44,12 +44,12 @@ class AddNewUser extends React.Component {
     const data = this.newUserForm.getData()
     this.setState({ creatingUser: true })
     Api.createExciseUser({
-      name: data.name,
-      email: data.email,
-      designation: data.designation,
-      state_id: data.selectedStateIdx,
+      name: data.name.state.value,
+      email: data.email.state.value,
+      designation: data.designation.state.value,
+      state_id: data.state.selectedStateIdx,
       roles: [{
-        role_id: data.selectedRoleIdx
+        role_id: data.state.selectedRoleIdx
       }]
     })
       .then((response) => {
@@ -64,13 +64,14 @@ class AddNewUser extends React.Component {
 
   addNewSupportUser() {
     const data = this.newUserForm.getData()
+    console.log("data", this)
     this.setState({ creatingUser: true })
     Api.createSupportUser({
-      name: data.name,
-      email: data.email,
-      designation: data.designation,
+      name: data.name.state.value,
+      email: data.email.state.value,
+      designation: data.designation.state.value,
       roles: [{
-        role_id: data.selectedRoleIdx
+        role_id: data.state.selectedRoleIdx
       }]
     })
       .then((response) => {
@@ -85,9 +86,10 @@ class AddNewUser extends React.Component {
 
   handleAddNewUser() {
     const data = this.newUserForm.getData()
-    if (data.selectedUserType.indexOf("Excise") !== -1) {
+    // console.log("data1", data)
+    if (data.state.selectedUserType.indexOf("Excise") !== -1) {
       this.addNewExciseUser()
-    } else if (data.selectedUserType.indexOf("Admin") !== -1) {
+    } else if (data.state.selectedUserType.indexOf("Admin") !== -1) {
       this.addNewSupportUser()
     } else {
       this.addNewDsoUser()

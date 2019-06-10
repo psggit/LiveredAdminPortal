@@ -33,20 +33,20 @@ class CreateExcise extends React.Component {
       creatingExciseDetails: true
     })
     Api.createExciseDetails({
-      name: data.exciseName,
-      state_id: data.selectedStateIdx,
-      delivery_status: data.deliveryStatus,
-      head_office_city_id: data.selectedCityIdx,
-      head_office_address: data.headOfficeAddress,
-      primary_contact_name: data.name,
-      primary_contact_email: data.email,
-      primary_contact_phone: data.phone
+      name: data.exciseName.state.value,
+      state_id: data.state.selectedStateIdx,
+      delivery_status: data.state.deliveryStatus,
+      head_office_city_id: data.state.selectedCityIdx,
+      head_office_address: data.state.headOfficeAddress,
+      primary_contact_name: data.name.state.value,
+      primary_contact_email: data.email.state.value,
+      primary_contact_phone: data.phone.state.value
     })
       .then((response) => {
         this.setState({
           creatingExciseDetails: false
         })
-        this.props.history.push(`/home/excise/view-details?stateId=${response.state_id}&name=${data.exciseName}`)
+        this.props.history.push(`/home/excise/view-details?stateId=${response.state_id}&name=${data.exciseName.state.value}`)
       })
       .catch((err) => {
         this.setState({ mountDialog: true, creatingExciseDetails: false })
