@@ -94,6 +94,33 @@ export function deleteCityToDso(payload) {
   })
 }
 
+export function deleteDsoUser(payload) {
+  return POST({
+    api: `${dso}/livered/dso/deleteDsoUser`,
+    handleError: true,
+    prependBaseUrl: false,
+    data: payload
+  })
+}
+
+export function deleteExciseUser(payload) {
+  return POST({
+    api: `${dso}/livered/dso/deleteExciseUser`,
+    handleError: true,
+    prependBaseUrl: false,
+    data: payload
+  })
+}
+
+export function deleteSupportUser(payload) {
+  return POST({
+    api: `${dso}/livered/dso/deleteSupportUser`,
+    handleError: true,
+    prependBaseUrl: false,
+    data: payload
+  })
+}
+
 export function createSupportUser(payload) {
   return POST({
     api: `${dso}/livered/dso/createSupportUser`,

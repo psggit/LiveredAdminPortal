@@ -44,9 +44,9 @@ const ManageSupportUser = (props) => {
   const [filter, setFilter] = useState(filterParams)
   const [name, setName] = useState(searchedName)
   const [showDeleteUserConfirmationModal, setDeleteUserConfirmationModal] = useState(false)
-  const [showEditUserConfirmationModal, setEditUserConfirmationModal] = useState(false)
+  const [showDeactivateUserConfirmationModal, setDeactivateUserConfirmationModal] = useState(false)
   const [deactivatingUser, setDeactivatingUser] = useState(false)
-  const [editingUser, setEditingUser] = useState(false)
+  const [deletingUser, setDeletingUser] = useState(false)
   const [key, setKey] = useState(0)
   /**
    * Payload for fetching support list
@@ -157,15 +157,29 @@ const ManageSupportUser = (props) => {
     const position = getPositionBasedOnContainer(e.target)
     selectedUser = item
     const actionItems = [
-      "Edit User Settings",
+      "Delete User",
       item.is_active ? "Deactivate User" : "Activate User"
     ]
     mountTableActionsMenu(position, actionItems, mountConfirmationModal)
   }
 
-  const handleEditUser = () => {
+  const handleDeleteUser = () => {
+    setDeletingUser(true)
     console.log("data", selectedUser)
+    Api.deleteSupportUser({
+      id: selectedUser.id
+    })
+      .then((response) => {
+        setDeletingUser(false)
+        setDeleteUserConfirmationModal(false)
+        setKey(key + 1)
+      })
+      .catch((err) => {
+        setDeletingUser(false)
+        console.log("Error in deleting support user", err)
+      })
   }
+
 
   const handleDeactivateUser = () => {
     setDeactivatingUser(true)
@@ -175,7 +189,7 @@ const ManageSupportUser = (props) => {
     })
       .then((response) => {
         setDeactivatingUser(false)
-        setDeleteUserConfirmationModal(false)
+        setDeactivateUserConfirmationModal(false)
         setKey(key + 1)
       })
       .catch((err) => {
@@ -185,10 +199,10 @@ const ManageSupportUser = (props) => {
   }
 
   const mountConfirmationModal = (action) => {
-    if (action === "editUser") {
-      setEditUserConfirmationModal(true)
-    } else {
+    if (action === "deleteUser") {
       setDeleteUserConfirmationModal(true)
+    } else {
+      setDeactivateUserConfirmationModal(true)
     }
   }
 
@@ -197,10 +211,10 @@ const ManageSupportUser = (props) => {
   }
 
   const unmountConfirmationModal = (action) => {
-    if (action === "editUser") {
-      setEditUserConfirmationModal(false)
-    } else {
+    if (action === "deleteUser") {
       setDeleteUserConfirmationModal(false)
+    } else {
+      setDeactivateUserConfirmationModal(false)
     }
   }
 
@@ -266,15 +280,15 @@ const ManageSupportUser = (props) => {
         </div>
       </div>
       {
-        (showDeleteUserConfirmationModal || showEditUserConfirmationModal) &&
+        (showDeleteUserConfirmationModal || showDeactivateUserConfirmationModal) &&
         <Dialog
-          title="Do you want to perform this action?"
+          title={`Do you want to ${showDeactivateUserConfirmationModal ? selectedUser.is_active ? 'deactivate' : 'activate' : 'delete'} user: ${selectedUser.name}?`}
           onClick={unmountConfirmationModal}
           actions={[
-            <Button disabled={deactivatingUser || editingUser} onClick={() => unmountConfirmationModal(showDeleteUserConfirmationModal ? "deleteUser" : "editUser")} secondary>
+            <Button disabled={deactivatingUser || deletingUser} onClick={() => unmountConfirmationModal(showDeleteUserConfirmationModal ? "deleteUser" : "deactivateUser")} secondary>
               No
             </Button>,
-            <Button disabled={deactivatingUser || editingUser} onClick={showDeleteUserConfirmationModal ? () => handleDeactivateUser() : () => handleEditUser()} primary>
+            <Button disabled={deactivatingUser || deletingUser} onClick={showDeactivateUserConfirmationModal ? () => handleDeactivateUser() : () => handleDeleteUser()} primary>
               Yes
             </Button>
           ]}

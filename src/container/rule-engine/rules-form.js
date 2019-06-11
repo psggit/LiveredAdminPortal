@@ -179,7 +179,7 @@ class RuleManagement extends React.Component {
           !loadingRules &&
           selectedStateIdx !== -1 &&
           ((action !== "view" && !noRules) || (action === "create" && noRules) || (action === "view" && !noRules)) &&
-          < div className="wrapper">
+          <div className="wrapper">
             <div className="rule--header">
               <p className="title">{title}{selectedStateIdx !== -1 ? ` | ${selectedStateName}` : ""}</p>
               {
