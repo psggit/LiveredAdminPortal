@@ -35,19 +35,19 @@ class PossessionLimit extends React.Component {
   getUpdatedPossessionLimit() {
     return [{
       brand_type: "IMFL",
-      volume_limit: parseInt(this.IMFL.state.value)
+      volume_limit: parseInt(this.IMFL.state.value) * 1000
     },
     {
       brand_type: "FMFL",
-      volume_limit: parseInt(this.FMFL.state.value)
+      volume_limit: parseInt(this.FMFL.state.value) * 1000
     },
     {
       brand_type: "Beer",
-      volume_limit: parseInt(this.beer.state.value)
+      volume_limit: parseInt(this.beer.state.value) * 1000
     },
     {
       brand_type: "Wine",
-      volume_limit: parseInt(this.wine.state.value)
+      volume_limit: parseInt(this.wine.state.value) * 1000
     }]
   }
 
@@ -142,7 +142,7 @@ class PossessionLimit extends React.Component {
             isRequired={true}
             defaultValue={
               data.possession_limit && data.possession_limit.length > 0
-                ? data.possession_limit.find((item) => item.brand_type === "IMFL").volume_limit
+                ? data.possession_limit.find((item) => item.brand_type === "IMFL").volume_limit / 1000
                 : ""
             }
             disabled={this.props.action === "view" || !this.state.showSave}
@@ -159,7 +159,7 @@ class PossessionLimit extends React.Component {
             isRequired={true}
             defaultValue={
               data.possession_limit && data.possession_limit.length > 0
-                ? data.possession_limit.find((item) => item.brand_type === "FMFL").volume_limit
+                ? data.possession_limit.find((item) => item.brand_type === "FMFL").volume_limit / 1000
                 : ""
             }
             disabled={this.props.action === "view" || !this.state.showSave}
@@ -176,7 +176,7 @@ class PossessionLimit extends React.Component {
             isRequired={true}
             defaultValue={
               data.possession_limit && data.possession_limit.length > 0
-                ? data.possession_limit.find((item) => item.brand_type === "Beer").volume_limit
+                ? data.possession_limit.find((item) => item.brand_type === "Beer").volume_limit / 1000
                 : ""
             }
             disabled={this.props.action === "view" || !this.state.showSave}
@@ -193,7 +193,7 @@ class PossessionLimit extends React.Component {
             isRequired={true}
             defaultValue={
               data.possession_limit && data.possession_limit.length > 0
-                ? data.possession_limit.find((item) => item.brand_type === "Wine").volume_limit
+                ? data.possession_limit.find((item) => item.brand_type === "Wine").volume_limit / 1000
                 : ""
             }
             disabled={this.props.action === "view" || !this.state.showSave}
