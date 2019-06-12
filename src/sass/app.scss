@@ -90,6 +90,9 @@ input[type='text'], input[type='password'], input[type='number'], input[type='ti
   &:focus {
     outline: 0;
   }
+  &.large {
+    width: 100%;
+  }
 }
 
 input[type='time'] {

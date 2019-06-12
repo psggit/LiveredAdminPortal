@@ -1,5 +1,6 @@
-import React, {useState} from "react"
+import React, { useState } from "react"
 import Button from "Components/button"
+import Dialog from "Components/dialog"
 import { POST } from "Utils/fetch"
 import { createSession } from "./session"
 import Header from "Components/header"
@@ -15,8 +16,8 @@ const Login = () => {
   const [showLoginErr, setShowLoginErr] = useState(false)
   const [showForgotPasswordModal, setShowForgotPasswordModal] = useState(false)
   const [showSuccessMessageModal, setShowSuccessMessageModal] = useState(false)
-  const [emailErr, setEmailErr] = useState({value: "", status: false})
-  const [passwordErr, setPasswordErr] = useState({value: "", status: false})
+  const [emailErr, setEmailErr] = useState({ value: "", status: false })
+  const [passwordErr, setPasswordErr] = useState({ value: "", status: false })
 
   const handleKeyPress = (e) => {
     e.preventDefault()
@@ -26,7 +27,7 @@ const Login = () => {
   }
 
   const handleLogin = (e) => {
-     e.preventDefault()
+    e.preventDefault()
     console.log("email", email, password)
     if (password.length && email.length) {
       setLoggingInStatus(true)
@@ -57,11 +58,11 @@ const Login = () => {
 
   const handleEmailChange = (evt) => {
     //this.setState({ [evt.target.name]:  evt.target.value});
-    setEmail( evt.target.value)
+    setEmail(evt.target.value)
   }
 
   const handleClick = () => {
-    location.href="/home/support"
+    location.href = "/home/support"
   }
 
   const resetPassword = () => {
@@ -95,8 +96,8 @@ const Login = () => {
   return (
     <React.Fragment>
       <Header isLoggedIn={false} />
-      <div id="login" className="container">
-        <div className="wrapper">
+      <div id="login">
+        <div className="container">
           <h3 className="title">
             Login
           </h3>
@@ -143,15 +144,15 @@ const Login = () => {
             </p>
           )}
         </div>
-        <p style={{ 
-            textAlign: "center", 
-            marginTop: "24px",
-            cursor: "pointer",
-          }}
+        {/* <p style={{
+          textAlign: "center",
+          marginTop: "24px",
+          cursor: "pointer",
+        }}
           onClick={handleClick}
         >
           Having trouble? Contact Support
-        </p>
+        </p> */}
       </div>
       {showForgotPasswordModal && (
         <Dialog
@@ -167,7 +168,7 @@ const Login = () => {
             </Button>
           ]}
         >
-          <input type="text" onChange={handleTextChange} />  
+          <input type="text" className="large" onChange={handleTextChange} />
         </Dialog>
       )}
       {showSuccessMessageModal && (
@@ -178,7 +179,7 @@ const Login = () => {
           actions={[
             <Button onClick={() => unMountModal('showSuccessMessageModal')} primary>
               Done
-            </Button>,``
+            </Button>, ``
           ]}
         />
       )}

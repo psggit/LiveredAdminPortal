@@ -1,5 +1,5 @@
 export const menuItems = [
-  { label: 'Overview', value: 'overview', icon: 'overviewIcon' },
+  // { label: 'Overview', value: 'overview', icon: 'overviewIcon' },
   { label: 'Excise Departments', value: 'excise-management', icon: 'exciseDeptIcon' },
   { label: 'Rules', value: 'rules', icon: 'rulesIcon' },
   { label: 'Delivery Operators', value: 'dso-management', icon: 'dsoIcon' },

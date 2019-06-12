@@ -6,16 +6,11 @@ import { POST, GET } from 'Utils/fetch'
 // const credit = "https://df53a98c.ngrok.io"
 // const rule = "https://6774026d.ngrok.io"
 
-
-const ottp = "https://195008c1.ngrok.io"
-const dso = "https://4839cb1e.ngrok.io"
-const credit = "https://d8d0fc08.ngrok.io"
-export const consumer = "https://c87e428a.ngrok.io"
-
-// const ottp = ""
-// const dso = ""
-// const credit = ""
-// const rule = ""
+const ottp = "https://fd9a0922.ngrok.io"
+export const dso = "https://459101d7.ngrok.io"
+const credit = "https://9648a8ab.ngrok.io"
+const rule = "https://8ee388c0.ngrok.io"
+//export const consumer = "https://c87e428a.ngrok.io"
 
 export function fetchAllOttps(payload) {
   return POST({
