@@ -84,7 +84,7 @@ const ManageExcise = (props) => {
    */
   const handlePageChange = (pagerObj) => {
     let queryParamsObj = {}
-    setActivePage(pagerObj.activePage)
+    setActivePage(parseInt(pagerObj.activePage))
     setLimit(pagerObj.pageSize)
     if (filter.length > 0) {
       queryParamsObj = {

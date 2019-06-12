@@ -97,7 +97,7 @@ const EditCredits = (props) => {
   const handlePageChange = (pagerObj) => {
     let queryParamsObj = {}
     setActivePage(pagerObj.activePage)
-    setLimit(pagerObj.pageSize)
+    setLimit(parseInt(pagerObj.pageSize))
 
     queryParamsObj = {
       activePage: pagerObj.activePage,

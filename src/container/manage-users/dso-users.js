@@ -104,7 +104,7 @@ const ManageDsoUser = (props) => {
   const handlePageChange = (pagerObj) => {
     let queryParamsObj = {}
     setActivePage(pagerObj.activePage)
-    setLimit(pagerObj.pageSize)
+    setLimit(parseInt(pagerObj.pageSize))
     if (filter.length > 0) {
       queryParamsObj = {
         activePage: pagerObj.activePage,
