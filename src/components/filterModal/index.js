@@ -41,7 +41,6 @@ class Filter extends React.Component {
     }
 
     filterObj = filterObj.filter((item) => item.value && item.value !== "All")
-    console.log("filter obj", filterObj)
     this.props.applyFilter(filterObj)
   }
 

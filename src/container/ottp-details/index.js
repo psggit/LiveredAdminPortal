@@ -16,7 +16,6 @@ import Select from "Components/select"
 
 const OttpDetails = (props) => {
   const OttpId = props.match.params.OttpId
-  // const dsoId = getQueryObjByName("dsoId")
   const [ottpDetailsData, setOttpDetails] = useState({})
   const [loadingOttpDetails, setLoadingOttpDetails] = useState(true)
   const [showCancelOtpModal, setShowCancelOtpModal] = useState(false)
@@ -44,7 +43,6 @@ const OttpDetails = (props) => {
   const fetchOttpDetails = () => {
     Api.fetchOttpDetails(OttpDetailsReqParams)
       .then((response) => {
-        console.log("response", response.ottp)
         setOttpDetails(response.ottp)
         setLoadingOttpDetails(false)
       })

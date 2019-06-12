@@ -9,7 +9,6 @@ import "./reports.scss"
 class ReportForm extends React.Component {
   constructor(props) {
     super(props)
-    console.log("props", props)
     this.state = {
       dataType: "",
       selectedDataTypeIdx: -1,
@@ -27,8 +26,6 @@ class ReportForm extends React.Component {
       { text: "All transport permits", value: 1 },
       { text: "Past transport permits", value: 2 },
       { text: "Cancelled transport permits", value: 3 },
-      //{ text: "User Log (list of all users)", value: 4 },
-      // { text: "Audit Log", value: 5 }
     ]
 
     this.dsoDataType = [
@@ -36,7 +33,6 @@ class ReportForm extends React.Component {
       { text: "Past transport permits", value: 2 },
       { text: "Cancelled transport permits", value: 3 },
       { text: "Credit history (only for DSO)", value: 4 },
-      // { text: "Account details and history", value: 2 },
     ]
 
     this.reportType = [

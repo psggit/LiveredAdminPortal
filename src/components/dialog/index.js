@@ -5,21 +5,6 @@ import ButtonGroup from "./../button-group"
 import Icon from "./../icon"
 
 const Dialog = ({ icon, title, subtitle, children, onClick, actions }) => {
-  // useEffect(() => {
-  //   document.addEventListener('click', handlePress)
-  //   console.log("Created");
-  //   return () => {
-  //     console.log("Cleaned up");
-  //     document.removeEventListener('click', handlePress)
-  //   };
-  // }, []);
-
-  // const handlePress = (e) => {
-  //   if (e.target.className === 'overlay-container') {
-  //     onClick()
-  //   }
-  // }
-
   return (
     <div className="overlay-container">
       <div className="dialog--container">

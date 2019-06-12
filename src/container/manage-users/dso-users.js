@@ -34,7 +34,9 @@ const ManageDsoUser = (props) => {
     (JSON.parse(decodeURI(getQueryObjByName("filter")))).find((item) => item.filterby === "name") !== undefined
     ? (JSON.parse(decodeURI(getQueryObjByName("filter")))).find((item) => item.filterby === "name").value
     : ""
-  const filterParams = getQueryObjByName("filter") !== undefined && Object.keys(getQueryObjByName("filter")).length > 0 ? JSON.parse(decodeURI(getQueryObjByName("filter"))) : []
+  const filterParams = getQueryObjByName("filter") !== undefined && Object.keys(getQueryObjByName("filter")).length > 0
+    ? JSON.parse(decodeURI(getQueryObjByName("filter")))
+    : []
   const [activePage, setActivePage] = useState(pageNo)
   const [loadingDsoUsers, setLoadingDsoUsers] = useState(true)
   const [dsoUsers, setDsoUsers] = useState([])
@@ -166,7 +168,6 @@ const ManageDsoUser = (props) => {
 
   const handleDeleteUser = () => {
     setDeletingUser(true)
-    console.log("data", selectedUser)
     Api.deleteDsoUser({
       id: selectedUser.id
     })
@@ -285,10 +286,18 @@ const ManageDsoUser = (props) => {
           title={`Do you want to ${showDeactivateUserConfirmationModal ? selectedUser.is_active ? 'deactivate' : 'activate' : 'delete'} user: ${selectedUser.name}?`}
           onClick={unmountConfirmationModal}
           actions={[
-            <Button disabled={deactivatingUser || deletingUser} onClick={() => unmountConfirmationModal(showDeactivateUserConfirmationModal ? "deleteUser" : "editUser")} secondary>
+            <Button
+              disabled={deactivatingUser || deletingUser}
+              onClick={() => unmountConfirmationModal(showDeactivateUserConfirmationModal ? "deleteUser" : "editUser")}
+              secondary
+            >
               No
             </Button>,
-            <Button disabled={deactivatingUser || deletingUser} onClick={showDeactivateUserConfirmationModal ? () => handleDeactivateUser() : () => handleDeleteUser()} primary>
+            <Button
+              disabled={deactivatingUser || deletingUser}
+              onClick={showDeactivateUserConfirmationModal ? () => handleDeactivateUser() : () => handleDeleteUser()}
+              primary
+            >
               Yes
             </Button>
           ]}

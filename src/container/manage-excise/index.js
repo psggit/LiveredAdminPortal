@@ -13,7 +13,11 @@ const exciseTableHeaders = [
   { title: "Contact Name", icon: "", tooltipText: "" },
   { title: "Email ID", icon: "", tooltipText: "" },
   { title: "Contact Number", icon: "", tooltipText: "" },
-  { title: "Delivery Status", icon: "info", tooltipText: "Current status of delivery operations for the state. Exceptions prevail for specific cities based on special restrictions" },
+  {
+    title: "Delivery Status",
+    icon: "info",
+    tooltipText: "Current status of delivery operations for the state. Exceptions prevail for specific cities based on special restrictions"
+  },
 ]
 
 const ManageExcise = (props) => {
@@ -24,7 +28,9 @@ const ManageExcise = (props) => {
     (JSON.parse(decodeURI(getQueryObjByName("filter")))).find((item) => item.filterby === "DsoName") !== undefined
     ? (JSON.parse(decodeURI(getQueryObjByName("filter")))).find((item) => item.filterby === "DsoName").value
     : ""
-  const filterParams = getQueryObjByName("filter") !== undefined && Object.keys(getQueryObjByName("filter")).length > 0 ? JSON.parse(decodeURI(getQueryObjByName("filter"))) : []
+  const filterParams = getQueryObjByName("filter") !== undefined && Object.keys(getQueryObjByName("filter")).length > 0
+    ? JSON.parse(decodeURI(getQueryObjByName("filter")))
+    : []
   const [activePage, setActivePage] = useState(pageNo)
   const [loadingExcise, setLoadingExcise] = useState(true)
   const [exciseData, setExciseData] = useState([])

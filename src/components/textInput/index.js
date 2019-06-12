@@ -55,8 +55,6 @@ class TextInput extends React.Component {
           type="text"
           value={this.state.value}
           name={this.props.name}
-          // errorMessage={this.props.errorMessage}
-          // emptyMessage={this.props.emptyMessage}
           pattern={this.props.pattern}
           maxLength={this.props.maxLength}
           required={this.props.isRequired}

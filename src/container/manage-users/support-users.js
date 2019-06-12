@@ -285,10 +285,18 @@ const ManageSupportUser = (props) => {
           title={`Do you want to ${showDeactivateUserConfirmationModal ? selectedUser.is_active ? 'deactivate' : 'activate' : 'delete'} user: ${selectedUser.name}?`}
           onClick={unmountConfirmationModal}
           actions={[
-            <Button disabled={deactivatingUser || deletingUser} onClick={() => unmountConfirmationModal(showDeleteUserConfirmationModal ? "deleteUser" : "deactivateUser")} secondary>
+            <Button
+              disabled={deactivatingUser || deletingUser}
+              onClick={() => unmountConfirmationModal(showDeleteUserConfirmationModal ? "deleteUser" : "deactivateUser")}
+              secondary
+            >
               No
             </Button>,
-            <Button disabled={deactivatingUser || deletingUser} onClick={showDeactivateUserConfirmationModal ? () => handleDeactivateUser() : () => handleDeleteUser()} primary>
+            <Button
+              disabled={deactivatingUser || deletingUser}
+              onClick={showDeactivateUserConfirmationModal ? () => handleDeactivateUser() : () => handleDeleteUser()}
+              primary
+            >
               Yes
             </Button>
           ]}

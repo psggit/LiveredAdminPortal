@@ -233,7 +233,6 @@ class DsoLocationForm extends React.Component {
                 ? this.props.action === "create" ? "Add Location Details" : "Edit Location Details"
                 : "Location Details"}
               enableEdit={this.props.enableEdit}
-              //handleClick={this.props.handleClick}
               handleCancel={this.props.handleCancel}
               disableBtn={this.props.updatingDsoLocationDetails || this.props.creatingDsoLocationDetails}
             />

@@ -16,14 +16,20 @@ const exciseOperationTableHeaders = [
   { title: "City", icon: "", tooltipText: "" },
   { title: "State", icon: "" },
   { title: "Delivery Operator", icon: "", tooltipText: "" },
-  { title: "Delivery Status", icon: "info", tooltipText: "Current status of delivery operations for a specific city associated to a specific delivery operator" },
+  {
+    title: "Delivery Status",
+    icon: "info",
+    tooltipText: "Current status of delivery operations for a specific city associated to a specific delivery operator"
+  },
 ]
 const toggleExciseDeliveryReqParams = {}
 
 const ManageOperations = (props) => {
   const pageLimit = parseInt(getQueryObjByName("limit")) || 10
   const pageNo = parseInt(getQueryObjByName("activePage")) || 1
-  const filterParams = getQueryObjByName("filter") !== undefined && Object.keys(getQueryObjByName("filter")).length > 0 ? JSON.parse(decodeURI(getQueryObjByName("filter"))) : []
+  const filterParams = getQueryObjByName("filter") !== undefined && Object.keys(getQueryObjByName("filter")).length > 0
+    ? JSON.parse(decodeURI(getQueryObjByName("filter")))
+    : []
   const [activePage, setActivePage] = useState(pageNo)
   const [mountFilter, setMountFilter] = useState(false)
   const [loadingOperations, setLoadingOperations] = useState(true)
@@ -56,7 +62,6 @@ const ManageOperations = (props) => {
    */
   const setFilteredFieldState = (fieldName, value) => {
     const selectedFieldIdxFn = eval(`set${fieldName}Idx`)
-    console.log("selectedFieldFn", selectedFieldIdxFn)
     selectedFieldIdxFn(value)
   }
 
@@ -64,7 +69,6 @@ const ManageOperations = (props) => {
    * Sets the filtered dropdown value on page reload
    */
   const setSelectedDropDownValue = (item) => {
-    console.log("item", item)
     switch (item.filterby) {
       case 'City':
         setFilteredFieldState('City', item.idx)

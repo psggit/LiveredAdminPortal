@@ -7,7 +7,6 @@ import { checkActiveClass } from "Utils/helpers"
 import Button from "Components/button"
 
 const UserNavbar = (props) => {
-  console.log("new props", props)
   return (
     <div className="main-header">
       <div>

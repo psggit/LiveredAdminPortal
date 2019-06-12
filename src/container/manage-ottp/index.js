@@ -65,7 +65,6 @@ const ManageOTTP = (props) => {
   const setFilteredFieldState = (fieldName, value) => {
     if (fieldName !== "FromDate" && fieldName !== "ToDate") {
       const selectedFieldIdxFn = eval(`set${fieldName}Idx`)
-      console.log("selectedFieldFn", selectedFieldIdxFn)
       selectedFieldIdxFn(value)
     } else if (fieldName === "FromDate") {
       setFromDate(value)
@@ -127,7 +126,6 @@ const ManageOTTP = (props) => {
     setOttpData([])
     Api.fetchAllOttps(payload)
       .then((response) => {
-        console.log("response", response)
         setLoadingOttp(false)
         setOttpData(response.ottp)
         setOttpDataCount(response.count)

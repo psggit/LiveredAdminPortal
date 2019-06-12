@@ -64,7 +64,6 @@ class AddNewUser extends React.Component {
 
   addNewSupportUser() {
     const data = this.newUserForm.getData()
-    console.log("data", this)
     this.setState({ creatingUser: true })
     Api.createSupportUser({
       name: data.name.state.value,
@@ -86,7 +85,6 @@ class AddNewUser extends React.Component {
 
   handleAddNewUser() {
     const data = this.newUserForm.getData()
-    // console.log("data1", data)
     if (data.state.selectedUserType.indexOf("Excise") !== -1) {
       this.addNewExciseUser()
     } else if (data.state.selectedUserType.indexOf("Admin") !== -1) {

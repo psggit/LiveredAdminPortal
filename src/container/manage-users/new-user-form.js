@@ -141,8 +141,6 @@ class AddNewUser extends React.Component {
             pattern="^[^-\s][a-zA-Z0-9_\s-]+$"
             isRequired={true}
             placeholder="name"
-            // defaultValue={this.state.name}
-            // disabled={!this.props.enableEdit}
             errorMessage="Name is invalid"
             emptyMessage="Name is required"
           />
@@ -155,8 +153,6 @@ class AddNewUser extends React.Component {
             pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
             isRequired={true}
             placeholder="email"
-            // defaultValue={this.state.email}
-            // disabled={!this.props.enableEdit}
             errorMessage="Email is invalid"
             emptyMessage="Email is required"
           />
@@ -169,8 +165,6 @@ class AddNewUser extends React.Component {
             pattern="^[^-\s][a-zA-Z0-9_\s-]+$"
             isRequired={true}
             placeholder="designation"
-            // defaultValue={this.state.designation}
-            // disabled={!this.props.enableEdit}
             errorMessage="Designation is invalid"
             emptyMessage="Designation is required"
           />
@@ -183,7 +177,6 @@ class AddNewUser extends React.Component {
             placeholder="user type"
             onChange={e => this.handleUserTypeChange(e)}
             value={this.state.selectedUserTypeIdx}
-          // disabled={!this.props.enableEdit}
           />
         </div>
         {
@@ -196,7 +189,6 @@ class AddNewUser extends React.Component {
               placeholder="state"
               onChange={e => this.handleStateChange(e)}
               value={this.state.selectedStateIdx}
-            // disabled={!this.props.enableEdit}
             />
           </div>
         }
@@ -210,7 +202,6 @@ class AddNewUser extends React.Component {
               placeholder="dso"
               onChange={e => this.handleDsoChange(e)}
               value={this.state.selectedDsoIdx}
-            // disabled={!this.props.enableEdit}
             />
           </div>
         }
@@ -222,7 +213,6 @@ class AddNewUser extends React.Component {
             placeholder="role"
             onChange={e => this.handleRoleChange(e)}
             value={this.state.selectedRoleIdx}
-          // disabled={!this.props.enableEdit}
           />
         </div>
         <div className="item">

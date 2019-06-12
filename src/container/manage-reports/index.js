@@ -80,7 +80,6 @@ class ManageReports extends React.Component {
   */
   handleSubmit() {
     const formData = this.reportForm.getData()
-    console.log("report form data", this.reportForm.getData())
     this.setState({ requestingReport: true })
     this.generateReport({
       data_type: formData.dataType,
@@ -102,15 +101,10 @@ class ManageReports extends React.Component {
    * @param {Object} payloadObj - payload object
    */
   generateReport(payloadObj) {
-    console.log("payload", payloadObj)
     if (payloadObj.data_type.indexOf("credits") === -1) {
       Api.generateOttpReport(payloadObj)
         .then((response) => {
-          // this.setState({ reportFormKey: this.state.reportFormKey + 1 })
-          // var reader = response.body.getReader();
-          // reader.read().then(function (result) {
           this.downloadReport(response)
-          //})
         })
         .catch((err) => {
           this.setState({ requestingReport: false })
@@ -119,11 +113,6 @@ class ManageReports extends React.Component {
     } else {
       Api.generateCreditReport(payloadObj)
         .then((response) => {
-          // this.setState({ reportFormKey: this.state.reportFormKey + 1 })
-          // var reader = response.body.getReader();
-          // reader.read().then(function (result) {
-          //   this.downloadReport(result)
-          // })
           this.downloadReport(response)
         })
         .catch((err) => {
@@ -135,7 +124,6 @@ class ManageReports extends React.Component {
 
   downloadReport(response) {
     const formData = this.reportForm.getData()
-    console.log("report name", formData)
     const filename = formData.reportName ? `${formData.reportName}.csv` : `export.csv`
     const data = (response)
     const blob = new Blob([data], { type: `text/csv` });

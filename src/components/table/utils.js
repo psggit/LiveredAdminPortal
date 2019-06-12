@@ -11,9 +11,6 @@ export function mountTableActionsMenu(position, actionItems, mountConfirmationMo
   console.log("action", actionItems)
   const ActionMenu = (
     <div style={style} className="table--action-menu">
-      {/* {
-        actionItems.map((item) => <div className="item">{item}</div>)
-      } */}
       <div className="menu-item" onClick={() => mountConfirmationModal("deleteUser")}> {actionItems[0]} </div>
       <div className="menu-item" onClick={() => mountConfirmationModal("deactivateUser")}> {actionItems[1]} </div>
     </div>
