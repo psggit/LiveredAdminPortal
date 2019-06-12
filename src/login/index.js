@@ -103,7 +103,7 @@ const Login = () => {
           </h3>
           <div className="body">
             <React.Fragment>
-              <form>
+              <form onSubmit={handleLogin}>
                 <div className="form-group">
                   <Label>Email Id</Label>
                   <input
@@ -128,7 +128,7 @@ const Login = () => {
                 </div>
                 <div className="form-group" style={{ textAlign: "center" }}>
                   <Button
-                    onClick={handleLogin}
+                    // onClick={handleLogin}
                     primary
                   >
                     Login
