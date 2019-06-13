@@ -7,7 +7,7 @@ class TextInput extends React.Component {
     super(props)
 
     this.state = {
-      value: props ? props.defaultValue : "",
+      value: props && props.defaultValue ? props.defaultValue : "",
       errorStatus: false,
       errorMessage: "",
       touched: false

@@ -1,5 +1,4 @@
 import React from "react"
-import "./filteredParams.scss"
 
 const FilteredParams = ({ data }) => {
   const textStyle = {
@@ -7,7 +6,7 @@ const FilteredParams = ({ data }) => {
     color: '#5a6872'
   }
   return (
-    <div style={{ display: 'flex', margin: '9px 0px', alignItems: 'center' }}>
+    <div style={{ display: 'flex', margin: '9px 0px', alignItems: 'center', padding: '0 60px' }}>
       <p style={textStyle}>Filtered results</p>
       {
         data.map((item, i) => {
