@@ -6,7 +6,7 @@ const FilteredParams = ({ data }) => {
     color: '#5a6872'
   }
   return (
-    <div style={{ display: 'flex', margin: '9px 0px', alignItems: 'center', padding: '0 60px' }}>
+    <div style={{ display: 'flex', margin: '15px 0px', alignItems: 'center' }}>
       <p style={textStyle}>Filtered results</p>
       {
         data.map((item, i) => {

@@ -22,6 +22,10 @@ const ManageDsoUsers = (props) => {
   const [dsoUsers, setDsoUsers] = useState([])
   const [dsoUsersCount, setDsoUsersCount] = useState(0)
   const [limit, setLimit] = useState(pageLimit)
+  const [filter, setFilter] = useState([{
+    filterby: "dso_id",
+    value: getQueryObjByName("id")
+  }])
   const [dsoName, setDsoName] = useState(getQueryObjByName("name")) || ""
 
   /**
@@ -30,10 +34,7 @@ const ManageDsoUsers = (props) => {
   const dsoUserReqParams = {
     limit,
     offset: limit * parseInt(activePage - 1),
-    filter: [{
-      filterby: "dso_id",
-      value: getQueryObjByName("id")
-    }]
+    filter
   }
 
   /**
@@ -71,12 +72,16 @@ const ManageDsoUsers = (props) => {
       queryParamsObj = {
         activePage: pagerObj.activePage,
         limit: pagerObj.pageSize,
-        filter: queryObj.filter
+        filter: JSON.stringify(filter),
+        id: getQueryObjByName("id"),
+        name: getQueryObjByName("name")
       }
     } else {
       queryParamsObj = {
         activePage: pagerObj.activePage,
-        limit: pagerObj.pageSize
+        limit: pagerObj.pageSize,
+        id: getQueryObjByName("id"),
+        name: getQueryObjByName("name")
       }
     }
 
@@ -127,6 +132,7 @@ const ManageDsoUsers = (props) => {
               </DataTable>
             </div>
           }
+          <p style={{ fontSize: '14px', color: "#152935", margin: '10px 0' }}>Note: To add users, go to Users and Roles section</p>
         </div>
       </div>
     </React.Fragment >

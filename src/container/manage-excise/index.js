@@ -90,7 +90,7 @@ const ManageExcise = (props) => {
       queryParamsObj = {
         activePage: pagerObj.activePage,
         limit: pagerObj.pageSize,
-        filter: queryObj.filter
+        filter: JSON.stringify(filter)
       }
     } else {
       queryParamsObj = {

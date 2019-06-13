@@ -20,6 +20,10 @@ const ManageExciseUsers = (props) => {
   const [activePage, setActivePage] = useState(pageNo)
   const [loadingExcise, setLoadingExcise] = useState(true)
   const [exciseData, setExciseData] = useState([])
+  const [filter, setFilter] = useState([{
+    filterby: "state_id",
+    value: getQueryObjByName("stateId")
+  }])
   const [exciseDataCount, setExciseDataCount] = useState(0)
   const [limit, setLimit] = useState(pageLimit)
 
@@ -70,12 +74,16 @@ const ManageExciseUsers = (props) => {
       queryParamsObj = {
         activePage: pagerObj.activePage,
         limit: pagerObj.pageSize,
-        filter: queryObj.filter
+        stateId: getQueryObjByName("stateId"),
+        name: getQueryObjByName("name"),
+        filter: JSON.stringify(filter)
       }
     } else {
       queryParamsObj = {
         activePage: pagerObj.activePage,
-        limit: pagerObj.pageSize
+        limit: pagerObj.pageSize,
+        stateId: getQueryObjByName("stateId"),
+        name: getQueryObjByName("name"),
       }
     }
 

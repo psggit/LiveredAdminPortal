@@ -3,8 +3,8 @@ import Label from "../label"
 import Select from "../select"
 
 const deliveryStatus = [
-  { text: 'Active', value: 1 },
-  { text: 'Inactive', value: 2 },
+  { text: 'Enabled', value: 1 },
+  { text: 'Disabled', value: 2 },
 ]
 
 class DeliveryStatus extends React.Component {

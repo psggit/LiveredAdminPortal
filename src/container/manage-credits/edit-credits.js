@@ -101,7 +101,9 @@ const EditCredits = (props) => {
 
     queryParamsObj = {
       activePage: pagerObj.activePage,
-      limit: pagerObj.pageSize
+      limit: pagerObj.pageSize,
+      id: getQueryObjByName("id"),
+      name: getQueryObjByName("name")
     }
 
     props.history.push(`/home/dso/view-credits?${getQueryUri(queryParamsObj)}`)

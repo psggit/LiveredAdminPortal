@@ -132,12 +132,16 @@ const ManageOperations = (props) => {
       queryParamsObj = {
         activePage: pagerObj.activePage,
         limit: pagerObj.pageSize,
-        filter: queryObj.filter
+        filter: JSON.stringify(filter),
+        stateId: getQueryObjByName("stateId"),
+        name: getQueryObjByName("name"),
       }
     } else {
       queryParamsObj = {
         activePage: pagerObj.activePage,
-        limit: pagerObj.pageSize
+        limit: pagerObj.pageSize,
+        stateId: getQueryObjByName("stateId"),
+        name: getQueryObjByName("name"),
       }
     }
 

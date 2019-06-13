@@ -31,8 +31,8 @@ const ManageExciseUser = (props) => {
   const pageNo = parseInt(getQueryObjByName("activePage")) || 1
   const searchedExciseName = getQueryObjByName("filter") !== undefined &&
     Object.keys(getQueryObjByName("filter")).length > 0 &&
-    (JSON.parse(decodeURI(getQueryObjByName("filter")))).find((item) => item.filterby === "name") !== undefined
-    ? (JSON.parse(decodeURI(getQueryObjByName("filter")))).find((item) => item.filterby === "name").value
+    (JSON.parse(decodeURI(getQueryObjByName("filter")))).find((item) => item.filterby === "ExciseName") !== undefined
+    ? (JSON.parse(decodeURI(getQueryObjByName("filter")))).find((item) => item.filterby === "ExciseName").value
     : ""
   const filterParams = getQueryObjByName("filter") !== undefined && Object.keys(getQueryObjByName("filter")).length > 0 ? JSON.parse(decodeURI(getQueryObjByName("filter"))) : []
   const [activePage, setActivePage] = useState(pageNo)
@@ -107,7 +107,7 @@ const ManageExciseUser = (props) => {
       queryParamsObj = {
         activePage: pagerObj.activePage,
         limit: pagerObj.pageSize,
-        filter: queryObj.filter
+        filter: JSON.stringify(filter)
       }
     } else {
       queryParamsObj = {
@@ -150,8 +150,8 @@ const ManageExciseUser = (props) => {
     if (filter.length > 0) {
       props.history.push(`/home/excise-users`)
       setFilter([])
+      setName("")
     }
-    setName("")
   }
 
   const showOptions = (e, item) => {

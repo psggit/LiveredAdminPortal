@@ -149,7 +149,7 @@ const ManageOTTP = (props) => {
       queryParamsObj = {
         activePage: pagerObj.activePage,
         limit: pagerObj.pageSize,
-        filter: queryObj.filter
+        filter: JSON.stringify(filter)
       }
     } else {
       queryParamsObj = {
@@ -298,15 +298,15 @@ const ManageOTTP = (props) => {
           </Filter>
         </div>
       </div>
-      {
-        isFilterApplied && !isSearchApplied &&
-        <FilteredParams data={filter} />
-      }
       <div style={{
         background: '#fff',
         margin: '20px 60px',
         padding: '60px'
       }}>
+        {
+          isFilterApplied && !isSearchApplied &&
+          <FilteredParams data={filter} />
+        }
         {(
           <div>
             <Pagination

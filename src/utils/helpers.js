@@ -36,7 +36,7 @@
 // }
 
 export function checkActiveClass(value) {
-  const url = location.href
+  const url = location.pathname
   if (url.indexOf(value) !== -1) {
     return 'active'
   }
