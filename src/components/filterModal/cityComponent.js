@@ -54,7 +54,7 @@ class City extends React.Component {
   }
 
   handleChange(e) {
-    console.log("city change", e.target.value)
+    // console.log("city change", e.target.value)
     const value = e.target.value
     this.setState({
       city: {
