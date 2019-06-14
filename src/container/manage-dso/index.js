@@ -11,7 +11,7 @@ import Button from "Components/button"
 
 const dsoTableHeaders = [
   { title: "Name", icon: "" },
-  { title: "Head Quaters", icon: "" },
+  { title: "Head Quarters", icon: "" },
   { title: "States Servicable", icon: "info", tooltipText: "States where delivery operations are serviceable" },
   { title: "License Status", icon: "info", tooltipText: "Current status of delivery operator’s license to delivery liquor" },
   { title: "License Expiry", icon: "info", tooltipText: "Expiry date of delivery operator’s license to delivery liquor" },

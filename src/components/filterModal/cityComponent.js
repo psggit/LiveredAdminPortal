@@ -27,6 +27,13 @@ class City extends React.Component {
     this.fetchStateAndCitiesList()
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.selectedCityIdx !== this.props.selectedCityIdx) {
+      this.fetchStateAndCitiesList()
+    }
+    console.log("prev props", prevProps, this.props)
+  }
+
   fetchStateAndCitiesList() {
     Api.fetchStateAndCitiesList({})
       .then((response) => {

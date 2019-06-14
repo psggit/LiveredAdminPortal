@@ -190,10 +190,10 @@ const ManageOTTP = (props) => {
       setIsFilterApplied(false)
       setFilter([])
     }
-    setDsoIdx("")
-    setCityIdx("")
-    setStateIdx("")
-    setPermitIdx("")
+    setDsoIdx(-1)
+    setCityIdx(-1)
+    setStateIdx(-1)
+    setPermitIdx(-1)
     setOttpId("")
   }
 

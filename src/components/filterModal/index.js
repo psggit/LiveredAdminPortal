@@ -11,9 +11,19 @@ import ToDate from "./toDateComponent"
 
 class Filter extends React.Component {
 
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
+    this.state = {
+      selectedCityIdx: this.props.selectedCityIdx ? this.props.selectedCityIdx : -1
+    }
     this.applyFilter = this.applyFilter.bind(this)
+  }
+
+  componentDidUpdate(prevProps) {
+    console.log("prev props", prevProps, this.props)
+    if (this.props.selectedCityIdx !== prevProps.selectedCityIdx) {
+      this.setState({ selectedCityIdx: this.props.selectedCityIdx })
+    }
   }
 
   applyFilter() {
@@ -45,6 +55,7 @@ class Filter extends React.Component {
   }
 
   render() {
+    console.log("filter", this.props)
     return (
       <div className={`filter-container ${this.props.showFilter ? 'show' : 'hide'}`} >
         <p className="title"> Filters </p>
@@ -66,7 +77,7 @@ class Filter extends React.Component {
           <City
             cityList={this.props.cityList}
             ref={(node) => { this.cityState = node }}
-            selectedCityIdx={this.props.selectedCityIdx}
+            selectedCityIdx={this.state.selectedCityIdx}
           />
           {
             this.props.filterName !== "exciseOperations" &&

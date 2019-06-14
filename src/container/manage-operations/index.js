@@ -153,7 +153,7 @@ const ManageOperations = (props) => {
   */
   const clearSearchResults = () => {
     if (filter.length > 0) {
-      props.history.push(`/home/excise/view-operations?stateId=${getQueryObjByName("stateId")}`)
+      props.history.push(`/home/excise/view-operations?stateId=${getQueryObjByName("stateId")}&name=${getQueryObjByName("name")} `)
       setIsFilterApplied(false)
       setFilter([])
     }
@@ -212,6 +212,7 @@ const ManageOperations = (props) => {
       limit: 10,
       activePage: 1,
       stateId: getQueryObjByName("stateId"),
+      name: getQueryObjByName("name"),
       filter: JSON.stringify(validFilter)
     }
 
@@ -353,8 +354,8 @@ const ManageOperations = (props) => {
                     )
                   })
                 }
-              </DataTable>
-            </div>
+              </DataTable >
+            </div >
           }
           {
             mountModal &&
@@ -371,8 +372,8 @@ const ManageOperations = (props) => {
               ]}
             />
           }
-        </div>
-      </div>
+        </div >
+      </div >
     </React.Fragment >
   )
 }
