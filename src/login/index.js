@@ -98,7 +98,7 @@ const Login = () => {
 
   return (
     <React.Fragment>
-      <Header isLoggedIn={false} />
+      <Header />
       <div id="login">
         <div className="container">
           <h3 className="title">
@@ -112,7 +112,7 @@ const Login = () => {
                   <input
                     type="text"
                     name="email"
-                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                    pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
                     onInput={handleEmailChange}
                     value={email}
                     required
@@ -123,7 +123,7 @@ const Login = () => {
                   <input
                     type="password"
                     name="password"
-                    pattern="^[a-zA-Z0-9!#@]*$"
+                    pattern="^[^-\s][a-zA-Z0-9_\s-]+$"
                     onInput={handlePasswordChange}
                     value={password}
                     required
