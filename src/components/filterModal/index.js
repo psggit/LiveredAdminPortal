@@ -40,7 +40,7 @@ class Filter extends React.Component {
       filterObj.push(dso, city, deliveryStatus)
     }
 
-    filterObj = filterObj.filter((item) => item.value && item.value !== "All")
+    filterObj = filterObj.filter((item) => item.filterby && item.filterby.length > 0)
     this.props.applyFilter(filterObj)
   }
 

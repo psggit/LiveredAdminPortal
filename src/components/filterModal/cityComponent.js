@@ -59,7 +59,7 @@ class City extends React.Component {
     this.setState({
       city: {
         filterby: e.target.name,
-        value: value.toString(),
+        value: this.state.cityList.find(item => item.value === parseInt(value)).text,
         idx: e.target.value,
         cityName: this.state.cityList.find(item => item.value === parseInt(value)).text
       }

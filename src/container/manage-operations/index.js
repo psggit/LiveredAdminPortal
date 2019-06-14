@@ -194,16 +194,25 @@ const ManageOperations = (props) => {
       }
     }, []);
 
+    const validFilter = uniqueFilter.filter((item) => {
+      if (item.value !== "All") {
+        if (item.filterby === "City") {
+          item.value = item.idx
+        }
+        return item
+      }
+    })
+
     setLimit(10)
     setActivePage(1)
-    setFilter(uniqueFilter)
+    setFilter(validFilter)
     setIsFilterApplied(true)
 
     const queryObj = {
       limit: 10,
       activePage: 1,
       stateId: getQueryObjByName("stateId"),
-      filter: JSON.stringify(uniqueFilter)
+      filter: JSON.stringify(validFilter)
     }
 
     props.history.push(`/home/excise/view-operations?${getQueryUri(queryObj)}`)
