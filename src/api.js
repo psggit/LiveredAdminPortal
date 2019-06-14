@@ -6,7 +6,7 @@ const ottp = "https://02e60307.ngrok.io"
 export const dso = "https://6f258f66.ngrok.io"
 const credit = "https://dc3e9629.ngrok.io"
 export const consumer = "https://32fcbab7.ngrok.io"
-const rule = "http://1e7e1a58.ngrok.io"
+const rule = "https://3ff20ddb.ngrok.io"
 
 export function fetchAllOttps(payload) {
   return POST({

@@ -311,7 +311,7 @@ const ManageOperations = (props) => {
               <DataTable
                 headings={exciseOperationTableHeaders}
                 loadingData={loadingOperations}
-                message="No DSO’s associated with Excise Department of Telanagana found, please go to DSO section to update or add new DSOs"
+                message={`No DSO's associated with ${getQueryObjByName("name")} found please go to DSO section to update or add new DSOs`}
               >
                 {
                   operationsData.length > 0 &&

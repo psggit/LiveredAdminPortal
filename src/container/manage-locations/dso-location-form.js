@@ -210,7 +210,7 @@ class DsoLocationForm extends React.Component {
                 return (
                   <tr
                     key={i}
-                    className={`clickable ${this.state.selectedStateIdx === item.state_id ? 'highlight' : ''}`}
+                    className={`${this.props.enableEdit ? 'clickable' : undefined} ${this.state.selectedStateIdx === item.state_id ? 'highlight' : ''}`}
                     onClick={this.props.action === "edit" ? () => this.handleRowClick(item) : () => { }}
                   >
                     <td>{item.state_name}</td>

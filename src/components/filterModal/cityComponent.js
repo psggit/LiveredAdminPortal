@@ -77,7 +77,7 @@ class City extends React.Component {
           name="City"
           placeholder="City"
           onChange={e => this.handleChange(e)}
-          value={parseInt(this.state.city.idx)}
+          value={this.state.city.idx ? parseInt(this.state.city.idx) : ""}
         />
       </div>
     )

@@ -13,6 +13,7 @@ const ExciseNavbar = (props) => {
           !props.navbarItems
             ? exciseNavbarItems.map((item, i) => (
               <NavLink
+                key={i}
                 className={`nav-link ${checkActiveClass(item.value)}`}
                 to={`${item.path}?stateId=${getQueryObjByName("stateId")}&name=${getQueryObjByName("name")}`}
               >
@@ -20,7 +21,13 @@ const ExciseNavbar = (props) => {
               </NavLink>
             ))
             : props.navbarItems.map((item, i) => (
-              <NavLink className={`nav-link ${checkActiveClass(item.value)}`} to={item.path}>{item.label}</NavLink>
+              <NavLink
+                key={i}
+                className={`nav-link ${checkActiveClass(item.value)}`}
+                to={item.path}
+              >
+                {item.label}
+              </NavLink>
             ))
         }
       </div>

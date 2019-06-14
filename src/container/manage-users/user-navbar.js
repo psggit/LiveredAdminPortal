@@ -13,6 +13,7 @@ const UserNavbar = (props) => {
         {
           userNavbarItems.map((item, i) => (
             <NavLink
+              key={i}
               className={`nav-link ${checkActiveClass(item.value)}`}
               to={`${item.path}`}
             >

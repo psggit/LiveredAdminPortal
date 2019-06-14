@@ -31,6 +31,7 @@ const DsoNavbar = (props) => {
             ? dsoNavbarItems.map((item, i) => (
               // <a key={i} onClick={() => handleClick(item.path)} className={`${checkActiveClass(item.value)}`}>{item.label}</a>
               <NavLink
+                key={i}
                 className={`nav-link ${checkActiveClass(item.value)}`}
                 to={`${item.path}?id=${getQueryObjByName("id")}&name=${getQueryObjByName("name")}`}
               >
@@ -39,7 +40,13 @@ const DsoNavbar = (props) => {
             ))
             : props.navbarItems.map((item, i) => (
               // <a key={i} onClick={() => handleClick(item.path)} className={`${checkActiveClass(item.value)}`}>{item.label}</a>
-              <NavLink className={`nav-link ${checkActiveClass(item.value)}`} to={item.path}>{item.label}</NavLink>
+              <NavLink
+                className={`nav-link ${checkActiveClass(item.value)}`}
+                to={item.path}
+                key={i}
+              >
+                {item.label}
+              </NavLink>
             ))
         }
       </div>
