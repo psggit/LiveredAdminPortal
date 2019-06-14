@@ -139,7 +139,10 @@ const ManageDSO = (props) => {
 
   return (
     <React.Fragment >
-      <PageHeader pageName="Delivery Service Operators" />
+      <PageHeader
+        pageName="Delivery Service Operators"
+        pathname="/home/dso-management"
+      />
       <div style={{
         display: "flex",
         marginTop: "30px",

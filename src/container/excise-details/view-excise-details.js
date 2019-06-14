@@ -20,7 +20,11 @@ class exciseDetails extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <PageHeader pageName="Excise Departments" text={getQueryObjByName("name")} />
+        <PageHeader
+          pageName="Excise Departments"
+          text={getQueryObjByName("name")}
+          pathname="/home/excise-management"
+        />
         <div style={{
           display: "flex",
           marginTop: "30px",

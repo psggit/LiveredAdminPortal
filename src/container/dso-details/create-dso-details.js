@@ -53,7 +53,11 @@ class CreateDso extends React.Component {
     const { creatingDsoDetails } = this.state
     return (
       <React.Fragment>
-        <PageHeader pageName="Delivery Service Operators" text="Add new" />
+        <PageHeader
+          pageName="Delivery Service Operators"
+          text="Add new"
+          pathname="/home/dso-management"
+        />
         <div style={{
           display: "flex",
           marginTop: "30px",

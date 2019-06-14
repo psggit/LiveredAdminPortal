@@ -15,16 +15,21 @@ class DeliveryStatus extends React.Component {
       deliveryStatus: {
         filterby: "",
         value: "",
-        idx: props && props.selectedDeliveryStatusIdx ? props.selectedDeliveryStatusIdx : ""
+        idx: props && props.selectedDeliveryStatusIdx ? props.selectedDeliveryStatusIdx : -1
       }
     }
 
     this.handleChange = this.handleChange.bind(this)
     this.getData = this.getData.bind(this)
+    this.reset = this.reset.bind(this)
   }
 
   getData() {
     return this.state
+  }
+
+  reset() {
+    this.setState({ deliveryStatus: { ...this.state.deliveryStatus, idx: -1 } })
   }
 
   handleChange(e) {
@@ -33,7 +38,7 @@ class DeliveryStatus extends React.Component {
       deliveryStatus: {
         filterby: e.target.name,
         idx: e.target.value,
-        value: deliveryStatus.find(item => item.value === parseInt(value)).text === "Active"
+        value: deliveryStatus.find(item => item.value === parseInt(value)).text === "Enabled"
           ? "true"
           : "false"
       }

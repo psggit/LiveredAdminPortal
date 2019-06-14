@@ -143,7 +143,10 @@ const ManageExcise = (props) => {
 
   return (
     <React.Fragment >
-      <PageHeader pageName="Excise Departments" />
+      <PageHeader
+        pageName="Excise Departments"
+        pathname="/home/excise-management"
+      />
       <div style={{
         display: "flex",
         marginTop: "30px",

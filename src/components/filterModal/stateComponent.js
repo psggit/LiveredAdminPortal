@@ -21,10 +21,15 @@ class State extends React.Component {
     this.getData = this.getData.bind(this)
     this.fetchStateAndCitiesList = this.fetchStateAndCitiesList.bind(this)
     this.formatResponse = this.formatResponse.bind(this)
+    this.reset = this.reset.bind(this)
   }
 
   componentDidMount() {
     this.fetchStateAndCitiesList()
+  }
+
+  reset() {
+    this.setState({ stateObj: { ...this.state.stateObj, idx: -1 } })
   }
 
   fetchStateAndCitiesList() {
@@ -59,7 +64,7 @@ class State extends React.Component {
     this.setState({
       stateObj: {
         filterby: e.target.name,
-        value: e.target.value,
+        value: (e.target.value),
         idx: e.target.value,
         stateName: this.state.stateList.find(item => item.value === parseInt(value)).text
       }

@@ -92,7 +92,11 @@ const ManageExciseUsers = (props) => {
 
   return (
     <React.Fragment >
-      <PageHeader pageName="Excise Departments" text={getQueryObjByName("name")} />
+      <PageHeader
+        pageName="Excise Departments"
+        text={getQueryObjByName("name")}
+        pathname="/home/excise-management"
+      />
       <div style={{
         background: '#fff',
         margin: '60px',

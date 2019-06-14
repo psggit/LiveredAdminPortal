@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import * as Api from "./../../api"
 import Pagination from "Components/pagination"
 import PageHeader from "Components/pageheader"
@@ -45,6 +45,9 @@ const ManageOperations = (props) => {
   //const [selectedStateIdx, setStateIdx] = useState("")
   const [selectedDsoIdx, setDsoIdx] = useState(-1)
   const [selectedDeliveryStatusIdx, setDeliveryStatusIdx] = useState(-1)
+
+  /** Refs */
+  const filterRef = useRef()
 
   /**
    * Payload for fetching ottp's
@@ -167,6 +170,7 @@ const ManageOperations = (props) => {
   */
   const resetFilter = () => {
     clearSearchResults()
+    filterRef.current.resetFilter()
   }
 
   /**
@@ -198,6 +202,9 @@ const ManageOperations = (props) => {
       if (item.value !== "All") {
         if (item.filterby === "City") {
           item.value = item.idx
+        }
+        if (item.filterby === "Delivery Operator") {
+          item.value = item.dso_id
         }
         return item
       }
@@ -258,7 +265,11 @@ const ManageOperations = (props) => {
 
   return (
     <React.Fragment >
-      <PageHeader pageName="Excise Departments" text={getQueryObjByName("name")} />
+      <PageHeader
+        pageName="Excise Departments"
+        text={getQueryObjByName("name")}
+        pathname="/home/excise-management"
+      />
       <div style={{
         background: '#fff',
         margin: '60px',
@@ -291,6 +302,7 @@ const ManageOperations = (props) => {
                 <span style={{ position: 'relative', top: '-2px', marginLeft: '5px' }}>Filter</span>
               </Button>
               <Filter
+                ref={filterRef}
                 filterName="exciseOperations"
                 showFilter={mountFilter}
                 applyFilter={applyFilter}

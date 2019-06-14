@@ -3,7 +3,7 @@ import './search.scss'
 import Icon from './../icon'
 
 const Search = (props) => {
-  console.log("props", props)
+  // console.log("props", props)
   //const [searchQuery, setSearchQueryText] = useState("")
 
   // useEffect(() => {

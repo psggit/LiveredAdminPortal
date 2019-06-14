@@ -79,7 +79,11 @@ class EditDsoDetails extends React.Component {
     const { dsoName, updatingDsoDetails, dsoDetailsData, loadingDsoDetails } = this.state
     return (
       <React.Fragment>
-        <PageHeader pageName="Delivery Service Operators" text={dsoName} />
+        <PageHeader
+          pageName="Delivery Service Operators"
+          text={dsoName}
+          pathname="/home/dso-management"
+        />
         <div style={{
           display: "flex",
           marginTop: "30px",

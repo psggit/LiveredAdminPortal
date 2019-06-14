@@ -16,10 +16,17 @@ class FromDate extends React.Component {
 
     this.handleChange = this.handleChange.bind(this)
     this.getData = this.getData.bind(this)
+    this.reset = this.reset.bind(this)
   }
 
   getData() {
     return this.state
+  }
+
+  reset() {
+    this.setState({
+      fromDate: { ...this.state.fromDate, value: "" }
+    })
   }
 
   handleChange(e) {
@@ -33,17 +40,17 @@ class FromDate extends React.Component {
   }
 
   render() {
-    return(
-      <div style={{position: 'relative'}} className="input-field">
+    return (
+      <div style={{ position: 'relative' }} className="input-field">
         <span className="calendar-icon">
           <Icon name="calendar" />
         </span>
         <Label>
           From
         </Label>
-        <input 
-          type="date" 
-          max="9999-12-31" 
+        <input
+          type="date"
+          max="9999-12-31"
           name="fromDate"
           onChange={this.handleChange}
           value={this.props.fromDate ? this.props.fromDate : this.state.fromDate.value}

@@ -64,7 +64,11 @@ class CreateExcise extends React.Component {
     const { creatingExciseDetails, mountDialog } = this.state
     return (
       <React.Fragment>
-        <PageHeader pageName="Excise Departments" text="Add new" />
+        <PageHeader
+          pageName="Excise Departments"
+          text="Add new"
+          pathname="/home/excise-management"
+        />
         <div style={{
           display: "flex",
           marginTop: "30px",

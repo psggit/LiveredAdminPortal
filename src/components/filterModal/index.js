@@ -13,16 +13,35 @@ class Filter extends React.Component {
 
   constructor(props) {
     super(props)
-    this.state = {
-      selectedCityIdx: this.props.selectedCityIdx ? this.props.selectedCityIdx : -1
-    }
+    // this.state = {
+    //   selectedCityIdx: this.props.selectedCityIdx ? this.props.selectedCityIdx : -1
+    // }
     this.applyFilter = this.applyFilter.bind(this)
+    this.resetFilter = this.resetFilter.bind(this)
   }
 
-  componentDidUpdate(prevProps) {
-    console.log("prev props", prevProps, this.props)
-    if (this.props.selectedCityIdx !== prevProps.selectedCityIdx) {
-      this.setState({ selectedCityIdx: this.props.selectedCityIdx })
+  // componentDidUpdate(prevProps) {
+  //   console.log("prev props", prevProps, this.props)
+  //   if (this.props.selectedCityIdx !== prevProps.selectedCityIdx) {
+  //     this.setState({ selectedCityIdx: this.props.selectedCityIdx })
+  //   }
+  // }
+
+  resetFilter() {
+
+    if (this.props.filterName !== "exciseOperations") {
+      this.cityState.reset()
+      this.stateComponent.reset()
+      this.dsoListState.reset()
+      this.permitStatusState.reset()
+      this.fromDateState.reset()
+      this.toDateState.reset()
+    }
+
+    if (this.props.filterName === "exciseOperations") {
+      this.cityState.reset()
+      this.dsoListState.reset()
+      this.deliveryStatusState.reset()
     }
   }
 
@@ -77,7 +96,7 @@ class Filter extends React.Component {
           <City
             cityList={this.props.cityList}
             ref={(node) => { this.cityState = node }}
-            selectedCityIdx={this.state.selectedCityIdx}
+            selectedCityIdx={this.props.selectedCityIdx}
           />
           {
             this.props.filterName !== "exciseOperations" &&

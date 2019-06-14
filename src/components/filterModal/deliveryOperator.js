@@ -18,6 +18,7 @@ class DeliveryOperator extends React.Component {
     this.handleChange = this.handleChange.bind(this)
     this.fetchDSOList = this.fetchDSOList.bind(this)
     this.getData = this.getData.bind(this)
+    this.reset = this.reset.bind(this)
   }
 
   componentDidMount() {
@@ -46,14 +47,18 @@ class DeliveryOperator extends React.Component {
     return this.state
   }
 
+  reset() {
+    this.setState({ dso: { ...this.state.dso, idx: -1 } })
+  }
+
   handleChange(e) {
     const value = e.target.value
-    console.log("dso", this.state.dsoList, value)
     this.setState({
       dso: {
         filterby: e.target.name,
-        value: this.state.dsoList.find(item => item.value === parseInt(value)).dso_id,
-        idx: this.state.dsoList.find(item => item.value === parseInt(value)).value
+        value: this.state.dsoList.find(item => item.value === parseInt(value)).text,
+        dso_id: this.state.dsoList.find(item => item.value === parseInt(value)).dso_id,
+        idx: parseInt(this.state.dsoList.find(item => item.value === parseInt(value)).value)
       }
     })
   }

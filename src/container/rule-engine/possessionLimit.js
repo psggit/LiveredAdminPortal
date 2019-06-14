@@ -83,7 +83,8 @@ class PossessionLimit extends React.Component {
       })
   }
 
-  savePossessionLimit() {
+  savePossessionLimit(e) {
+    e.preventDefault()
     if (this.props.action === "create") {
       this.createPossessionLimit()
     } else {
@@ -95,114 +96,115 @@ class PossessionLimit extends React.Component {
     const { showSave, updatingPossessionLimit, creatingPossessionLimit, createdPossessionLimit } = this.state
     const { data, action } = this.props
     return (
-      <div className="rule--body possession-limit">
-        <div className="title">
-          <Label
-            icon="info"
-            tooltipText="Quantity of liquor that an individual can possess at any given time"
-          >
-            Possession Limit (Litres)
-          </Label>
-          {
-            ((action === "edit" && showSave) || (action === "create" && (data.possession_limit.length === 0 && !createdPossessionLimit))) &&
-            <div className="button-group">
-              <Button
-                disabled={updatingPossessionLimit || creatingPossessionLimit}
-                onClick={this.savePossessionLimit}
-              >
-                Save
-              </Button>
-              <NavLink
-                to={location.pathname}
-                className="nav-link cancel"
-                onClick={this.toggleSave}
-              >
-                Cancel
-                </NavLink>
-            </div>
-          }
-          {
-            this.props.action === "edit" && !showSave &&
-            <NavLink
-              onClick={this.toggleSave}
-              to={location.pathname}
-              className="nav-link save"
+      <form onSubmit={this.savePossessionLimit}>
+        <div className="rule--body possession-limit">
+          <div className="title">
+            <Label
+              icon="info"
+              tooltipText="Quantity of liquor that an individual can possess at any given time"
             >
-              Edit
+              Possession Limit (Litres)
+          </Label>
+            {
+              ((action === "edit" && showSave) || (action === "create" && (data.possession_limit.length === 0 && !createdPossessionLimit))) &&
+              <div className="button-group">
+                <Button
+                  disabled={updatingPossessionLimit || creatingPossessionLimit}
+                //onClick={this.savePossessionLimit}
+                >
+                  Save
+              </Button>
+                <NavLink
+                  to={location.pathname}
+                  className="nav-link cancel"
+                  onClick={this.toggleSave}
+                >
+                  Cancel
+                </NavLink>
+              </div>
+            }
+            {
+              this.props.action === "edit" && !showSave &&
+              <NavLink
+                onClick={this.toggleSave}
+                to={location.pathname}
+                className="nav-link save"
+              >
+                Edit
             </NavLink>
-          }
-        </div>
+            }
+          </div>
 
-        <div className="brand-type">
-          <span>IMFL</span>
-          <TextInput
-            ref={input => (this.IMFL = input)}
-            name="IMFL"
-            pattern="[0-9]*"
-            isRequired={true}
-            defaultValue={
-              data.possession_limit && data.possession_limit.length > 0
-                ? data.possession_limit.find((item) => item.brand_type === "IMFL").volume_limit / 1000
-                : ""
-            }
-            disabled={this.props.action === "view" || !this.state.showSave}
-            errorMessage="IMFL is invalid"
-            emptyMessage="IMFL is required"
-          />
+          <div className="brand-type">
+            <span>IMFL</span>
+            <TextInput
+              ref={input => (this.IMFL = input)}
+              name="IMFL"
+              pattern="[0-9]*"
+              isRequired={true}
+              defaultValue={
+                data.possession_limit && data.possession_limit.length > 0
+                  ? data.possession_limit.find((item) => item.brand_type === "IMFL").volume_limit / 1000
+                  : ""
+              }
+              disabled={this.props.action === "view" || !this.state.showSave}
+              errorMessage="IMFL is invalid"
+              emptyMessage="IMFL is required"
+            />
+          </div>
+          <div className="brand-type">
+            <span>FMFL</span>
+            <TextInput
+              ref={input => (this.FMFL = input)}
+              name="FMFL"
+              pattern="[0-9]*"
+              isRequired={true}
+              defaultValue={
+                data.possession_limit && data.possession_limit.length > 0
+                  ? data.possession_limit.find((item) => item.brand_type === "FMFL").volume_limit / 1000
+                  : ""
+              }
+              disabled={this.props.action === "view" || !this.state.showSave}
+              errorMessage="FMFL is invalid"
+              emptyMessage="FMFL is required"
+            />
+          </div>
+          <div className="brand-type">
+            <span>Beer</span>
+            <TextInput
+              ref={input => (this.beer = input)}
+              name="beer"
+              pattern="[0-9]*"
+              isRequired={true}
+              defaultValue={
+                data.possession_limit && data.possession_limit.length > 0
+                  ? data.possession_limit.find((item) => item.brand_type === "Beer").volume_limit / 1000
+                  : ""
+              }
+              disabled={this.props.action === "view" || !this.state.showSave}
+              errorMessage="Beer is invalid"
+              emptyMessage="Beer is required"
+            />
+          </div>
+          <div className="brand-type">
+            <span>Wine</span>
+            <TextInput
+              ref={input => (this.wine = input)}
+              name="wine"
+              pattern="[0-9]*"
+              isRequired={true}
+              defaultValue={
+                data.possession_limit && data.possession_limit.length > 0
+                  ? data.possession_limit.find((item) => item.brand_type === "Wine").volume_limit / 1000
+                  : ""
+              }
+              disabled={this.props.action === "view" || !this.state.showSave}
+              errorMessage="Wine is invalid"
+              emptyMessage="Wine is required"
+            />
+          </div>
         </div>
-        <div className="brand-type">
-          <span>FMFL</span>
-          <TextInput
-            ref={input => (this.FMFL = input)}
-            name="FMFL"
-            pattern="[0-9]*"
-            isRequired={true}
-            defaultValue={
-              data.possession_limit && data.possession_limit.length > 0
-                ? data.possession_limit.find((item) => item.brand_type === "FMFL").volume_limit / 1000
-                : ""
-            }
-            disabled={this.props.action === "view" || !this.state.showSave}
-            errorMessage="FMFL is invalid"
-            emptyMessage="FMFL is required"
-          />
-        </div>
-        <div className="brand-type">
-          <span>Beer</span>
-          <TextInput
-            ref={input => (this.beer = input)}
-            name="beer"
-            pattern="[0-9]*"
-            isRequired={true}
-            defaultValue={
-              data.possession_limit && data.possession_limit.length > 0
-                ? data.possession_limit.find((item) => item.brand_type === "Beer").volume_limit / 1000
-                : ""
-            }
-            disabled={this.props.action === "view" || !this.state.showSave}
-            errorMessage="Beer is invalid"
-            emptyMessage="Beer is required"
-          />
-        </div>
-        <div className="brand-type">
-          <span>Wine</span>
-          <TextInput
-            ref={input => (this.wine = input)}
-            name="wine"
-            pattern="[0-9]*"
-            isRequired={true}
-            defaultValue={
-              data.possession_limit && data.possession_limit.length > 0
-                ? data.possession_limit.find((item) => item.brand_type === "Wine").volume_limit / 1000
-                : ""
-            }
-            disabled={this.props.action === "view" || !this.state.showSave}
-            errorMessage="Wine is invalid"
-            emptyMessage="Wine is required"
-          />
-        </div>
-      </div>
-
+      </form>
     )
   }
 }

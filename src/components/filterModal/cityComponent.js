@@ -12,7 +12,7 @@ class City extends React.Component {
         filterby: "",
         value: "",
         cityName: "",
-        idx: props && props.selectedCityIdx ? props.selectedCityIdx : ""
+        idx: props && props.selectedCityIdx ? props.selectedCityIdx : -1
       },
       cityList: []
     }
@@ -21,17 +21,15 @@ class City extends React.Component {
     this.getData = this.getData.bind(this)
     this.fetchStateAndCitiesList = this.fetchStateAndCitiesList.bind(this)
     this.formatResponse = this.formatResponse.bind(this)
+    this.reset = this.reset.bind(this)
   }
 
   componentDidMount() {
     this.fetchStateAndCitiesList()
   }
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.selectedCityIdx !== this.props.selectedCityIdx) {
-      this.fetchStateAndCitiesList()
-    }
-    console.log("prev props", prevProps, this.props)
+  reset() {
+    this.setState({ city: { ...this.state.city, idx: -1 } })
   }
 
   fetchStateAndCitiesList() {
@@ -67,7 +65,7 @@ class City extends React.Component {
       city: {
         filterby: e.target.name,
         value: this.state.cityList.find(item => item.value === parseInt(value)).text,
-        idx: e.target.value,
+        idx: (e.target.value),
         cityName: this.state.cityList.find(item => item.value === parseInt(value)).text
       }
     })
@@ -83,7 +81,7 @@ class City extends React.Component {
           options={this.state.cityList ? this.state.cityList : []}
           name="City"
           placeholder="City"
-          onChange={e => this.handleChange(e)}
+          onChange={this.handleChange}
           value={this.state.city.idx ? parseInt(this.state.city.idx) : ""}
         />
       </div>

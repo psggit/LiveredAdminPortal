@@ -139,7 +139,10 @@ class ManageReports extends React.Component {
   render() {
     return (
       <div id="reports" key={this.state.reportFormKey}>
-        <PageHeader pageName="Reports" />
+        <PageHeader
+          pageName="Reports"
+          pathname="/home/reports"
+        />
         <div className="form-wrapper">
           <ReportForm
             ref={(node) => this.reportForm = (node)}

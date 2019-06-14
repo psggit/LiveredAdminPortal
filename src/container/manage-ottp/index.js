@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import * as Api from "./../../api"
 import Pagination from "Components/pagination"
 import PageHeader from "Components/pageheader"
@@ -202,6 +202,7 @@ const ManageOTTP = (props) => {
   */
   const resetFilter = () => {
     clearSearchResults()
+    filterRef.current.resetFilter()
   }
 
   /**
@@ -232,7 +233,10 @@ const ManageOTTP = (props) => {
     const validFilter = uniqueFilter.filter((item) => {
       if (item.value !== "All") {
         if (item.filterby === "City") {
-          item.value = item.idx
+          item.value = item.idx.toString()
+        }
+        if (item.filterby === "Delivery Operator") {
+          item.value = item.dso_id
         }
         return item
       }
@@ -264,9 +268,12 @@ const ManageOTTP = (props) => {
     props.history.push(`/home/ottp-details/${data.ottp_info.ottp_id}`)
   }
 
+  /** Refs */
+  const filterRef = useRef()
+
   return (
     <React.Fragment >
-      <PageHeader pageName="Ottp Management" />
+      <PageHeader pageName="OTTP Management" pathname="/home/ottp-management" />
       <div style={{
         display: "flex",
         margin: "30px 0 20px 0",
@@ -295,6 +302,7 @@ const ManageOTTP = (props) => {
             <span style={{ position: 'relative', top: '-2px', marginLeft: '5px' }}>Filter</span>
           </Button>
           <Filter
+            ref={filterRef}
             showFilter={mountFilter}
             applyFilter={applyFilter}
             fromDate={fromDate}

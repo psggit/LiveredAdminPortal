@@ -82,7 +82,11 @@ class EditLocation extends React.Component {
     const { updatingDsoLocationDetails } = this.state
     return (
       <React.Fragment>
-        <PageHeader pageName="Delivery Service Operators" text={getQueryObjByName("name")} />
+        <PageHeader
+          pageName="Delivery Service Operators"
+          text={getQueryObjByName("name")}
+          pathname="/home/dso-management"
+        />
         <div style={{
           display: "flex",
           marginTop: "30px",

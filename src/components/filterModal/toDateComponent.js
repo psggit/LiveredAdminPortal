@@ -16,10 +16,17 @@ class ToDate extends React.Component {
 
     this.handleChange = this.handleChange.bind(this)
     this.getData = this.getData.bind(this)
+    this.reset = this.reset.bind(this)
   }
 
   getData() {
     return this.state
+  }
+
+  reset() {
+    this.setState({
+      toDate: { ...this.state.toDate, value: "" }
+    })
   }
 
   handleChange(e) {

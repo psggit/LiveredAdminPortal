@@ -15,16 +15,21 @@ class PermitStatus extends React.Component {
       permitStatus: {
         filterby: "",
         value: "",
-        idx: props && props.selectedPermitIdx ? props.selectedPermitIdx : ""
+        idx: props && props.selectedPermitIdx ? props.selectedPermitIdx : -1
       }
     }
 
     this.handleChange = this.handleChange.bind(this)
     this.getData = this.getData.bind(this)
+    this.reset = this.reset.bind(this)
   }
 
   getData() {
     return this.state
+  }
+
+  reset() {
+    this.setState({ permitStatus: { ...this.state.permitStatus, idx: -1 } })
   }
 
   handleChange(e) {
@@ -32,7 +37,7 @@ class PermitStatus extends React.Component {
     this.setState({
       permitStatus: {
         filterby: e.target.name,
-        idx: e.target.value,
+        idx: (e.target.value),
         value: permitStatus.find(item => item.value === parseInt(value)).text
       }
     })
