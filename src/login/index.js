@@ -28,27 +28,30 @@ const Login = () => {
 
   const handleLogin = (e) => {
     e.preventDefault()
-    console.log("email", email, password)
-    if (password.length && email.length) {
-      setLoggingInStatus(true)
-      POST({
-        api: "/retailer/auth/login",
-        apiBase: "api1",
-        handleError: false,
-        data: { email, password }
-      })
-        .then((json) => {
-          if (json.data) {
-            Notify(JSON.parse(json.data).message, "warning")
-          } else {
-            createSession(json)
-            window.location.href = "/home/overview"
-          }
-        })
-        .catch((error) => {
-          setShowLoginErr(true)
-        })
-    }
+    // console.log("email", email, password)
+    //if (password.length && email.length) {
+    document.cookie = "livered=123;"
+    createSession({ hasura_id: 123 })
+    setLoggingInStatus(true)
+    window.location.href = "/home/excise-management"
+    // POST({
+    //   api: "/retailer/auth/login",
+    //   apiBase: "api1",
+    //   handleError: false,
+    //   data: { email, password }
+    // })
+    //   .then((json) => {
+    //     if (json.data) {
+    //       Notify(JSON.parse(json.data).message, "warning")
+    //     } else {
+    //       createSession(json)
+    //       window.location.href = "/home/overview"
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     setShowLoginErr(true)
+    //   })
+    //}
   }
 
   const handlePasswordChange = (evt) => {
