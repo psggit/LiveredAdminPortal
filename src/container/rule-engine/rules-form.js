@@ -141,7 +141,7 @@ class RuleManagement extends React.Component {
 
     return (
       <div id="rule-engine">
-        <PageHeader pageName="Rules" />
+        <PageHeader pageName="Rules" pathname="/home/rules" />
         <div className="wrapper">
           <Label>Excise Department</Label>
           <div style={{ display: 'flex' }}>

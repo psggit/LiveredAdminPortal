@@ -221,7 +221,7 @@ const ManageExciseUser = (props) => {
   return (
     <React.Fragment>
       <div id="User" key={key}>
-        <PageHeader pageName="Users & Roles" />
+        <PageHeader pageName="Users & Roles" pathname="/home/excise-users" />
 
         <div className="navbar">
           <UserNavbar addNewUser={addNewUser} />

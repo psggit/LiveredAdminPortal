@@ -98,7 +98,7 @@ class AddNewUser extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <PageHeader pageName="Users & Roles" />
+        <PageHeader pageName="Users & Roles" pathname="/home/excise-users" />
         <div className="wrapper">
           <div className="content">
             <p style={{ fontSize: '24px', color: '#2d3f49', marginBottom: '30px' }}>

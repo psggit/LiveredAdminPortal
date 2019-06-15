@@ -4,13 +4,21 @@ import Icon from './../icon'
 const textStyle = {
   fontSize: '23px',
   color: '#00b4a0',
+  cursor: 'pointer'
 }
 
 const headerStyle = {
   color: '#2d3f49',
-  fontSize: '23px'
+  fontSize: '23px',
+  cursor: 'pointer'
 }
-const PageHeader = ({ pageName, text }) => (
+
+const handleClick = (pathname) => {
+  console.log("pathname", pathname)
+  location.href = pathname
+}
+
+const PageHeader = ({ pageName, text, pathname }) => (
   <div style={{
     display: 'flex',
     alignItems: 'center',
@@ -19,7 +27,7 @@ const PageHeader = ({ pageName, text }) => (
     padding: '18px 36px',
   }}
   >
-    <span style={text ? textStyle : headerStyle}>{pageName}</span>
+    <span style={text ? textStyle : headerStyle} onClick={() => handleClick(pathname)}>{pageName}</span>
     {
       text &&
       <div style={{ display: 'flex', alignItems: 'center' }}>

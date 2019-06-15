@@ -88,7 +88,11 @@ const OttpDetails = (props) => {
 
   return (
     <React.Fragment>
-      <PageHeader pageName="Ottp Management" text={OttpId} />
+      <PageHeader
+        pageName="Ottp Management"
+        text={OttpId}
+        pathname="/home/ottp-management"
+      />
       <div style={{
         display: "flex",
         marginTop: "30px",
