@@ -25,7 +25,6 @@ const Search = (props) => {
   // }
 
   const handleSearch = (e) => {
-    console.log("keycode", e.which, e.keycode)
     if (e.keyCode === 13) {
       props.handleSearch()
     }
@@ -41,7 +40,7 @@ const Search = (props) => {
       </span>
       <input
         placeholder={props.placeholder}
-        value={props.searchText}
+        value={props.searchText ? props.searchText : ""}
         onChange={(e) => props.setSearchText(e.target.value)}
         onKeyDown={(e) => handleSearch(e)}
       />

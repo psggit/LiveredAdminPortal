@@ -288,7 +288,7 @@ const ManageDsoUser = (props) => {
           actions={[
             <Button
               disabled={deactivatingUser || deletingUser}
-              onClick={() => unmountConfirmationModal(showDeactivateUserConfirmationModal ? "deleteUser" : "editUser")}
+              onClick={() => unmountConfirmationModal(showDeleteUserConfirmationModal ? "deleteUser" : "editUser")}
               secondary
             >
               No

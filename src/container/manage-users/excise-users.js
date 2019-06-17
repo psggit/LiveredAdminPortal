@@ -150,7 +150,7 @@ const ManageExciseUser = (props) => {
     if (filter.length > 0) {
       props.history.push(`/home/excise-users`)
       setFilter([])
-      setName("")
+      setExciseName("")
     }
   }
 

@@ -143,7 +143,7 @@ class SpecialDayRestrictionForm extends React.Component {
               />
             </div>
             <div className="input-field" style={{ marginLeft: '110px' }}>
-              <span>
+              <span onClick={this.handleCheckboxChange}>
                 {
                   this.state.isRepeat
                     ? <Icon name="filledRectangle" />

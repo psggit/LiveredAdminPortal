@@ -231,7 +231,7 @@ const ManageOTTP = (props) => {
     }, []);
 
     const validFilter = uniqueFilter.filter((item) => {
-      if (item.value !== "All") {
+      if (item.value !== "All" && item.value !== "") {
         if (item.filterby === "City") {
           item.value = item.idx.toString()
         }

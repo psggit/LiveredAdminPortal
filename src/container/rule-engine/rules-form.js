@@ -237,7 +237,7 @@ class RuleManagement extends React.Component {
           showErrorModal &&
           (
             <Dialog
-              title="Please fill all the sections"
+              title="Please fill and save all the sections"
               onClick={this.toggleModalState}
               actions={[
                 <Button onClick={() => this.toggleModalState()} primary>

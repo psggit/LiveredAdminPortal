@@ -185,6 +185,7 @@ const ManageDSO = (props) => {
             <DataTable
               headings={dsoTableHeaders}
               loadingData={loadingDso}
+              message="No dso's found"
             >
               {
                 dsoData.length > 0 &&
