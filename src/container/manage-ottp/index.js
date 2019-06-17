@@ -291,6 +291,7 @@ const ManageOTTP = (props) => {
         />
         <div style={{ marginLeft: '46px', position: 'relative' }}>
           {
+            isFilterApplied && !isSearchApplied &&
             <span style={{ marginRight: '10px' }}>
               <Button secondary onClick={resetFilter}>
                 <span>Reset</span>

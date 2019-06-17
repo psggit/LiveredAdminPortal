@@ -291,6 +291,7 @@ const ManageOperations = (props) => {
             <div style={{ color: "#2d3f49", fontSize: '24px' }}>Operations</div>
             <div style={{ marginLeft: '46px', position: 'relative' }}>
               {
+                isFilterApplied &&
                 <span style={{ marginRight: '10px' }}>
                   <Button secondary onClick={resetFilter}>
                     <span>Reset</span>
