@@ -107,6 +107,16 @@ const ManageOperations = (props) => {
     fetchAllOperations(operationsReqParams)
   }, [activePage, limit, filter, key])
 
+  const appliedFilterValues = {
+    selectedCityIdx,
+    selectedDeliveryStatusIdx,
+    selectedDsoIdx,
+  }
+
+  useEffect(() => {
+    filterRef.current.setFilterDefaultValues(appliedFilterValues)
+  }, [])
+
   const fetchAllOperations = (payload) => {
     setLoadingOperations(true)
     setOperationsData([])
@@ -307,9 +317,9 @@ const ManageOperations = (props) => {
                 filterName="exciseOperations"
                 showFilter={mountFilter}
                 applyFilter={applyFilter}
-                selectedCityIdx={selectedCityIdx}
-                selectedDsoIdx={selectedDsoIdx}
-                selectedDeliveryStatusIdx={selectedDeliveryStatusIdx}
+              // selectedCityIdx={selectedCityIdx}
+              // selectedDsoIdx={selectedDsoIdx}
+              // selectedDeliveryStatusIdx={selectedDeliveryStatusIdx}
               //selectedStateIdx={selectedStateIdx}
               >
               </Filter>

@@ -22,6 +22,7 @@ class DeliveryStatus extends React.Component {
     this.handleChange = this.handleChange.bind(this)
     this.getData = this.getData.bind(this)
     this.reset = this.reset.bind(this)
+    this.setDefaultValue = this.setDefaultValue.bind(this)
   }
 
   getData() {
@@ -42,6 +43,13 @@ class DeliveryStatus extends React.Component {
           ? "true"
           : "false"
       }
+    })
+  }
+
+  setDefaultValue(value) {
+    console.log("value", value)
+    this.setState({
+      deliveryStatus: { ...this.state.deliveryStatus, idx: value }
     })
   }
 

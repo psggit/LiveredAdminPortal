@@ -22,6 +22,7 @@ class City extends React.Component {
     this.fetchStateAndCitiesList = this.fetchStateAndCitiesList.bind(this)
     this.formatResponse = this.formatResponse.bind(this)
     this.reset = this.reset.bind(this)
+    this.setDefaultValue = this.setDefaultValue.bind(this)
   }
 
   componentDidMount() {
@@ -52,6 +53,12 @@ class City extends React.Component {
     })
     cityList = [...cityList, { text: "All", value: cityList.length + 1 }]
     this.setState({ cityList })
+  }
+
+  setDefaultValue(value) {
+    this.setState({
+      city: { ...this.state.city, idx: value }
+    })
   }
 
   getData() {

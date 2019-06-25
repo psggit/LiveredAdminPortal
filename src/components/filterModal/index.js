@@ -18,6 +18,7 @@ class Filter extends React.Component {
     // }
     this.applyFilter = this.applyFilter.bind(this)
     this.resetFilter = this.resetFilter.bind(this)
+    this.setFilterDefaultValues = this.setFilterDefaultValues.bind(this)
   }
 
   // componentDidUpdate(prevProps) {
@@ -26,6 +27,31 @@ class Filter extends React.Component {
   //     this.setState({ selectedCityIdx: this.props.selectedCityIdx })
   //   }
   // }
+
+  setFilterDefaultValues(defaultValueObj) {
+    console.log("set filter default values", defaultValueObj)
+    if (defaultValueObj.selectedCityIdx && defaultValueObj.selectedCityIdx !== -1) {
+      this.cityState.setDefaultValue(defaultValueObj.selectedCityIdx)
+    }
+    if (defaultValueObj.selectedStateIdx && defaultValueObj.selectedStateIdx !== -1) {
+      this.stateComponent.setDefaultValue(defaultValueObj.selectedStateIdx)
+    }
+    if (defaultValueObj.selectedDsoIdx && defaultValueObj.selectedDsoIdx !== -1) {
+      this.dsoListState.setDefaultValue(defaultValueObj.selectedDsoIdx)
+    }
+    if (defaultValueObj.selectedPermitIdx && defaultValueObj.selectedPermitIdx !== -1) {
+      this.permitStatusState.setDefaultValue(defaultValueObj.selectedPermitIdx)
+    }
+    if (defaultValueObj.selectedDeliveryStatusIdx && defaultValueObj.selectedDeliveryStatusIdx !== -1) {
+      this.deliveryStatusState.setDefaultValue(defaultValueObj.selectedDeliveryStatusIdx)
+    }
+    if (defaultValueObj.fromDate && defaultValueObj.fromDate !== -1) {
+      this.fromDateState.setDefaultValue(defaultValueObj.fromDate)
+    }
+    if (defaultValueObj.toDate && defaultValueObj.toDate !== -1) {
+      this.toDateState.setDefaultValue(defaultValueObj.toDate)
+    }
+  }
 
   resetFilter() {
 

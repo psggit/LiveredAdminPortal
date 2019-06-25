@@ -11,7 +11,7 @@ class State extends React.Component {
       stateObj: {
         filterby: "",
         value: "",
-        idx: props && props.selectedStateIdx ? props.selectedStateIdx : "",
+        idx: props && props.selectedStateIdx ? props.selectedStateIdx : -1,
         stateName: ""
       },
       stateList: []
@@ -22,6 +22,7 @@ class State extends React.Component {
     this.fetchStateAndCitiesList = this.fetchStateAndCitiesList.bind(this)
     this.formatResponse = this.formatResponse.bind(this)
     this.reset = this.reset.bind(this)
+    this.setDefaultValue = this.setDefaultValue.bind(this)
   }
 
   componentDidMount() {
@@ -30,6 +31,13 @@ class State extends React.Component {
 
   reset() {
     this.setState({ stateObj: { ...this.state.stateObj, idx: -1 } })
+  }
+
+  setDefaultValue(value) {
+    console.log("value", value)
+    this.setState({
+      stateObj: { ...this.state.stateObj, idx: value }
+    })
   }
 
   fetchStateAndCitiesList() {

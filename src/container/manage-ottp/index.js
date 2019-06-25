@@ -270,6 +270,18 @@ const ManageOTTP = (props) => {
 
   /** Refs */
   const filterRef = useRef()
+  const appliedFilterValues = {
+    selectedCityIdx,
+    selectedDsoIdx,
+    selectedStateIdx,
+    selectedPermitIdx,
+    fromDate,
+    toDate
+  }
+
+  useEffect(() => {
+    filterRef.current.setFilterDefaultValues(appliedFilterValues)
+  }, [])
 
   return (
     <React.Fragment >
@@ -306,12 +318,12 @@ const ManageOTTP = (props) => {
             ref={filterRef}
             showFilter={mountFilter}
             applyFilter={applyFilter}
-            fromDate={fromDate}
-            toDate={toDate}
-            selectedCityIdx={selectedCityIdx}
-            selectedDsoIdx={selectedDsoIdx}
-            selectedPermitIdx={selectedPermitIdx}
-            selectedStateIdx={selectedStateIdx}
+          // fromDate={fromDate}
+          // toDate={toDate}
+          //selectedCityIdx={selectedCityIdx}
+          // selectedDsoIdx={selectedDsoIdx}
+          // selectedPermitIdx={selectedPermitIdx}
+          // selectedStateIdx={selectedStateIdx}
           >
           </Filter>
         </div>

@@ -11,7 +11,7 @@ class DeliveryOperator extends React.Component {
       dso: {
         filterby: "",
         value: "",
-        idx: props && props.selectedDsoIdx ? props.selectedDsoIdx : ""
+        idx: props && props.selectedDsoIdx ? props.selectedDsoIdx : -1
       }
     }
 
@@ -19,6 +19,7 @@ class DeliveryOperator extends React.Component {
     this.fetchDSOList = this.fetchDSOList.bind(this)
     this.getData = this.getData.bind(this)
     this.reset = this.reset.bind(this)
+    this.setDefaultValue = this.setDefaultValue.bind(this)
   }
 
   componentDidMount() {
@@ -49,6 +50,13 @@ class DeliveryOperator extends React.Component {
 
   reset() {
     this.setState({ dso: { ...this.state.dso, idx: -1 } })
+  }
+
+  setDefaultValue(value) {
+    console.log("value", value)
+    this.setState({
+      dso: { ...this.state.dso, idx: value }
+    })
   }
 
   handleChange(e) {

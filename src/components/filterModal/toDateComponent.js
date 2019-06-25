@@ -17,6 +17,7 @@ class ToDate extends React.Component {
     this.handleChange = this.handleChange.bind(this)
     this.getData = this.getData.bind(this)
     this.reset = this.reset.bind(this)
+    this.setDefaultValue = this.setDefaultValue.bind(this)
   }
 
   getData() {
@@ -26,6 +27,13 @@ class ToDate extends React.Component {
   reset() {
     this.setState({
       toDate: { ...this.state.toDate, value: "" }
+    })
+  }
+
+  setDefaultValue(value) {
+    console.log("value", value)
+    this.setState({
+      toDate: { ...this.state.toDate, value }
     })
   }
 

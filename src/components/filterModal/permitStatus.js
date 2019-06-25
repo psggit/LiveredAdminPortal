@@ -22,6 +22,14 @@ class PermitStatus extends React.Component {
     this.handleChange = this.handleChange.bind(this)
     this.getData = this.getData.bind(this)
     this.reset = this.reset.bind(this)
+    this.setDefaultValue = this.setDefaultValue.bind(this)
+  }
+
+  setDefaultValue(value) {
+    console.log("value", value)
+    this.setState({
+      permitStatus: { ...this.state.permitStatus, idx: value }
+    })
   }
 
   getData() {
