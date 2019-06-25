@@ -318,14 +318,7 @@ const ManageOTTP = (props) => {
             ref={filterRef}
             showFilter={mountFilter}
             applyFilter={applyFilter}
-          // fromDate={fromDate}
-          // toDate={toDate}
-          //selectedCityIdx={selectedCityIdx}
-          // selectedDsoIdx={selectedDsoIdx}
-          // selectedPermitIdx={selectedPermitIdx}
-          // selectedStateIdx={selectedStateIdx}
-          >
-          </Filter>
+          />
         </div>
       </div>
       <div style={{

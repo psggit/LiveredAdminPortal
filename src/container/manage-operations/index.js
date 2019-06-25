@@ -317,12 +317,7 @@ const ManageOperations = (props) => {
                 filterName="exciseOperations"
                 showFilter={mountFilter}
                 applyFilter={applyFilter}
-              // selectedCityIdx={selectedCityIdx}
-              // selectedDsoIdx={selectedDsoIdx}
-              // selectedDeliveryStatusIdx={selectedDeliveryStatusIdx}
-              //selectedStateIdx={selectedStateIdx}
-              >
-              </Filter>
+              />
             </div>
           </div>
           {
