@@ -56,24 +56,26 @@ const OttpDetails = (props) => {
   }
 
   const cancelOttp = () => {
-    setCancellingOttp(true)
-    Api.cancelOttp({
-      ottp_info: {
-        ottp_id: OttpId,
-        status: "cancelled"
-      },
-      changed_by: "admin",
-      reason: cancelOttpOptions.find((item) => item.value === parseInt(cancelOttpReasonIdx)).text
-    })
-      .then((response) => {
-        setShowCancelOtpModal(false)
-        setCancellingOttp(false)
-        window.location = location.href
+    if (cancelOttpReasonIdx !== -1) {
+      setCancellingOttp(true)
+      Api.cancelOttp({
+        ottp_info: {
+          ottp_id: OttpId,
+          status: "cancelled"
+        },
+        changed_by: "admin",
+        reason: cancelOttpOptions.find((item) => item.value === parseInt(cancelOttpReasonIdx)).text
       })
-      .catch((err) => {
-        setCancellingOttp(false)
-        console.log("Error in cancelling ottp", err)
-      })
+        .then((response) => {
+          setShowCancelOtpModal(false)
+          setCancellingOttp(false)
+          window.location = location.href
+        })
+        .catch((err) => {
+          setCancellingOttp(false)
+          console.log("Error in cancelling ottp", err)
+        })
+    }
   }
 
   const mountModal = () => {

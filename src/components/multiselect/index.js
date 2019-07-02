@@ -22,6 +22,7 @@ class Select extends React.Component {
 
   componentWillReceiveProps(newProps) {
     if (this.props.selectedValues !== newProps.selectedValues) {
+      console.log("new props", newProps.selectedValues2)
       this.setState({
         values: newProps.selectedValues
       })
@@ -41,12 +42,13 @@ class Select extends React.Component {
   }
 
   onDeleteOption(text) {
-    const id = this.props.options.find((item) => item.text === text).id
+    const id = this.props.options.find((item) => item.text === text).value
     this.removeOption(text)
     this.props.removeOption(id, text, this.addOption)
   }
 
   addOption(value) {
+    console.log("values", this.state.values)
     this.setState(prevState => {
       const [...values] = prevState.values;
       const index = values.indexOf(value);
@@ -88,8 +90,8 @@ class Select extends React.Component {
     if (values.length === 0) {
       return <div className="placeholder">{placeholder}</div>;
     }
-
-    if (multiple) {
+    console.log("values", values, values[0].trim())
+    if (multiple && values.length >= 1) {
       return values.map(value => {
         return (
           <span

@@ -9,13 +9,38 @@ class EditLocation extends React.Component {
   constructor() {
     super()
     this.state = {
-      updatingDsoLocationDetails: false
+      updatingDsoLocationDetails: false,
+      creatingDsoLocationDetails: false
     }
 
     this.handleCancel = this.handleCancel.bind(this)
     this.removeCityToDso = this.removeCityToDso.bind(this)
     this.addCityToDso = this.addCityToDso.bind(this)
     this.editDsoLocationDetails = this.editDsoLocationDetails.bind(this)
+    this.createDsoLocationDetails = this.createDsoLocationDetails.bind(this)
+  }
+
+  createDsoLocationDetails() {
+    this.setState({ creatingDsoLocationDetails: true })
+    const data = this.dsoLocationForm.getData()
+    Api.creatingDsoLocationDetails({
+      dso_id: getQueryObjByName("id"),
+      service_status: true,
+      state_id: data.state.selectedStateIdx,
+      reg_office_city_id: data.state.selectedRegionalCityIdx,
+      reg_office_address: data.state.regionalOfficeAddress,
+      reg_office_contact_name: data.name.state.value,
+      reg_office_contact_email: data.email.state.value,
+      reg_office_contact_phone: data.phone.state.value
+    })
+      .then((response) => {
+        this.setState({ creatingDsoLocationDetails: false })
+        this.props.history.push(`/home/dso/view-locations?id=${getQueryObjByName("id")}&name=${getQueryObjByName("name")}`)
+      })
+      .catch((err) => {
+        this.setState({ creatingDsoLocationDetails: false })
+        console.log("Error in creating dso location details", err)
+      })
   }
 
   editDsoLocationDetails() {
@@ -42,7 +67,7 @@ class EditLocation extends React.Component {
   }
 
   handleCancel() {
-    this.props.history.push(`/home/dso-management`)
+    this.props.history.push(`/home/dso/view-locations?id=${getQueryObjByName("id")}`)
   }
 
   addCityToDso(id, value, callback) {
@@ -79,7 +104,7 @@ class EditLocation extends React.Component {
   }
 
   render() {
-    const { updatingDsoLocationDetails } = this.state
+    const { updatingDsoLocationDetails, creatingDsoLocationDetails } = this.state
     return (
       <React.Fragment>
         <PageHeader
@@ -107,7 +132,9 @@ class EditLocation extends React.Component {
                     handleCancel={this.handleCancel}
                     history={this.props.history}
                     updatingDsoLocationDetails={updatingDsoLocationDetails}
-                    handleClick={this.editDsoLocationDetails}
+                    creatingDsoLocationDetails={creatingDsoLocationDetails}
+                    handleClick={this.createDsoLocationDetails}
+                    handleUpdate={this.editDsoLocationDetails}
                     addCityToDso={this.addCityToDso}
                     removeCityToDso={this.removeCityToDso}
                   />

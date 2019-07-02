@@ -196,7 +196,7 @@ const ManageDSO = (props) => {
                       <td>{item.head_office.city}</td>
                       <td>{item.state_servicable ? item.state_servicable.join(",") : ''}</td>
                       <td>{item.license_status ? "Active" : "Inactive"}</td>
-                      <td>{Moment(item.license_expiry).format("DD_MM_YYYY")}</td>
+                      <td>{Moment(item.license_expiry).format("DD-MM-YYYY")}</td>
                       <td>{item.is_active ? "Enabled" : "Disabled"}</td>
                     </tr>
                   )

@@ -27,6 +27,7 @@ class DsoLocationForm extends React.Component {
       regionalOfficeCity: "",
       regionalOfficeAddress: "",
       deliveryStatus: true,
+      editLocation: false,
       name: "",
       email: "",
       phone: "",
@@ -149,19 +150,26 @@ class DsoLocationForm extends React.Component {
     //     this.props.handleClick()
     //   })
     // } else {
-    this.props.handleClick()
+    // console.log("hand props", this.props)
+    if (!this.state.editLocation) {
+      this.props.handleClick()
+    } else {
+      this.props.handleUpdate()
+    }
     //}
   }
 
   handleSubmit(e) {
     e.preventDefault()
     this.handleSave()
+    //this.props.handleClick()
   }
 
   handleRowClick(item) {
     this.setState({
       subTitle: "Edit Location",
       showAddStateToDsoForm: true,
+      editLocation: true,
       selectedStateIdx: parseInt(item.state_id),
       selectedRegionalCityIdx: item.reg_office_city_id,
       deliveryStatus: item.service_status,
@@ -171,7 +179,7 @@ class DsoLocationForm extends React.Component {
       email: item.reg_office_contact_email,
       phone: item.reg_office_contact_phone,
       cityList: this.state.stateMap[item.state_id].cities.map((item) => { return { text: item.city_name, value: item.city_id } }),
-      deliverableCityList: item.city_list.trim().substring(0, item.city_list.length - 2).split(",").map((item) => item.trim())
+      deliverableCityList: item.city_list.trim().length > 0 ? item.city_list.trim().substring(0, item.city_list.length - 2).split(",").map((item) => item.trim()) : ""
     })
   }
 
@@ -188,7 +196,7 @@ class DsoLocationForm extends React.Component {
   }
 
   render() {
-    const { showAddStateToDsoForm, subTitle } = this.state
+    const { showAddStateToDsoForm, subTitle, editLocation } = this.state
     return (
       <React.Fragment>
         <div style={{ marginTop: '50px' }}>
@@ -347,6 +355,7 @@ class DsoLocationForm extends React.Component {
                               ref={input => (this.phone = input)}
                               name="phone"
                               pattern="[0-9]*"
+                              maxLength={10}
                               isRequired={true}
                               placeholder="phone"
                               defaultValue={this.state.phone}
@@ -380,17 +389,17 @@ class DsoLocationForm extends React.Component {
                         removeOption={this.props.removeCityToDso}
                       />
                     </div>
-                    <div style={{ marginTop: '20px' }}>
+                    {/* <div style={{ marginTop: '20px' }}>
                       <Button
                         secondary
                         onClick={() => this.handleSave()}
                         disabled={this.props.updatingDsoLocationDetails || this.props.creatingDsoLocationDetails}
                       >
                         {
-                          location.href.indexOf("edit") !== -1 ? 'Update' : 'Add State'
+                          editLocation ? 'Update' : 'Add State'
                         }
                       </Button>
-                    </div>
+                    </div> */}
                   </React.Fragment>
                 }
               </React.Fragment>

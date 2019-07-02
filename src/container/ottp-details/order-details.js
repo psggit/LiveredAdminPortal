@@ -33,24 +33,27 @@ const orderDetails = ({ ottpId, orderStatus, orders }) => {
     } else {
       status = "ongoing"
     }
-    setChangingOrderStatus(true)
-    Api.changeOrderStatus({
-      ottp_info: {
-        ottp_id: ottpId,
-        status
-      },
-      changed_by: "admin",
-      reason: orderStatusOptions.find((item) => item.value === parseInt(selectedOrderStatusIdx)).text
-    })
-      .then((response) => {
-        setShowModal(false)
-        setChangingOrderStatus(false)
-        window.location = location.href
+
+    if (parseInt(selectedOrderStatusIdx) !== -1) {
+      setChangingOrderStatus(true)
+      Api.changeOrderStatus({
+        ottp_info: {
+          ottp_id: ottpId,
+          status
+        },
+        changed_by: "admin",
+        reason: orderStatusOptions.find((item) => item.value === parseInt(selectedOrderStatusIdx)).text
       })
-      .catch((err) => {
-        setChangingOrderStatus(false)
-        console.log("Error in changing order status", err)
-      })
+        .then((response) => {
+          setShowModal(false)
+          setChangingOrderStatus(false)
+          window.location = location.href
+        })
+        .catch((err) => {
+          setChangingOrderStatus(false)
+          console.log("Error in changing order status", err)
+        })
+    }
   }
   return (
     <React.Fragment>
@@ -118,9 +121,9 @@ const orderDetails = ({ ottpId, orderStatus, orders }) => {
           subtitle="Choose current order status"
           onClick={unmountModal}
           actions={[
-            <Button disabled={changingOrderStatus} onClick={() => unMountModal()} secondary>
+            <Button disabled={changingOrderStatus} onClick={() => unmountModal()} secondary>
               No
-              </Button>,
+            </Button>,
             <Button disabled={changingOrderStatus} onClick={() => changeOrderStatus()} primary>
               Yes
             </Button>
