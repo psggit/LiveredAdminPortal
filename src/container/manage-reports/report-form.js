@@ -75,7 +75,11 @@ class ReportForm extends React.Component {
           dataType: this.exciseDataType.find((item) => item.value === parseInt(e.target.value)).text
         })
         break;
-
+      case 'deliveryOperator':
+        this.setState({
+          selectedDsoIdx: (e.target.value)
+        })
+        break;
       case 'dsoDataType':
         this.setState({
           selectedDataTypeIdx: parseInt(e.target.value),
@@ -91,7 +95,6 @@ class ReportForm extends React.Component {
         break;
 
       case 'state':
-        console.log("props", this.props)
         this.setState({
           selectedStateIdx: parseInt(e.target.value),
           state: this.props.stateList.find((item) => item.value === parseInt(e.target.value)).text
