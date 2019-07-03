@@ -1,17 +1,16 @@
-FROM node:10.14.1
+FROM node:8.11.2
 
 RUN mkdir -p /app
 WORKDIR /app
 
 COPY package.json .
-RUN npm rebuild
-RUN npm install --build-from-source
+RUN yarn install
 
 COPY ./ /app
 
 # ENV NODE_PATH /app/node_modules/
 # ENV NODE_PATH /usr/lib/node_modules/
 
-RUN npm run build
+RUN yarn run build
 
-ENTRYPOINT ["npm", "run", "start"]
+ENTRYPOINT ["yarn", "run", "start"]
