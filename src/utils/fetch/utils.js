@@ -10,6 +10,7 @@ import { Api } from "./../config"
  */
 
 const getToken = () => ({
+  'x-user-id': "1"
   // "Authorization": `Bearer ${localStorage.getItem('auth-token')}`,
   // "x-hasura-role": `${localStorage.getItem('x-hasura-role')}`,
   // "hasura-id": `${localStorage.getItem('hasura-id')}`
