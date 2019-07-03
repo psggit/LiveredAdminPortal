@@ -124,7 +124,7 @@ class DsoFee extends React.Component {
               pattern="[0-9]*"
               isRequired={true}
               defaultValue={`${data.permit_rules && data.permit_rules.length > 0 ? data.permit_rules[0].cancellation_fee : ""}`}
-              disabled={this.props.action === "view" || !this.state.showSave}
+              disabled={this.props.action === "view" || !this.state.showSave || (action === "create" && createdPermitRules)}
               errorMessage="Cancellation fee is invalid"
               emptyMessage="Cancellation fee is required"
             />
@@ -144,7 +144,7 @@ class DsoFee extends React.Component {
               pattern="^[0-9]*"
               isRequired={true}
               defaultValue={`${data.permit_rules && data.permit_rules.length > 0 ? data.permit_rules[0].permit_cost : ""}`}
-              disabled={this.props.action === "view" || !this.state.showSave}
+              disabled={this.props.action === "view" || !this.state.showSave || (action === "create" && createdPermitRules)}
               errorMessage="Permit fee is invalid"
               emptyMessage="Permit fee is required"
             />

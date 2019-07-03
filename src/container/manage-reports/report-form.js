@@ -32,7 +32,7 @@ class ReportForm extends React.Component {
       { text: "All transport permits", value: 1 },
       { text: "Past transport permits", value: 2 },
       { text: "Cancelled transport permits", value: 3 },
-      { text: "Credit history (only for DSO)", value: 4 },
+      { text: "Credit history", value: 4 },
     ]
 
     this.reportType = [

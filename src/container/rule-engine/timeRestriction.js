@@ -173,7 +173,7 @@ class TimeRestriction extends React.Component {
                   ? data.time_restrictions.find((item) => item.weekday_id === 1).start_time.substring(11, 16)
                   : ""
               }
-              disabled={this.props.action === "view" || !this.state.showSave}
+              disabled={this.props.action === "view" || !this.state.showSave || (action === "create" && createdTimeRestrictions)}
             />
             <p>to</p>
             <input
@@ -186,7 +186,7 @@ class TimeRestriction extends React.Component {
                   ? data.time_restrictions.find((item) => item.weekday_id === 1).end_time.substring(11, 16)
                   : ""
               }
-              disabled={this.props.action === "view" || !this.state.showSave}
+              disabled={this.props.action === "view" || !this.state.showSave || (action === "create" && createdTimeRestrictions)}
             />
           </div>
           <div className="timings">
@@ -201,7 +201,7 @@ class TimeRestriction extends React.Component {
                   ? data.time_restrictions.find((item) => item.weekday_id === 2).start_time.substring(11, 16)
                   : ""
               }
-              disabled={this.props.action === "view" || !this.state.showSave}
+              disabled={this.props.action === "view" || !this.state.showSave || (action === "create" && createdTimeRestrictions)}
             />
             <p>to</p>
             <input
@@ -214,7 +214,7 @@ class TimeRestriction extends React.Component {
                   ? data.time_restrictions.find((item) => item.weekday_id === 2).end_time.substring(11, 16)
                   : ""
               }
-              disabled={this.props.action === "view" || !this.state.showSave}
+              disabled={this.props.action === "view" || !this.state.showSave || (action === "create" && createdTimeRestrictions)}
             />
           </div>
           <div className="timings">
@@ -229,7 +229,7 @@ class TimeRestriction extends React.Component {
                   ? data.time_restrictions.find((item) => item.weekday_id === 3).start_time.substring(11, 16)
                   : ""
               }
-              disabled={this.props.action === "view" || !this.state.showSave}
+              disabled={this.props.action === "view" || !this.state.showSave || (action === "create" && createdTimeRestrictions)}
             />
             <p>to</p>
             <input
@@ -242,7 +242,7 @@ class TimeRestriction extends React.Component {
                   ? data.time_restrictions.find((item) => item.weekday_id === 3).end_time.substring(11, 16)
                   : ""
               }
-              disabled={this.props.action === "view" || !this.state.showSave}
+              disabled={this.props.action === "view" || !this.state.showSave || (action === "create" && createdTimeRestrictions)}
             />
           </div>
           <div className="timings">
@@ -257,7 +257,7 @@ class TimeRestriction extends React.Component {
                   ? data.time_restrictions.find((item) => item.weekday_id === 4).start_time.substring(11, 16)
                   : ""
               }
-              disabled={this.props.action === "view" || !this.state.showSave}
+              disabled={this.props.action === "view" || !this.state.showSave || (action === "create" && createdTimeRestrictions)}
             />
             <p>to</p>
             <input
@@ -270,7 +270,7 @@ class TimeRestriction extends React.Component {
                   ? data.time_restrictions.find((item) => item.weekday_id === 4).end_time.substring(11, 16)
                   : ""
               }
-              disabled={this.props.action === "view" || !this.state.showSave}
+              disabled={this.props.action === "view" || !this.state.showSave || (action === "create" && createdTimeRestrictions)}
             />
           </div>
           <div className="timings">
@@ -285,7 +285,7 @@ class TimeRestriction extends React.Component {
                   ? data.time_restrictions.find((item) => item.weekday_id === 5).start_time.substring(11, 16)
                   : ""
               }
-              disabled={this.props.action === "view" || !this.state.showSave}
+              disabled={this.props.action === "view" || !this.state.showSave || (action === "create" && createdTimeRestrictions)}
             />
             <p>to</p>
             <input
@@ -298,7 +298,7 @@ class TimeRestriction extends React.Component {
                   ? data.time_restrictions.find((item) => item.weekday_id === 5).end_time.substring(11, 16)
                   : ""
               }
-              disabled={this.props.action === "view" || !this.state.showSave}
+              disabled={this.props.action === "view" || !this.state.showSave || (action === "create" && createdTimeRestrictions)}
             />
           </div>
           <div className="timings">
@@ -313,7 +313,7 @@ class TimeRestriction extends React.Component {
                   ? data.time_restrictions.find((item) => item.weekday_id === 6).start_time.substring(11, 16)
                   : ""
               }
-              disabled={this.props.action === "view" || !this.state.showSave}
+              disabled={this.props.action === "view" || !this.state.showSave || (action === "create" && createdTimeRestrictions)}
             />
             <p>to</p>
             <input
@@ -326,7 +326,7 @@ class TimeRestriction extends React.Component {
                   ? data.time_restrictions.find((item) => item.weekday_id === 6).end_time.substring(11, 16)
                   : ""
               }
-              disabled={this.props.action === "view" || !this.state.showSave}
+              disabled={this.props.action === "view" || !this.state.showSave || (action === "create" && createdTimeRestrictions)}
             />
           </div>
           <div className="timings">
@@ -341,7 +341,7 @@ class TimeRestriction extends React.Component {
                   ? data.time_restrictions.find((item) => item.weekday_id === 7).start_time.substring(11, 16)
                   : ""
               }
-              disabled={this.props.action === "view" || !this.state.showSave}
+              disabled={this.props.action === "view" || !this.state.showSave || (action === "create" && createdTimeRestrictions)}
             />
             <p>to</p>
             <input
@@ -354,7 +354,7 @@ class TimeRestriction extends React.Component {
                   ? data.time_restrictions.find((item) => item.weekday_id === 7).end_time.substring(11, 16)
                   : ""
               }
-              disabled={this.props.action === "view" || !this.state.showSave}
+              disabled={this.props.action === "view" || !this.state.showSave || (action === "create" && createdTimeRestrictions)}
             />
           </div>
         </div>

@@ -124,7 +124,7 @@ class LegalPurchaseAge extends React.Component {
             isRequired={true}
             placeholder="legal purchase age"
             defaultValue={data && data.consumer_min_age ? data.consumer_min_age : ""}
-            disabled={this.props.action === "view" || !this.state.showSave}
+            disabled={this.props.action === "view" || !this.state.showSave || (action === "create" && createdLegalAge)}
             errorMessage="Legal purchase age is invalid"
             emptyMessage="Legal purchase age is required"
           />

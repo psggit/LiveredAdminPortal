@@ -2,11 +2,11 @@ import { POST, GET } from 'Utils/fetch'
 //const ipAddress = "192.168.43.10"
 //const ipAddress = "183.82.32.28"
 
-const ottp = "https://64bd7cc0.ngrok.io"
-export const dso = "http://192.168.5.84:3002"
-const credit = " https://7fe5509e.ngrok.io"
-export const consumer = "https://32c29633.ngrok.io"
-const rule = "https://040758f9.ngrok.io"
+const ottp = "https://7b5d80c6.ngrok.io"
+export const dso = "http://192.168.5.63:3002"
+const credit = "https://0df929f5.ngrok.io"
+export const consumer = "https://ca05b468.ngrok.io"
+const rule = "https://b51b955c.ngrok.io"
 
 export function fetchAllOttps(payload) {
   return POST({

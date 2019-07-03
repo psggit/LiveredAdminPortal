@@ -147,7 +147,7 @@ class PossessionLimit extends React.Component {
                   ? data.possession_limit.find((item) => item.brand_type === "IMFL").volume_limit / 1000
                   : ""
               }
-              disabled={this.props.action === "view" || !this.state.showSave}
+              disabled={this.props.action === "view" || !this.state.showSave || (action === "create" && createdPossessionLimit)}
               errorMessage="IMFL is invalid"
               emptyMessage="IMFL is required"
             />
@@ -164,7 +164,7 @@ class PossessionLimit extends React.Component {
                   ? data.possession_limit.find((item) => item.brand_type === "FMFL").volume_limit / 1000
                   : ""
               }
-              disabled={this.props.action === "view" || !this.state.showSave}
+              disabled={this.props.action === "view" || !this.state.showSave || (action === "create" && createdPossessionLimit)}
               errorMessage="FMFL is invalid"
               emptyMessage="FMFL is required"
             />
@@ -181,7 +181,7 @@ class PossessionLimit extends React.Component {
                   ? data.possession_limit.find((item) => item.brand_type === "Beer").volume_limit / 1000
                   : ""
               }
-              disabled={this.props.action === "view" || !this.state.showSave}
+              disabled={this.props.action === "view" || !this.state.showSave || (action === "create" && createdPossessionLimit)}
               errorMessage="Beer is invalid"
               emptyMessage="Beer is required"
             />
@@ -198,7 +198,7 @@ class PossessionLimit extends React.Component {
                   ? data.possession_limit.find((item) => item.brand_type === "Wine").volume_limit / 1000
                   : ""
               }
-              disabled={this.props.action === "view" || !this.state.showSave}
+              disabled={this.props.action === "view" || !this.state.showSave || (action === "create" && createdPossessionLimit)}
               errorMessage="Wine is invalid"
               emptyMessage="Wine is required"
             />
