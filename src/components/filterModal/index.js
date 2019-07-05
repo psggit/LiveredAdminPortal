@@ -29,7 +29,6 @@ class Filter extends React.Component {
   // }
 
   setFilterDefaultValues(defaultValueObj) {
-    console.log("set filter default values", defaultValueObj)
     if (defaultValueObj.selectedCityIdx && defaultValueObj.selectedCityIdx !== -1) {
       this.cityState.setDefaultValue(defaultValueObj.selectedCityIdx)
     }
@@ -75,7 +74,6 @@ class Filter extends React.Component {
     let filterObj = []
     const dso = this.dsoListState.getData().dso
     const city = this.cityState.getData().city
-
     if (this.props.filterName !== "exciseOperations") {
       const stateComponentState = this.stateComponent.getData().stateObj
       const permitStatus = this.permitStatusState.getData().permitStatus
@@ -88,19 +86,15 @@ class Filter extends React.Component {
       if (toDate.filterby) {
         filterObj.push(toDate)
       }
-
       filterObj.push(stateComponentState, dso, city, permitStatus)
     } else {
       const deliveryStatus = this.deliveryStatusState.getData().deliveryStatus
       filterObj.push(dso, city, deliveryStatus)
     }
-
-    filterObj = filterObj.filter((item) => item.filterby && item.filterby.length > 0)
     this.props.applyFilter(filterObj)
   }
 
   render() {
-    console.log("filter", this.props)
     return (
       <div className={`filter-container ${this.props.showFilter ? 'show' : 'hide'}`} >
         <p className="title"> Filters </p>

@@ -72,7 +72,7 @@ class State extends React.Component {
     this.setState({
       stateObj: {
         filterby: e.target.name,
-        value: (e.target.value),
+        value: this.state.stateList.find(item => item.value === parseInt(value)).text,
         idx: e.target.value,
         stateName: this.state.stateList.find(item => item.value === parseInt(value)).text
       }

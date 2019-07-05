@@ -211,7 +211,7 @@ const ManageOTTP = (props) => {
  */
   const applyFilter = (newFilter) => {
     let appliedFilter = []
-
+    console.log("new filter", newFilter)
     //If filter already applied, then adds the new filter options to it
     if (filter) {
       appliedFilter = filter
@@ -233,14 +233,21 @@ const ManageOTTP = (props) => {
     const validFilter = uniqueFilter.filter((item) => {
       if (item.value !== "All" && item.value !== "") {
         if (item.filterby === "City") {
+          console.log("filter1")
           item.value = item.idx.toString()
         }
         if (item.filterby === "Delivery Operator") {
+          console.log("filter2")
           item.value = item.dso_id
         }
+        // if (item.filterby === "State") {
+        //   item.value = item.dso_id
+        // }
         return item
       }
     })
+
+    console.log("valid filter", validFilter)
 
     setLimit(10)
     setActivePage(1)
