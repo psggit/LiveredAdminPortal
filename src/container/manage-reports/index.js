@@ -101,7 +101,7 @@ class ManageReports extends React.Component {
    * @param {Object} payloadObj - payload object
    */
   generateReport(payloadObj) {
-    if (payloadObj.data_type.indexOf("credits") === -1) {
+    if (payloadObj.data_type.toLowerCase().indexOf("credit") === -1) {
       Api.generateOttpReport(payloadObj)
         .then((response) => {
           this.downloadReport(response)
