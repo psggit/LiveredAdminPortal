@@ -56,7 +56,7 @@ class SpecialRestriction extends React.Component {
       is_repeat: data.state.isRepeat,
       reason: data.reason.state.value
     }
-
+    console.log("paload", payload)
     Api.createCitySpecialDay(payload)
       .then((response) => {
         payload.id = response.id
@@ -76,9 +76,21 @@ class SpecialRestriction extends React.Component {
   createStateSpecialDay() {
     const data = this.specialrestrictionForm.getData()
     this.setState({ creatingSpecialRestriction: true })
-    Api.createStateSpecialDay({
+    const payload = {
       state_id: parseInt(this.props.stateId),
       state: getQueryObjByName("stateName"),
+      // city_id: parseInt(data.state.selectedCityIdx),
+      // city: data.state.selectedCityName,
+      date: data.specialDate.value,
+      start_time: data.startTime.value + ":00+05:30",
+      end_time: data.endTime.value + ":00+05:30",
+      is_repeat: data.state.isRepeat,
+      reason: data.reason.state.value
+    }
+    console.log("paload", payload)
+    Api.createStateSpecialDay({
+      state_id: parseInt(this.props.stateId),
+      state_name: getQueryObjByName("stateName"),
       date: data.specialDate.value,
       from_time: data.startTime.value + ":00+05:30",
       to_time: data.endTime.value + ":00+05:30",

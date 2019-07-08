@@ -10,11 +10,11 @@ import { POST, GET } from 'Utils/fetch'
 // const rule = "https://ruleengine.livered-dev.com"
 
 //dev
-const ottp = "https://f5c2eb8c.ngrok.io"
-export const dso = "http://192.168.5.84"
-const credit = "https://e6ee9cc2.ngrok.io"
-export const consumer = "https://2b20cfb3.ngrok.io"
-const rule = "https://3f004433.ngrok.io"
+const ottp = "https://79bd647f.ngrok.io"
+export const dso = "http://192.168.5.84:3002"
+const credit = "https://23fff800.ngrok.io"
+export const consumer = "https://9800b602.ngrok.io"
+const rule = "https://d429cc52.ngrok.io"
 
 export function fetchAllOttps(payload) {
   return POST({

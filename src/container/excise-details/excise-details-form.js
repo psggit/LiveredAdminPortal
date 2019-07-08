@@ -19,7 +19,7 @@ class ExciseDetailsForm extends React.Component {
       cityList: [],
       stateList: [],
       stateMap: {},
-      deliveryStatus: "",
+      deliveryStatus: false,
       headOfficeAddress: "",
       name: "",
       email: "",

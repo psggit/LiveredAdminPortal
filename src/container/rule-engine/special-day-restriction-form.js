@@ -36,6 +36,7 @@ class SpecialDayRestrictionForm extends React.Component {
   }
 
   handleSelectChange(e) {
+    console.log("selected city index", e.target.value)
     this.setState({
       selectedCityIdx: e.target.value,
       selectedCityName: this.state.cityList.find((item) => parseInt(item.value) === parseInt(e.target.value)).text
@@ -51,17 +52,20 @@ class SpecialDayRestrictionForm extends React.Component {
       .then((response) => {
         const stateId = this.props.stateId ? parseInt(this.props.stateId) : parseInt(getQueryObjByName("stateId"))
         let cityList = response.stateCity[stateId].cities
+        let maxCityId = 0
         cityList = cityList.map((item) => {
+          if (item.city_id > maxCityId) {
+            maxCityId = item.city_id
+          }
           return {
             text: item.city_name,
             value: item.city_id
           }
         })
-
         this.setState({
           cityList: [...cityList, {
             text: "All",
-            value: cityList.length - 1
+            value: maxCityId + 1
           }],
           selectedCityIdx: cityList[0].value,
           selectedCityName: cityList[0].text

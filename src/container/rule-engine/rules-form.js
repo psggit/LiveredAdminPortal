@@ -71,12 +71,17 @@ class RuleManagement extends React.Component {
   handleChange(e) {
     this.setState({
       selectedStateIdx: parseInt(e.target.value),
-      selectedStateName: this.state.stateList.find((item) => item.value === parseInt(e.target.value)).text
+      //selectedStateName: this.state.stateList.find((item) => item.value === parseInt(e.target.value)).text
     })
   }
 
   fetchAndViewExciseRules() {
-    const { selectedStateIdx, selectedStateName, rulesData: { } } = this.state
+    const { selectedStateIdx, rulesData: { } } = this.state
+    const selectedStateName = this.state.stateList.find((item) => item.value === parseInt(selectedStateIdx)).text
+    this.setState({
+      selectedStateName,
+      loadingRules: true
+    })
     this.fetchRules()
     this.props.history.push(`/home/rules?stateId=${selectedStateIdx}&stateName=${selectedStateName}`)
   }
