@@ -2,12 +2,14 @@ import { POST, GET } from 'Utils/fetch'
 //const ipAddress = "192.168.43.10"
 //const ipAddress = "183.82.32.28"
 
+//prod
 // const ottp = "https://ottp.livered-dev.com"
 // export const dso = "https://dsomanagement.livered-dev.com"
 // const credit = "https://credit.livered-dev.com"
 // export const consumer = "https://consumer.livered-dev.com"
 // const rule = "https://ruleengine.livered-dev.com"
 
+//dev
 const ottp = "https://f5c2eb8c.ngrok.io"
 export const dso = "http://192.168.5.84"
 const credit = "https://e6ee9cc2.ngrok.io"
