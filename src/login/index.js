@@ -108,7 +108,7 @@ const Login = () => {
             <React.Fragment>
               <form onSubmit={handleLogin}>
                 <div className="form-group">
-                  <Label>Email Id</Label>
+                  <Label>Email ID</Label>
                   <input
                     type="text"
                     name="email"
