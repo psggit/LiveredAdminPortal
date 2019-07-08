@@ -3,18 +3,18 @@ import { POST, GET } from 'Utils/fetch'
 //const ipAddress = "183.82.32.28"
 
 //prod
-// const ottp = "https://ottp.livered-dev.com"
-// export const dso = "https://dsomanagement.livered-dev.com"
-// const credit = "https://credit.livered-dev.com"
-// export const consumer = "https://consumer.livered-dev.com"
-// const rule = "https://ruleengine.livered-dev.com"
+const ottp = "https://ottp.livered-dev.com"
+export const dso = "https://dsomanagement.livered-dev.com"
+const credit = "https://credit.livered-dev.com"
+export const consumer = "https://consumer.livered-dev.com"
+const rule = "https://ruleengine.livered-dev.com"
 
 //dev
-const ottp = "https://79bd647f.ngrok.io"
-export const dso = "http://192.168.5.84:3002"
-const credit = "https://23fff800.ngrok.io"
-export const consumer = "https://9800b602.ngrok.io"
-const rule = "https://d429cc52.ngrok.io"
+// const ottp = "https://79bd647f.ngrok.io"
+// export const dso = "http://192.168.5.84:3002"
+// const credit = "https://23fff800.ngrok.io"
+// export const consumer = "https://9800b602.ngrok.io"
+// const rule = "https://d429cc52.ngrok.io"
 
 export function fetchAllOttps(payload) {
   return POST({
