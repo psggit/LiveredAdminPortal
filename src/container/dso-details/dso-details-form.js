@@ -108,6 +108,7 @@ class DsoDetailsForm extends React.Component {
   }
 
   setLicenseStatus(status) {
+    console.log("license status", status, this.props.enableEdit)
     if (status === "validated") {
       this.setState({ isValidated: !this.state.isValidated, licenseStatus: true, isNotValidated: false })
     } else {
@@ -234,7 +235,7 @@ class DsoDetailsForm extends React.Component {
                 </Label>
                 <div style={{ display: 'flex', alignItems: 'center' }}>
                   <span
-                    onClick={() => this.setLicenseStatus('validated')}
+                    onClick={this.props.enableEdit ? () => this.setLicenseStatus('validated') : () => { }}
                     className="circle"
                     style={{ marginRight: '10px', cursor: this.props.enableEdit ? 'pointer' : 'default' }}
                   >
