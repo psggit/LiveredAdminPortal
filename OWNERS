@@ -1,0 +1,9 @@
+filters:
+  ".*":
+    approvers:
+      - hl05
+      - AparnaRada
+    lables:
+      - approved
+      - lgtm
+      - wip
