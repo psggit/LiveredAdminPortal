@@ -1,13 +1,38 @@
 {
-  "extends": "airbnb",
+  "env": {
+    "browser": true, //browser global variables.
+    "es6": true // enable all ECMAScript 6 features except for modules 
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended" //the plugin will tell the linter that it’s looking at React code, not regular JavaScript
+  ],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true //enable JSX
+    },
+    "ecmaVersion": 2018, //overrides the expected ECMAScript 5 syntax
+    "sourceType": "module" //if your code is in ECMAScript modules
+  },
+  "plugins": [
+    "react"
+  ],
   "rules": {
-    "semi": 0,
-    "comma-dangle": 0,
-    "indent": [2],
-    "react/prefer-stateless-function": [0, {"ignorePureComponents": true}],
-    "react/jsx-filename-extension": [1, { "extensions": [".js"] }],
-    "no-trailing-spaces": 0,
-    "react/sort-comp": 0,
-    "jsx-a11y/anchor-is-valid": 0
+    "indent": [
+      "error",
+      2
+    ],
+    "linebreak-style": [
+      "error",
+      "unix"
+    ],
+    "quotes": [
+      "error",
+      "double"
+    ],
+    "semi": [
+      "error",
+      "never"
+    ]
   }
 }

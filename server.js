@@ -17,7 +17,7 @@ app.get('*.js', function (req, res, next) {
   next();
 });
 
-app.use('/admin', express.static(path.join(__dirname, 'dist')))
+app.use('/', express.static(path.join(__dirname, 'dist')))
 
 app.get('/*', (req, res) => {
   //console.log(req.query);

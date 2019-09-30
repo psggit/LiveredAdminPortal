@@ -10,11 +10,12 @@ import { POST, GET } from 'Utils/fetch'
 // const rule = "https://ruleengine-livered.hipbar-dev.com"
 
 //dev
-const ottp = "http://192.168.5.84:3000"
-export const dso = "http://192.168.5.84:3002"
-const credit = "http://192.168.5.84:3004"
-export const consumer = "http://192.168.5.84:3003"
-const rule = "http://192.168.5.84:3005"
+// const ottp = "http://192.168.5.84:3000"
+// export const dso = "http://192.168.5.84:3002"
+// const credit = "http://192.168.5.84:3004"
+// export const consumer = "http://192.168.5.84:3003"
+// const rule = "http://192.168.5.84:3005"
+//const fence = "http://192.168.5.84:3006"
 
 //dev
 // const ottp = "https://79bd647f.ngrok.io"
@@ -22,6 +23,14 @@ const rule = "http://192.168.5.84:3005"
 // const credit = "https://23fff800.ngrok.io"
 // export const consumer = "https://9800b602.ngrok.io"
 // const rule = "https://d429cc52.ngrok.io"
+//const fence = "http://9ed75734.ngrok.io"
+
+const ottp = "https://ottp-livered.hipbar-dev.com"
+export const dso = "https://dsomanagement-livered.hipbar-dev.com"
+const credit = "https://credit-livered.hipbar-dev.com"
+export const consumer = "https://consumer-livered.hipbar-dev.com"
+const rule = "https://ruleengine-livered.hipbar-dev.com"
+const fence = "https://loki-livered.hipbar-dev.com"
 
 export function fetchAllOttps(payload) {
   return POST({

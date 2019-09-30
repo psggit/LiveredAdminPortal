@@ -47,9 +47,9 @@ module.exports = {
       title: 'Output Management',
       template: './index.html'
     }),
-    new webpack.DefinePlugin({
-      "process.env.BASE_URL": JSON.stringify(process.env.BASE_URL || "amebae21.hasura-app.io"),
-    }),
+    // new webpack.DefinePlugin({
+    //   "process.env.BASE_URL": JSON.stringify(process.env.BASE_URL || "hipbar-dev.com"),
+    // }),
     new CompressionPlugin({  
       test: /\.js$|\.css$|\.html$/,
       filename: "[path].gz[query]",
@@ -62,7 +62,7 @@ module.exports = {
   output: {
     filename: '[name].[chunkhash].js',
     path: path.resolve(__dirname, 'dist'),
-    publicPath: '/admin'
+    publicPath: '/'
   },
   optimization: {
     splitChunks: {

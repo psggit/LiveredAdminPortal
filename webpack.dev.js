@@ -10,9 +10,9 @@ module.exports = merge(common, {
     host: '0.0.0.0',
     port: 8003,
     compress: true,
-    publicPath: '/admin',
+    publicPath: '/',
     historyApiFallback: {
-      index: "/admin"
+      index: "/"
     }
   },
   plugins: [
