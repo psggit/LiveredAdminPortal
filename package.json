@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "BASE_URL=hipbar.com NODE_ENV=production webpack --config webpack.prod.js",
-    "start:local": "BASE_URL=hipbar-dev.com NODE_ENV=development webpack-dev-server --config webpack.dev.js --disable-host-check",
+    "start:local": "BASE_URL=hipbar-dev.com NODE_ENV=development webpack-dev-server --config webpack.dev.js --history-api-fallback --disable-host-check",
     "start:dev": "BASE_URL=hipbar-dev.com NODE_ENV=development webpack-dev-server --config webpack.dev.js --host 0.0.0.0",
     "start": "NODE_ENV=production node server.js"
   },

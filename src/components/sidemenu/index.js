@@ -5,7 +5,8 @@ import Icon from "./../icon"
 const Sidemenu = ({ currentRoute, menuItems, history }) => {
 
   const checkActiveClass = (value) => {
-    if (currentRoute === value) {
+    console.log("value", value, "current route", currentRoute, currentRoute.indexOf(value))
+    if (value.indexOf(currentRoute) !== -1) {
       return 'active'
     }
     return ''
