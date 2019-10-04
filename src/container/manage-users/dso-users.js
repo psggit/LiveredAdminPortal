@@ -19,6 +19,7 @@ const dsoUserTableHeaders = [
   { title: "Email Address", icon: "" },
   { title: "Designation", icon: "", tooltipText: "" },
   { title: "Role", icon: "", tooltipText: "" },
+  { title: "Dso Name", icon: "", tooltipText: "" },
   { title: "User Type", icon: "", tooltipText: "" },
   { title: "User Status", icon: "info", tooltipText: "Activity status of a user" },
   { title: "", icon: "", tooltipText: "" }
@@ -231,7 +232,7 @@ const ManageDsoUser = (props) => {
         <div className="container">
           <div className="search-container">
             <Search
-              placeholder="Search by dso name"
+              placeholder="Search by name"
               setSearchText={setDsoName}
               searchText={dsoName}
               handleSearch={handleSearch}
@@ -264,6 +265,7 @@ const ManageDsoUser = (props) => {
                         <td>{item.email}</td>
                         <td>{item.designation}</td>
                         <td>{item.roles[0].name}</td>
+                        <td>{item.dso_id}</td>
                         <td>DSO</td>
                         <td>{item.is_active ? "Active" : "Inactive"}</td>
                         <td>

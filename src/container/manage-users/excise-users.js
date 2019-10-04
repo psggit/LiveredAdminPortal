@@ -230,7 +230,7 @@ const ManageExciseUser = (props) => {
         <div className="container">
           <div className="search-container">
             <Search
-              placeholder="Search by excise name"
+              placeholder="Search by name"
               setSearchText={setExciseName}
               searchText={exciseName}
               handleSearch={handleSearch}
