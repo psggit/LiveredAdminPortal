@@ -179,7 +179,7 @@ class DsoLocationForm extends React.Component {
       email: item.reg_office_contact_email,
       phone: item.reg_office_contact_phone,
       cityList: this.state.stateMap[item.state_id].cities.map((item) => { return { text: item.city_name, value: item.city_id } }),
-      deliverableCityList: item.city_list.trim().length > 0 ? item.city_list.trim().substring(0, item.city_list.length - 2).split(",").map((item) => item.trim()) : ""
+      deliverableCityList: item.city_list ? item.city_list.trim().length > 0 ? item.city_list.trim().substring(0, item.city_list.length - 2).split(",").map((item) => item.trim()) : "" : ""
     })
   }
 
@@ -222,7 +222,7 @@ class DsoLocationForm extends React.Component {
                     onClick={this.props.action === "edit" ? () => this.handleRowClick(item) : () => { }}
                   >
                     <td>{item.state_name}</td>
-                    <td>{item.city_list.substring(0, (item.city_list.length - 1))}</td>
+                    <td>{item.city_list ? item.city_list.substring(0, (item.city_list.length - 1)) : ""}</td>
                     <td>{item.reg_office_city}</td>
                     <td>{item.reg_office_address}</td>
                     <td>{item.reg_office_contact_phone}</td>
