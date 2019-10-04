@@ -240,9 +240,9 @@ const ManageOTTP = (props) => {
           console.log("filter2")
           item.value = item.dso_id
         }
-        // if (item.filterby === "State") {
-        //   item.value = item.dso_id
-        // }
+        if (item.filterby === "State") {
+          item.value = item.idx
+        }
         return item
       }
     })

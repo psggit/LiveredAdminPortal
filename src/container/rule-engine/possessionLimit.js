@@ -35,19 +35,19 @@ class PossessionLimit extends React.Component {
   getUpdatedPossessionLimit() {
     return [{
       brand_type: "IMFL",
-      volume_limit: parseInt(this.IMFL.state.value) * 1000
+      volume_limit: (this.IMFL.state.value) * 1000
     },
     {
       brand_type: "FMFL",
-      volume_limit: parseInt(this.FMFL.state.value) * 1000
+      volume_limit: (this.FMFL.state.value) * 1000
     },
     {
       brand_type: "Beer",
-      volume_limit: parseInt(this.beer.state.value) * 1000
+      volume_limit: (this.beer.state.value) * 1000
     },
     {
       brand_type: "Wine",
-      volume_limit: parseInt(this.wine.state.value) * 1000
+      volume_limit: (this.wine.state.value) * 1000
     }]
   }
 
@@ -131,7 +131,7 @@ class PossessionLimit extends React.Component {
                 className="nav-link save"
               >
                 Edit
-            </NavLink>
+              </NavLink>
             }
           </div>
 
@@ -140,7 +140,7 @@ class PossessionLimit extends React.Component {
             <TextInput
               ref={input => (this.IMFL = input)}
               name="IMFL"
-              pattern="[0-9]*"
+              pattern="[0-9.]*"
               isRequired={true}
               defaultValue={
                 data.possession_limit && data.possession_limit.length > 0
@@ -157,7 +157,7 @@ class PossessionLimit extends React.Component {
             <TextInput
               ref={input => (this.FMFL = input)}
               name="FMFL"
-              pattern="[0-9]*"
+              pattern="[0-9.]*"
               isRequired={true}
               defaultValue={
                 data.possession_limit && data.possession_limit.length > 0
@@ -174,7 +174,7 @@ class PossessionLimit extends React.Component {
             <TextInput
               ref={input => (this.beer = input)}
               name="beer"
-              pattern="[0-9]*"
+              pattern="[0-9.]*"
               isRequired={true}
               defaultValue={
                 data.possession_limit && data.possession_limit.length > 0
@@ -191,7 +191,7 @@ class PossessionLimit extends React.Component {
             <TextInput
               ref={input => (this.wine = input)}
               name="wine"
-              pattern="[0-9]*"
+              pattern="[0-9.]*"
               isRequired={true}
               defaultValue={
                 data.possession_limit && data.possession_limit.length > 0
