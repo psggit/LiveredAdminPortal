@@ -30,5 +30,5 @@ app.get('/*', (req, res) => {
 
 // Serve the files on port 3000.
 app.listen(8080, function () {
-  console.log('Example app listening on the port 8080!\n');
+  console.log('Example app listening on port 8080!\n');
 });
