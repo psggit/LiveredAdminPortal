@@ -17,7 +17,7 @@ app.get('*.js', function (req, res, next) {
   next();
 });
 
-app.use('/', express.static(path.join(__dirname, 'dist')))
+app.use(express.static(path.join(__dirname, 'dist')))
 
 app.get('/*', (req, res) => {
   //console.log(req.query);
@@ -28,7 +28,7 @@ app.get('/*', (req, res) => {
   })
 });
 
-// Serve the files on port 3000.
+// Serve the files on port 8080.
 app.listen(8080, function () {
   console.log('Example app listening on port 8080!\n');
 });

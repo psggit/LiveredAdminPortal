@@ -4,10 +4,10 @@
   "description": "Basic React Boilerplate",
   "main": "index.js",
   "scripts": {
-    "build": "BASE_URL=hipbar-dev.com NODE_ENV=production webpack --config webpack.prod.js",
+    "build": "BASE_URL=hipbar-dev.com webpack --config webpack.prod.js",
     "start:local": "BASE_URL=hipbar-dev.com NODE_ENV=development webpack-dev-server --config webpack.dev.js --history-api-fallback --disable-host-check",
     "start:dev": "BASE_URL=hipbar-dev.com NODE_ENV=development webpack-dev-server --config webpack.dev.js --host 0.0.0.0",
-    "start": "NODE_ENV=production node server.js"
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -46,8 +46,8 @@
     "history": "^4.10.1",
     "moment": "^2.22.2",
     "ngrok": "^3.2.5",
-    "react": "^16.10.1",
-    "react-dom": "^16.10.1",
+    "react": "^16.10.2",
+    "react-dom": "^16.10.2",
     "react-router": "^5.1.2",
     "react-router-dom": "^5.1.2",
     "webpack": "^4.41.0",
