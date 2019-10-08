@@ -241,6 +241,7 @@ class ExciseDetailsForm extends React.Component {
                 <div className="item">
                   <Label>City</Label>
                   <Select
+                    required
                     options={this.state.cityList}
                     name="headOfficeCity"
                     placeholder="city"
