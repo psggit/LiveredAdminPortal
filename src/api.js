@@ -504,7 +504,7 @@ export function fetchOttpDetails(payload) {
 
 export function fetchStateAndCitiesList(payload) {
   return GET({
-    api: `${fence}/liveredFence/getCityAndState`,
+    api: `${fence}/liveredFence/getCityAndStateMap`,
     handleError: true,
     prependBaseUrl: false,
     //data: payload
