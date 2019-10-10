@@ -27,7 +27,7 @@ class AddNewUser extends React.Component {
       designation: data.designation.state.value,
       dso_id: data.state.selectedDsoIdx,
       roles: [{
-        role_id: data.state.selectedRoleIdx
+        role_id: parseInt(data.state.selectedRoleIdx)
       }]
     })
       .then((response) => {
@@ -49,7 +49,7 @@ class AddNewUser extends React.Component {
       designation: data.designation.state.value,
       state_id: data.state.selectedStateIdx,
       roles: [{
-        role_id: data.state.selectedRoleIdx
+        role_id: parseInt(data.state.selectedRoleIdx)
       }]
     })
       .then((response) => {
@@ -70,7 +70,7 @@ class AddNewUser extends React.Component {
       email: data.email.state.value,
       designation: data.designation.state.value,
       roles: [{
-        role_id: data.state.selectedRoleIdx
+        role_id: parseInt(data.state.selectedRoleIdx)
       }]
     })
       .then((response) => {

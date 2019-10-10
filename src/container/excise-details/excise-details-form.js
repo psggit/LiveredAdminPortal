@@ -125,6 +125,7 @@ class ExciseDetailsForm extends React.Component {
   }
 
   handleCityChange(e) {
+    console.log("city list", this.state.cityList)
     this.setState({
       selectedCityIdx: parseInt(e.target.value)
     })

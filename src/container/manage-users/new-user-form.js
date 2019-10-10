@@ -114,7 +114,7 @@ class AddNewUser extends React.Component {
     })
   }
 
-  handleRoleChange() {
+  handleRoleChange(e) {
     this.setState({
       selectedRoleIdx: e.target.value
     })
