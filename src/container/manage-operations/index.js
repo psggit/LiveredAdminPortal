@@ -209,7 +209,7 @@ const ManageOperations = (props) => {
     }, []);
 
     const validFilter = uniqueFilter.filter((item) => {
-      if (item.value !== "All" && item.value !== "") {
+      if (item.value !== "All" && item.value !== "" && parseInt(item.idx) !== -1) {
         if (item.filterby === "City") {
           item.value = item.idx
         }

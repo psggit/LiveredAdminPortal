@@ -220,6 +220,7 @@ const ManageOTTP = (props) => {
         appliedFilter.push(item)
       })
     }
+    console.log("filter", filter)
     const uniqueFilter = appliedFilter.reduce((acc, current) => {
       const isFoundFilter = acc.find(item => item.filterby === current.filterby);
       if (!isFoundFilter) {
@@ -232,7 +233,9 @@ const ManageOTTP = (props) => {
     }, []);
 
     const validFilter = uniqueFilter.filter((item) => {
-      if (item.value !== "All" && item.value !== "") {
+      console.log("value", item)
+      if (item.value !== "All" && item.idx !== "" && parseInt(item.idx) !== -1) {
+        console.log("item value", item.value)
         if (item.filterby === "City") {
           console.log("filter1")
           item.value = item.idx.toString()
