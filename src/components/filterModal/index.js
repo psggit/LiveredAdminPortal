@@ -29,19 +29,19 @@ class Filter extends React.Component {
   // }
 
   setFilterDefaultValues(defaultValueObj) {
-    if (defaultValueObj.selectedCityIdx && defaultValueObj.selectedCityIdx !== -1) {
+    if (defaultValueObj.hasOwnProperty("selectedCityIdx") && defaultValueObj.selectedCityIdx !== -1) {
       this.cityState.setDefaultValue(defaultValueObj.selectedCityIdx)
     }
-    if (defaultValueObj.selectedStateIdx && defaultValueObj.selectedStateIdx !== -1) {
+    if (defaultValueObj.hasOwnProperty("selectedStateIdx") && defaultValueObj.selectedStateIdx !== -1) {
       this.stateComponent.setDefaultValue(defaultValueObj.selectedStateIdx)
     }
-    if (defaultValueObj.selectedDsoIdx && defaultValueObj.selectedDsoIdx !== -1) {
+    if (defaultValueObj.hasOwnProperty("selectedDsoIdx") && defaultValueObj.selectedDsoIdx !== -1) {
       this.dsoListState.setDefaultValue(defaultValueObj.selectedDsoIdx)
     }
-    if (defaultValueObj.selectedPermitIdx && defaultValueObj.selectedPermitIdx !== -1) {
+    if (defaultValueObj.hasOwnProperty("selectedPermitIdx") && defaultValueObj.selectedPermitIdx !== -1) {
       this.permitStatusState.setDefaultValue(defaultValueObj.selectedPermitIdx)
     }
-    if (defaultValueObj.selectedDeliveryStatusIdx && defaultValueObj.selectedDeliveryStatusIdx !== -1) {
+    if (defaultValueObj.hasOwnProperty("selectedDeliveryStatusIdx") && defaultValueObj.selectedDeliveryStatusIdx !== -1) {
       this.deliveryStatusState.setDefaultValue(defaultValueObj.selectedDeliveryStatusIdx)
     }
     if (defaultValueObj.fromDate && defaultValueObj.fromDate !== -1) {
@@ -95,6 +95,7 @@ class Filter extends React.Component {
   }
 
   render() {
+    console.log("data props", this.props)
     return (
       <div className={`filter-container ${this.props.showFilter ? 'show' : 'hide'}`} >
         <p className="title"> Filters </p>

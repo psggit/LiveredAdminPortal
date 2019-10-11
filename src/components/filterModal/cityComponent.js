@@ -29,6 +29,14 @@ class City extends React.Component {
     this.fetchStateAndCitiesList()
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.selectedCityIdx !== this.props.selectedCityIdx) {
+      this.setState({
+        city: { ...this.state.city, idx: this.props.selectedCityIdx ? this.props.selectedCityIdx : 0 }
+      })
+    }
+  }
+
   reset() {
     this.setState({ city: { ...this.state.city, idx: -1 } })
   }
@@ -47,7 +55,7 @@ class City extends React.Component {
     let cityList = response.cities.map((item) => {
       return {
         text: item.city_name,
-        value: item.id,
+        value: item.city_id,
         stateId: item.StateId
       }
     })
@@ -66,7 +74,6 @@ class City extends React.Component {
   }
 
   handleChange(e) {
-    // console.log("city change", e.target.value)
     const value = e.target.value
     this.setState({
       city: {

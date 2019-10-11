@@ -29,6 +29,15 @@ class DeliveryOperator extends React.Component {
     })
   }
 
+  componentDidUpdate(prevProps) {
+    console.log("pros", this.props)
+    if (prevProps.selectedDsoIdx !== this.props.selectedDsoIdx) {
+      this.setState({
+        dso: { ...this.state.dso, idx: this.props.selectedDsoIdx ? this.props.selectedDsoIdx : -1 }
+      })
+    }
+  }
+
   fetchDSOList(payload) {
     Api.fetchDSOList(payload)
       .then((response) => {
@@ -60,6 +69,7 @@ class DeliveryOperator extends React.Component {
   }
 
   handleChange(e) {
+    console.log("dso list", this.state.dsoList)
     const value = e.target.value
     this.setState({
       dso: {
@@ -72,6 +82,7 @@ class DeliveryOperator extends React.Component {
   }
 
   render() {
+    console.log("props", this.props, "state", this.state)
     return (
       <div className="delivery-operator input-field">
         <Label>

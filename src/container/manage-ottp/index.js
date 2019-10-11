@@ -192,6 +192,7 @@ const ManageOTTP = (props) => {
     }
     setDsoIdx(-1)
     setCityIdx(-1)
+    setActivePage(1)
     setStateIdx(-1)
     setPermitIdx(-1)
     setOttpId("")

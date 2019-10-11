@@ -92,7 +92,7 @@ class DsoDetailsForm extends React.Component {
         const cityList = response.cities.map((item) => {
           return {
             text: item.city_name,
-            value: item.id
+            value: item.city_id
           }
         })
         this.setState({ cityList })
